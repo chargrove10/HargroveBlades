@@ -45,20 +45,16 @@
                 </div>
 
         </div>
+        
+        
 </template>
 
 <script>
 export default ({
     data() {
-        
-    },
-
-    created() {
-        //get information from DB with axios here
-    },
-
-    methods: {
-        //js functions go here
+        return {
+            msg: 'Customer'
+        }
     }
 })
 </script>

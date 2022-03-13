@@ -1,4 +1,5 @@
 <template>
+<CustomerDetail />
 <div id = 'app'>
   <div class="main-title">
         <h1 class="title">Hargrove-Blades</h1>
@@ -119,10 +120,11 @@
                 <div>
                     <button >Edit</button>
                     <div class="divider "></div>
-                    <router-link to="/customer"><button>Add</button></router-link>
+                    <router-link :to="{ name: 'CustomerDetail'}"><button>Add</button></router-link>
                     <div class="divider"></div>
                     <button >Create Order</button>
                 </div>
+                
 
             </div>
 
@@ -187,11 +189,16 @@
         </div>
         
     </div>
-    </div>
+</div>
+
+
+
 </template>
 
 <script>
+
 export default {
+
 
         methods: {
 
