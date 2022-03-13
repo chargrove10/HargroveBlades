@@ -1,7 +1,4 @@
 <template>
-    <div>
-       
-
         <div id="Customer" class="tabcontent">
                 <h style="font-weight: bold; font-size:18px">Input Customer Information</h>
                 <div class="tab-divider"></div>
@@ -48,17 +45,12 @@
                 </div>
 
         </div>
-    </div>
 </template>
 
 <script>
 export default ({
     data() {
-        return {
-            Customer: [],
-            isShow: false,
-            customer: {}
-        }
+        
     },
 
     created() {

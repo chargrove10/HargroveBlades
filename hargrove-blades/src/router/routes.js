@@ -8,11 +8,7 @@ const routes = [
         name: 'MainPage',
         component: MainPage
     },
-    {
-        path:'/customer/:id',
-        name:'CustomerDetail',
-        component: CustomerDetail
-    },
+    
     {
         path:'/customer',
         name: 'Customer',
@@ -22,7 +18,7 @@ const routes = [
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
-    routes // short for `routes: routes`
+    routes: routes // short for `routes: routes`
   })
   
   export default router
