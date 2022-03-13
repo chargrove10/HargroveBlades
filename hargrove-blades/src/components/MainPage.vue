@@ -1,5 +1,5 @@
 <template>
-
+<div id = 'app'>
   <div class="main-title">
         <h1 class="title">Hargrove-Blades</h1>
     </div>
@@ -126,7 +126,7 @@
                 <div>
                     <button >Edit</button>
                     <div class="divider "></div>
-                    <button v-on:click = createCustomer()>Add</button>
+                    <router-link :to="{ name: 'CustomerDetail'}"><button>Add</button></router-link>
                     <div class="divider"></div>
                     <button >Create Order</button>
                 </div>
@@ -189,14 +189,14 @@
                 <div>
                     <button >Edit</button>
                     <div class="divider "></div>
-                    <button >Add</button>
+                    <router-link :to="{ name: 'ProductDetail'}"><button>Add</button></router-link>
                 </div>
             </div>
         
         </div>
         
     </div>
-
+</div>
 
 
 
@@ -206,10 +206,11 @@
 
 export default {
 
+
         methods: {
 
             createCustomer() {
-                this.$router.push({name: 'CustomerDetail'})
+                this.$router.push('/customer')
             },
 
             openOrder(event, Order) {
@@ -246,7 +247,7 @@ export default {
         event.currentTarget.className += "active";
             },
 
-            openProduct(event, Product) {
+        openProduct(event, Product) {
         var i, tabcontent, tablink;
 
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -269,4 +270,5 @@ export default {
     }
 </script>
 
-
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped src="../assets/style.css"></style>
