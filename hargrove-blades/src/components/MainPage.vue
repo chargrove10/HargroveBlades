@@ -9,11 +9,11 @@
 
             <div class="tab">
                 
-                <button onclick ="openCustomer(event, 'Customer')">Customer</button>
+                <button v-on:click ="openCustomer(event, 'Customer')">Customer</button>
                 <div class="tab-divider"></div>
-                <button onclick ="openOrder(event, 'Order')">Order</button>
+                <button v-on:click ="openOrder(event, 'Order')">Order</button>
                 <div class="tab-divider"></div>
-                <button onclick ="openProduct(event, 'Product')">Product</button>
+                <button v-on:click ="openProduct(event, 'Product')">Product</button>
             </div>
 
         </div>
@@ -246,7 +246,7 @@ export default {
 
         },
 
-  name: 'HelloWorld',
+  name: 'MainPage',
   props: {
     msg: String
   }
