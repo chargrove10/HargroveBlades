@@ -1,10 +1,15 @@
 <template>
-        <div id="Customer" class="tabcontent">
-                <h style="font-weight: bold; font-size:18px">Input Customer Information</h>
-                <div class="tab-divider"></div>
-                <div class="tab-divider"></div>
+<div class="form-div">
 
-                <div class="cform1">
+    <div style="text-align:center;margin-bottom:20px">
+        <header>Input Customer Information</header>
+    </div>
+      
+
+    
+        <div style="background-color: lightgrey">
+
+                <div style="width:50%; float: left">
                     <form>
                         <label for="fname">First name:</label><br/>
                         <input type="text" id="fname" name="fname" value="John"/><br/>
@@ -20,7 +25,7 @@
                     </form>
                 </div>
 
-                <div class="cform2">
+                <div style="width:50%; margin-left: 50%">
                     <form>
                         <label for="address">Street Address:</label><br/>
                         <input type="text" id="address" name="address" value="1234 Guess ln"/><br/>
@@ -46,17 +51,11 @@
 
         </div>
         
-        
+</div>
 </template>
 
 <script>
-export default ({
-    data() {
-        return {
-            msg: 'Customer'
-        }
-    }
-})
+
 </script>
 
-<style src="../assets/style.css"></style>
+

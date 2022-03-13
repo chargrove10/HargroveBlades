@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import MainPage from '@/components/MainPage.vue';
+import MainPage from '../components/MainPage.vue';
+import CustomerDetail from '../components/CustomerDetail.vue'
 
 
 const routes = [
@@ -10,9 +11,9 @@ const routes = [
     },
     
     {
-        path:"/CustomerDetail",
+        path:"/customer",
         name: "CustomerDetail",
-        component: () => import('@/components/CustomerDetail.vue')
+        component: CustomerDetail
     }
 ]
 

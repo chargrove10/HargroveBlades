@@ -48,6 +48,14 @@ body {
     background-color: white;
     
 }
+
+.form-div {
+    height:auto;
+    margin:2% 10% 20% 10%;
+    background-color: grey;
+    
+}
+
 .auto-style6 {
     margin-left: 5px;
 }
