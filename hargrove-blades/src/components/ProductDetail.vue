@@ -16,8 +16,11 @@
                         <label for="phone">Knife Style</label><br/>
                         <input type="text" id="knifeStyle" name="knifeStyle" value="Test"/><br/>
                         <label for="email">Steel Type</label><br/>
-                        <input type="text" id="steelType" name="steelType" value="Test"/><br/>                
-                     
+                        <input type="text" id="steelType" name="steelType" value="Test"/><br/> 
+                        <label for="email">Price</label><br/>
+                        <input type="text" id="price" name="price" value="Test"/><br/> 
+                        <label for="email">Complete Date</label><br/>
+                        <input type="date" id="completeDate" name="completeDate"/><br/>    
                     </form>
                 </div>
 
@@ -29,8 +32,12 @@
                         <input type="text" id="bladeLength" name="bladeLength" value="11"/><br/>
                         <label for="fname">Overall Length </label><br/>
                         <input type="text" id="overallLength" name="overallLength" value="15"/><br/>
+                        <label for="fname">Blade Finsih </label><br/>
+                        <input type="text" id="bladeFinish" name="bladefinish" value="Test"/><br/>
                         <label for="fname">Embellishments </label><br/>
                         <input type="text" id="embellishments" name="embellishments" value="Test"/><br/>
+                        <label for="notes">Product Notes:</label><br/>
+                        <textarea id="Note" rows="4" cols="24"></textarea><br /> 
                     </form>
                 </div>
 
