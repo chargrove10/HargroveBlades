@@ -23,6 +23,7 @@
 
             <div id="Order" class="tabcontent">
                 <div style="background-color:lightgray; text-align:center"><header>Order Information</header></div>
+                
                 <div class="tab-divider"></div>
                 <div>
                     <div class="cform1">
@@ -34,11 +35,14 @@
                         <input type="text" id="date" name="date" value="03/2022" /><br />
                     
                     </div>
-                    <div>
-                        <button>Search</button>
-                    </div>
+
                     <div class="tab-divider"></div>
                 </div>
+
+                <div class="search-button">
+                        <button>Search</button>
+                </div>
+                
                 <div class="tab-divider"></div>
                 
                 <form>
@@ -71,7 +75,7 @@
                 <div style="background-color:lightgray; text-align:center"><header>Customer Information</header></div>
                 
                 <div class="tab-divider"></div>
-                <div>
+                <div >
                     <div class="cform1">
                         <label>Customer Name</label>
                         <input type="text" id="fname" name="fname" value="John"/><br/>
@@ -81,11 +85,14 @@
                         <input type="text" id="phone" name="phone" value="1233334565" /><br />
                     
                     </div>
-                    <div>
-                        <button>Search</button>
-                    </div>
+        
                     <div class="tab-divider"></div>
                 </div>
+                
+                <div class="search-button">
+                        <button>Search</button>
+                </div>
+
                 <div class="tab-divider"></div>
            
                 <div>
@@ -143,10 +150,11 @@
                         <label>Steel Type</label>
                         <input type="text" id="stype" name="stype" value="Damascus" /><br/>
                     </div>
-                    <div>
-                        <button>Search</button>
-                    </div>
+                    
                     <div class="tab-divider"></div>
+                </div>
+                <div class="search-button">
+                        <button>Search</button>
                 </div>
                 <div class="tab-divider"></div>
            
