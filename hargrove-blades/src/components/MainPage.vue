@@ -118,7 +118,7 @@
                 <div>
                     <button >Edit</button>
                     <div class="divider "></div>
-                    <button >Add</button>
+                    <router-link to="/customer"><button>Add</button></router-link>
                     <div class="divider"></div>
                     <button >Create Order</button>
                 </div>
@@ -192,6 +192,10 @@
 export default {
 
         methods: {
+
+            createCustomer() {
+                this.$router.push('/customer')
+            },
 
             openOrder(event, Order) {
         var i, tabcontent, tablink;

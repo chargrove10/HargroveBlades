@@ -1,6 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <MainPage />
+  <MainPage msg="Hargrove Blades"/>
 </template>
 
 <script>
