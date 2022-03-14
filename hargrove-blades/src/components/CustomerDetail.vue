@@ -49,6 +49,10 @@
                     </form>
                 </div>
 
+                <div>
+                    <router-link :to="{ name: 'MainPage'}"><button>Home</button></router-link>
+                </div>
+
         </div>
         
 </div>

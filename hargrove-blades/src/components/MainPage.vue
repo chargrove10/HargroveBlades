@@ -128,7 +128,7 @@
                     <div class="divider "></div>
                     <router-link :to="{ name: 'CustomerDetail'}"><button>Add</button></router-link>
                     <div class="divider"></div>
-                    <button >Create Order</button>
+                    <router-link :to="{ name: 'CreateOrder'}"><button >Create Order</button></router-link>
                 </div>
                 
 

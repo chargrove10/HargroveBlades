@@ -9,32 +9,32 @@
 
                 <div style="width:50%; float: left">
                     <form>
-                        <label for="fname">Serial Number </label><br/>
+                        <label for="serialNo">Serial Number </label><br/>
                         <input type="text" id="serialNo" name="serialNo" value="1234era54t"/><br/>
-                        <label for="lname">Product Status </label><br/>
+                        <label for="prodStatus">Product Status </label><br/>
                         <input type="text" id="prodStatus" name="prodStatus" value="Pending"/><br/>
-                        <label for="phone">Knife Style</label><br/>
+                        <label for="knifeStyle">Knife Style</label><br/>
                         <input type="text" id="knifeStyle" name="knifeStyle" value="Test"/><br/>
-                        <label for="email">Steel Type</label><br/>
+                        <label for="steelType">Steel Type</label><br/>
                         <input type="text" id="steelType" name="steelType" value="Test"/><br/> 
-                        <label for="email">Price</label><br/>
+                        <label for="price">Price</label><br/>
                         <input type="text" id="price" name="price" value="Test"/><br/> 
-                        <label for="email">Complete Date</label><br/>
+                        <label for="completeDate">Complete Date</label><br/>
                         <input type="date" id="completeDate" name="completeDate"/><br/>    
                     </form>
                 </div>
 
                 <div style="width:50%; margin-left: 50%">
                     <form>
-                        <label for="notes">Handle Material </label><br/>
+                        <label for="handleMaterial">Handle Material </label><br/>
                         <input type="text" id="handleMaterial" name="handleMaterial" value="Test"/><br/> 
-                        <label for="fname">Blade Length </label><br/>
+                        <label for="bladeLength">Blade Length </label><br/>
                         <input type="text" id="bladeLength" name="bladeLength" value="11"/><br/>
-                        <label for="fname">Overall Length </label><br/>
+                        <label for="overallLength">Overall Length </label><br/>
                         <input type="text" id="overallLength" name="overallLength" value="15"/><br/>
-                        <label for="fname">Blade Finsih </label><br/>
+                        <label for="bladeFinish">Blade Finsih </label><br/>
                         <input type="text" id="bladeFinish" name="bladefinish" value="Test"/><br/>
-                        <label for="fname">Embellishments </label><br/>
+                        <label for="embellishments">Embellishments </label><br/>
                         <input type="text" id="embellishments" name="embellishments" value="Test"/><br/>
                         <label for="notes">Product Notes:</label><br/>
                         <textarea id="Note" rows="4" cols="24"></textarea><br /> 
