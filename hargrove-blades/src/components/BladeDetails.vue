@@ -8,7 +8,7 @@
 
         <div class="tab-div1">
 
-            <div class="tab">
+            <div class="tab" style="transform: translate(20%, 40%)">
 
                 <button v-on:click = home()>Home</button>
                 <div class="tab-divider"></div>
@@ -39,6 +39,7 @@
 
                     <div class="tab-divider"></div>
                 </div>
+                
 
                 <div class="search-button">
                         <button>Search</button>
@@ -64,7 +65,7 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <button>Edit</button>
+                    <router-link :to="{ name: 'SteelType'}"><button>Edit</button></router-link>
                     <div class="divider "></div>
                     <router-link :to="{ name: 'SteelType'}"><button>Add</button></router-link>
                 </div>
@@ -113,7 +114,7 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <button >Edit</button>
+                    <router-link :to="{ name: 'KnifeStyle'}"><button>Edit</button></router-link>
                     <div class="divider "></div>
                     <router-link :to="{ name: 'KnifeStyle'}"><button>Add</button></router-link>
                 </div>

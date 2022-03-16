@@ -17,6 +17,8 @@
                 <button v-on:click ="openProduct(event, 'Product')">Product</button>
                 <div class="tab-divider"></div>
                 <button v-on:click= bladeDetails()>Blade Details</button>
+                <div class="tab-divider" />
+                <button v-on:click= reports()>Reports</button>
             </div>
 
         </div>
@@ -77,7 +79,7 @@
                 <div style="background-color:lightgray; text-align:center"><header>Customer Information</header></div>
                 
                 <div class="tab-divider"></div>
-                <div >
+                <div>
                     <div class="cform1">
                         <label>Customer Name</label>
                         <input type="text" id="fname" name="fname" value="John"/><br/>
@@ -92,7 +94,7 @@
                 </div>
                 
                 <div class="search-button">
-                        <button>Search</button>
+                    <button>Search</button>
                 </div>
 
                 <div class="tab-divider"></div>
@@ -126,7 +128,7 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <button >Edit</button>
+                    <router-link :to="{ name: 'CustomerDetail'}"><button>Edit</button></router-link>
                     <div class="divider "></div>
                     <router-link :to="{ name: 'CustomerDetail'}"><button>Add</button></router-link>
                     <div class="divider"></div>
@@ -156,7 +158,7 @@
                     <div class="tab-divider"></div>
                 </div>
                 <div class="search-button">
-                        <button>Search</button>
+                    <button>Search</button>
                 </div>
                 <div class="tab-divider"></div>
            
@@ -189,7 +191,7 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <button >Edit</button>
+                    <router-link :to="{ name: 'ProductDetail'}"><button>Edit</button></router-link>
                     <div class="divider "></div>
                     <router-link :to="{ name: 'ProductDetail'}"><button>Add</button></router-link>
                 </div>
@@ -211,9 +213,13 @@ export default {
 
         methods: {
 
-            bladeDetails() {
-                this.$router.push('/bladeDetails')
-            },
+        reports() {
+            this.$router.push('/reports')
+        },
+
+        bladeDetails() {
+            this.$router.push('/bladeDetails')
+        },
 
             openOrder(event, Order) {
         var i, tabcontent, tablink;

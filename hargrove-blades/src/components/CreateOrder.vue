@@ -5,11 +5,18 @@
         <header>Create New Order</header>
     </div>
       
+    <div class="tab-div1">
+        
+        <div class="tab">
+        <button v-on:click=home()>Home</button>
+        </div>
 
+    </div>
     
+    <div class="tab-div2">
         <div style="background-color: lightgrey">
 
-                <div style="width:50%; float: left">
+                <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
                         <label for="customerId">Customer ID:</label><br/>
                         <input type="text" id="customerId" name="customerId" value="Test"/><br/>
@@ -25,7 +32,7 @@
                     </form>
                 </div>
 
-                <div style="width:50%; margin-left: 50%">
+                <div style="width:40%; margin-left: 60%">
                     <form>
                         <label for="orderTotal">Order Total:</label><br/>
                         <input type="text" id="orderTotal" name="orderTotal" value="Test"/><br/>
@@ -43,16 +50,23 @@
                     </form>
                 </div>
                 
-                <div>
-                    <router-link :to="{ name: 'MainPage'}"><button>Home</button></router-link>
-                </div>
+                <button style="transform:translate(40%,0)">Save</button>
 
         </div>
+    </div>
         
 </div>
 </template>
 
 <script>
+
+    export default {
+        methods: {
+            home() {
+                this.$router.push('/')
+            }
+        }
+    }
 
 </script>
 

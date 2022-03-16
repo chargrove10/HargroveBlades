@@ -6,6 +6,7 @@ import CreateOrder from '../components/CreateOrder.vue'
 import BladeDetails from '../components/BladeDetails.vue'
 import KnifeStyle from '../components/KnifeStyle.vue'
 import SteelType from '../components/SteelType.vue'
+import Reports from '../components/Reports.vue'
 
 const routes = [
     {
@@ -43,6 +44,11 @@ const routes = [
         path: "/steelType",
         name: "SteelType",
         component: SteelType
+    },
+    {
+        path: "/reports",
+        name: "Reports",
+        component: Reports
     }
 ]
 
