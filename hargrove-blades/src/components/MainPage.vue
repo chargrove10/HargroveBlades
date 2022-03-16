@@ -2,7 +2,8 @@
 <div id = 'app'>
   <div class="main-title">
     
-        <img src='../assets/sponsor.jpg' height='100' width='100' align="right">
+        <img src='../assets/sponsor.jpg' height='100' width='100' align="left">
+        
     
         <h1 class="title">Hargrove-Blades</h1>
     </div>
