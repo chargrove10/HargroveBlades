@@ -1,6 +1,9 @@
 <template>
 <div id = 'app'>
   <div class="main-title">
+    
+        <img src='../assets/sponsor.jpg' height='100' width='100' align="right">
+    
         <h1 class="title">Hargrove-Blades</h1>
     </div>
 
@@ -23,7 +26,7 @@
 
         </div>
 
-        <div class="tab-div2">
+        <div class="tab-div2" style="min-height:auto">
 
             <div id="Order" class="tabcontent">
                 <div style="background-color:lightgray; text-align:center"><header>Order Information</header></div>
