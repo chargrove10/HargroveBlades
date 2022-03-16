@@ -15,6 +15,8 @@
                 <button v-on:click ="openOrder(event, 'Order')">Order</button>
                 <div class="tab-divider"></div>
                 <button v-on:click ="openProduct(event, 'Product')">Product</button>
+                <div class="tab-divider"></div>
+                <button v-on:click= bladeDetails()>Blade Details</button>
             </div>
 
         </div>
@@ -209,8 +211,8 @@ export default {
 
         methods: {
 
-            createCustomer() {
-                this.$router.push('/customer')
+            bladeDetails() {
+                this.$router.push('/bladeDetails')
             },
 
             openOrder(event, Order) {
