@@ -1,8 +1,11 @@
 const express = require('express');
 const sql = require('mssql');
+const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = 3000;
+
+app.use(bodyParser)
 
 app.listen(PORT, () => {
     console.log("Connection achieved on : ", PORT)
@@ -23,4 +26,8 @@ sql.connect(database, err => {
     } else {
         console.log('Connected')
     }
+})
+
+app.get("/", (req,res) => {
+    res.send("Sample get request")
 })
