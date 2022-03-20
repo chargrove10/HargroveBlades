@@ -34,27 +34,36 @@
                 <div>
                     <div class="pform1">
                         <label>Knife Style</label>
-                        <input type="text" id="styleName" name="styleName" value="Test"/><br/>
+                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
+                            <button type="submit" class="search-button">
+                                <img src="../assets/search.png">
+                            </button>
                     </div>
                     <div class="pform2">
                         <label>Steel Type</label>
-                        <input type="text" id="steelType" name="steelType" value="Test" /><br />
+                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
+                            <button type="submit" class="search-button">
+                                <img src="../assets/search.png">
+                            </button>
                     
                     </div>
                     <div class="pform3">
                         <label>Handle Material</label>
-                        <input type="text" id="handleMat" name="handleMat" value="Test" /><br />
+                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
+                            <button type="submit" class="search-button">
+                                <img src="../assets/search.png">
+                            </button>
                     
                     </div>
 
                     <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    
                 </div>
 
                 <div class="tab-divider"></div>
-
-                <div class="search-button">
-                        <button>Search</button>
-                </div>
                 
                 <div class="tab-divider"></div>
 

@@ -36,24 +36,32 @@
                 <div>
                     <div class="cform1">
                         <label>Customer Name</label>
-                        <input type="text" id="fname" name="fname" value="John"/><br/>
+                        <input type="search" placeholder="Search" class="search-field" />
+                            <button type="submit" class="search-button">
+                                <img src="../assets/search.png">
+                            </button>
+                        
                     </div>
                     <div class="cform2">
                         <label>Phone Number</label>
-                        <input type="text" id="phone" name="phone" value="1233334565" /><br />
-                    
+                        <input type="search" placeholder="Search" class="search-field" />
+                            <button type="submit" class="search-button">
+                                <img src="../assets/search.png">
+                            </button>                    
                     </div>
         
                     <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
                 </div>
                 
-                <div class="search-button">
-                    <button >Search</button>
-                </div>
+                
 
                 <div class="tab-divider"></div>
            
-                <div>
+                <div class="table-div">
                     <form>
                         <table>
                             <tr>
@@ -86,7 +94,7 @@
                     <div class="divider "></div>
                     <router-link :to="{ name: 'CustomerDetail'}"><button>Add</button></router-link>
                     <div class="divider"></div>
-                    <router-link :to="{ name: 'CreateOrder'}"><button >Create Order</button></router-link>
+                    <router-link :to="{ name: 'CreateOrder'}"><button>Create Order</button></router-link>
                 </div>
                 
 

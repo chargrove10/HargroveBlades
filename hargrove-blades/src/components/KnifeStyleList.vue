@@ -29,21 +29,27 @@
                 <div>
                     <div class="cform1">
                         <label>Style</label>
-                        <input type="text" id="styleName" name="styleName" value="Test"/><br/>
+                        <input type="search" placeholder="Search" class="search-field" />
+                            <button type="submit" class="search-button">
+                                <img src="../assets/search.png">
+                            </button>
                     </div>
                     <div class="cform2">
                         <label>Style Description</label>
-                        <input type="text" id="styleDesc" name="styleDesc" value="Test" /><br />
+                        <input type="search" placeholder="Search" class="search-field" />
+                            <button type="submit" class="search-button">
+                                <img src="../assets/search.png">
+                            </button>
                     
                     </div>
 
                     <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
                 </div>
                 
-                <div class="search-button">
-                        <button>Search</button>
-                </div>
-
                 <div class="tab-divider"></div>
            
                 <div>

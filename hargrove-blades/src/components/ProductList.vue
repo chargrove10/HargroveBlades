@@ -35,22 +35,33 @@
                 <div>
                     <div class="pform1">
                         <label>Serial Number</label>
-                        <input type="text" id="serial" name="serial" value="1234era54t"/><br/>
+                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
+                            <button type="submit" class="search-button">
+                                <img src="../assets/search.png">
+                            </button>
                     </div>
                     <div class="pform2">
                         <label>Knife Style</label>
-                        <input type="text" id="kstyle" name="kstyle" value="Curved" /><br/>               
+                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
+                            <button type="submit" class="search-button">
+                                <img src="../assets/search.png">
+                            </button>               
                     </div>
                     <div class="pform3">
                         <label>Steel Type</label>
-                        <input type="text" id="stype" name="stype" value="Damascus" /><br/>
+                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
+                            <button type="submit" class="search-button">
+                                <img src="../assets/search.png">
+                            </button>
                     </div>
                     
                     <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
                 </div>
-                <div class="search-button">
-                    <button>Search</button>
-                </div>
+                
                 <div class="tab-divider"></div>
            
                 <div>

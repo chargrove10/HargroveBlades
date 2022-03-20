@@ -36,20 +36,27 @@
                 <div>
                     <div class="cform1">
                         <label>Order Number</label>
-                        <input type="text" id="orderNum" name="OrderNum" value="AE12321T"/><br/>
+                        <input type="search" placeholder="Search" class="search-field" />
+                            <button type="submit" class="search-button">
+                                <img src="../assets/search.png">
+                            </button>
                     </div>
                     <div class="cform2">
                         <label>Order Date</label>
-                        <input type="text" id="date" name="date" value="03/2022" /><br />
+                        <input type="search" placeholder="Search" class="search-field" />
+                            <button type="submit" class="search-button">
+                                <img src="../assets/search.png">
+                            </button>
                     
                     </div>
 
                     <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider"></div>
                 </div>
 
-                <div class="search-button">
-                        <button>Search</button>
-                </div>
                 
                 <div class="tab-divider"></div>
                 

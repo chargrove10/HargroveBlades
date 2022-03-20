@@ -85,15 +85,16 @@ body {
     transform: translateY(8%);
 }
 
-button {
+.tab-div2 button {
     display:inline-block;
     transition: 0.3s;
-    padding: 1.5%;
+    padding: 0.4%;
     cursor: pointer;
     background-color: honeydew;
     font-size: 16px;
     opacity: 0.6;
-    height: 10%;      
+    height: 100%; 
+    width: 9%;
     font-style:normal;
     font-family: 'Times New Roman';
     font-weight: bold;
@@ -200,6 +201,28 @@ header {
     font-size:24px;
 }
 
+.search-field {
+    width: 30%;
+    padding: 10px 35px 10px 15px;
+    border: none;
+    border-radius: 100px;
+    outline: none;
+  }
+  
 .search-button {
-    margin-top:2%;
+    background: transparent !important;
+    border: none;
+    outline: none;
+    margin-left: 0%;
+    transform: translateY(20%);
+  }
+  
+.search-button img {
+    width: 20px;
+    height: 20px;
+    object-fit: scale-down;
+  }
+
+.table-div {
+    margin-right:40%
 }
