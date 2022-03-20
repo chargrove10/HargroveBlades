@@ -74,12 +74,12 @@
                                 
                             </tr>
                            
-                            <tr>
-                                <td>John</td>
-                                <td>Doe</td>
-                                <td>1234454321</td>
-                                <td>Sugar Grove</td>
-                                <td>Texas</td>
+                            <tr v-for="customers in Customers" :key="customers._id">
+                                <td>{{customers.CustomerFirstName}}</td>
+                                <td>{{customers.CustomerLastName}}</td>
+                                <td>{{customers.CustomerPhone}}</td>
+                                <td>{{customers.AddressLine1}}</td>
+                                <td>{{customers.StateName}}</td>
                                 
                                 
                             </tr>
@@ -110,8 +110,27 @@
 </template>
 
 <script>
+import axios from "axios";
 
 export default {
+
+        data() {
+            return {
+                Customers: [],
+                isShow: false,
+                customers: {}
+            }
+        },
+
+        created() {
+
+            axios.get('/customerList').then((res) => {
+                this.Customer=res.data;
+            }).catch(err => {
+                console.log(err)
+            })
+
+        },
 
 
         methods: {
