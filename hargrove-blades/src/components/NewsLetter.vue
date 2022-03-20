@@ -1,6 +1,7 @@
 <template>
 <div>
     <div class="main-title">
+        <img src='../assets/sponsor.jpg' height='100' width='100' align="left">
         <h1 class="title">Hargrove-Blades Reports</h1>
     </div>
 
