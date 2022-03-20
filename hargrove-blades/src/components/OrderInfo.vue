@@ -9,17 +9,27 @@
 
         <div class="tab-div1">
 
-            <div class="tab" style="transform: translate(20%, 10%)">
+            <div class="tab">
                 
-                <button v-on:click = home()>Home</button>
+                <router-link to="/customerList" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Home</a>
+                </router-link>
                 <div class="tab-divider" />
-                <button v-on:click = knifeAvail()>Availability</button>
+                <router-link to="/knifeAvailability" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Availability</a>
+                </router-link>
                 <div class="tab-divider" />
-                <button v-on:click = orderInfo()>Order Info</button>
+                <router-link to="/orderInfo" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Order Info</a>
+                </router-link>
                 <div class="tab-divider" />
-                <button v-on:click = newsletter()>Newsletter</button>
+                <router-link to="/newsletter" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Newsletter</a>
+                </router-link>
                 <div class="tab-divider" />
-                <button v-on:click = priceEstimate()>Price Estimate</button>
+                <router-link to="/priceEstimate" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Price Estimate</a>
+                </router-link>
                 
             </div>
 

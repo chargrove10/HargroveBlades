@@ -18,7 +18,7 @@ body {
 }
 
 .main-content {
-    height: 90%;
+    height: 100%;
     background-color: darkgrey;
 }
 
@@ -29,20 +29,14 @@ body {
     
     
 }
-.tab {
-    margin: 10%;
-    position: relative;
-    width: auto;
-    transform: translate(20%, 10%);
-        
-}
+
 .tab-divider {
     height:15px;
     display:block;
 }
 .tab-div2 {
     
-    margin-left: 14%; 
+    margin-left: 10%; 
     height: 90%;
     min-height: 398px;
     background-color: white;
@@ -58,6 +52,17 @@ body {
 
 .auto-style6 {
     margin-left: 5px;
+}
+
+.tab {
+    margin: 0;
+    padding: 0;
+    width: 10%;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+        
 }
 
 .tab button {
@@ -103,6 +108,21 @@ body {
     transform: translateY(8%);
 }
 
+.tab a {
+    display: block;
+    color: rgb(0, 0, 0);
+    padding: 14px;
+    font-size:18px;
+    text-decoration: none;
+    text-align: center;
+    
+}
+
+.tab a:hover {
+    background-color: #a6d1c1;
+    color: white;
+  }
+
 .tab-div2 button {
 	background:linear-gradient(to bottom, #fdfbf6 5%, #b8b6b1 100%);
 	background-color:honeydew;
@@ -135,10 +155,11 @@ button:active {
 
 
 .tabcontent{
-    display: none;       
+          
     border: 10px solid lightgray;
     text-align: justify;
     border-spacing: 40px;
+    height: 100%;
     
 }
 
@@ -248,5 +269,7 @@ header {
 .table-div {
     margin-right:40%
 }
+
+
 
 

@@ -14,15 +14,25 @@
 
             <div class="tab">
                 
-                <button v-on:click = customer()>Customer</button>
+                <router-link to="/customerList" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Customer</a>
+                </router-link>
                 <div class="tab-divider"></div>
-                <button v-on:click = order()>Order</button>
+                <router-link to="/orderList" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Order</a>
+                </router-link>
                 <div class="tab-divider"></div>
-                <button v-on:click = product()>Product</button>
+                <router-link to="/productList" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Product</a>
+                </router-link>
                 <div class="tab-divider"></div>
-                <button v-on:click= bladeDetails()>Blade Details</button>
+                <router-link to="/bladeDetails" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Blade Details</a>
+                </router-link>
                 <div class="tab-divider" />
-                <button v-on:click= reports()>Reports</button>
+                <router-link to="/" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Reports</a>
+                </router-link>
             </div>
 
         </div>

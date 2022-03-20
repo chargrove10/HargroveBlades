@@ -9,13 +9,19 @@
 
         <div class="tab-div1">
 
-            <div class="tab" style="transform: translate(20%, 40%)">
+            <div class="tab">
 
-                <button v-on:click = home()>Home</button>
+                <router-link to="/customerList" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Home</a>
+                </router-link>
                 <div class="tab-divider"></div>
-                <button v-on:click = knifeStyleList()>Knife Style</button>
+                <router-link to="/knifeStyleList" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Knife Style</a>
+                </router-link>
                 <div class="tab-divider"></div>
-                <button v-on:click = steelTypeList()>Steel Type</button>
+                <router-link to="/bladeDetails" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Steel Type</a>
+                </router-link>
                 
             </div>
 
@@ -23,7 +29,7 @@
 
         <div class="tab-div2">
 
-            <div id="SteelType" class="tabcontent" style="display:block">
+            <div id="SteelType" class="tabcontent">
                 <div style="background-color:lightgray; text-align:center"><header>Steel Information</header></div>
                 
                 <div class="tab-divider"></div>
