@@ -14,11 +14,11 @@
 
             <div class="tab">
                 
-                <button v-on:click ="openCustomer(event, 'Customer')">Customer</button>
+                <button v-on:click = customer()>Customer</button>
                 <div class="tab-divider"></div>
-                <button v-on:click ="openOrder(event, 'Order')">Order</button>
+                <button v-on:click = order()>Order</button>
                 <div class="tab-divider"></div>
-                <button v-on:click ="openProduct(event, 'Product')">Product</button>
+                <button v-on:click = product()>Product</button>
                 <div class="tab-divider"></div>
                 <button v-on:click= bladeDetails()>Blade Details</button>
                 <div class="tab-divider" />
@@ -212,71 +212,34 @@
 
 <script>
 
+
+
 export default {
 
 
         methods: {
 
-        reports() {
-            this.$router.push('/reports')
-        },
-
-        bladeDetails() {
-            this.$router.push('/bladeDetails')
-        },
-
-            openOrder(event, Order) {
-        var i, tabcontent, tablink;
-
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-
-        tablink = document.getElementsByClassName("tablink");
-        for (i = 0; i < tablink.length; i++) {
-            tablink[i].className = tablink[i].className.replace("active", "");
-        }
-
-        document.getElementById(Order).style.display = "block";
-        event.currentTarget.className += "active";
+            product() {
+                this.$router.push('/productList')
             },
 
-            openCustomer(event, Customer) {
-        var i, tabcontent, tablink;
-
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-
-        tablink = document.getElementsByClassName("tablink");
-        for (i = 0; i < tablink.length; i++) {
-            tablink[i].className = tablink[i].className.replace("active", "");
-        }
-
-        document.getElementById(Customer).style.display = "block";
-        event.currentTarget.className += "active";
+            reports() {
+                this.$router.push('/')
             },
 
-        openProduct(event, Product) {
-        var i, tabcontent, tablink;
+            bladeDetails() {
+                this.$router.push('/bladeDetails')
+            },
 
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
+            order() {
+                this.$router.push('/orderList')
+            },
+
+            customer() {
+                this.$router.push('/customerList')
+            },
+
         }
-
-        tablink = document.getElementsByClassName("tablink");
-        for (i = 0; i < tablink.length; i++) {
-            tablink[i].className = tablink[i].className.replace("active", "");
-        }
-
-        document.getElementById(Product).style.display = "block";
-        event.currentTarget.className += "active";
-            }
-
-        },
 
   
     }

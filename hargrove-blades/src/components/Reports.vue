@@ -12,13 +12,13 @@
                 
                 <button v-on:click = home()>Home</button>
                 <div class="tab-divider" />
-                <button v-on:click ="openKnifeAvail(event, 'knifeAvail')">Availability</button>
+                <button v-on:click = knifeAvail()>Availability</button>
                 <div class="tab-divider" />
-                <button v-on:click ="openOrderInfo(event, 'OrderInfo')">Order Info</button>
+                <button v-on:click = orderInfo()>Order Info</button>
                 <div class="tab-divider" />
-                <button v-on:click ="openNewsletter(event, 'Newsletter')">Newsletter</button>
+                <button v-on:click = newsletter()>Newsletter</button>
                 <div class="tab-divider" />
-                <button v-on:click ="openPriceEstimate(event, 'priceEstimate')">Price Estimate</button>
+                <button v-on:click = priceEstimate()>Price Estimate</button>
                 
             </div>
 
@@ -216,96 +216,24 @@ export default {
         methods: {
 
         home() {
-            this.$router.push('/')
+                this.$router.push('/customerList')
+            },
+
+        knifeAvail() {
+            this.$router.push('/knifeAvailability')
         },
 
-        openKnifeAvail(event, KnifeAvail) {
-        var i, tabcontent, tablink;
-
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-
-        tablink = document.getElementsByClassName("tablink");
-        for (i = 0; i < tablink.length; i++) {
-            tablink[i].className = tablink[i].className.replace("active", "");
-        }
-
-        document.getElementById(KnifeAvail).style.display = "block";
-        event.currentTarget.className += "active";
-        
+        orderInfo() {
+            this.$router.push('/orderInfo')
         },
 
-        openOrderInfo(event, OrderInfo) {
-        var i, tabcontent, tablink;
-
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-
-        tablink = document.getElementsByClassName("tablink");
-        for (i = 0; i < tablink.length; i++) {
-            tablink[i].className = tablink[i].className.replace("active", "");
-        }
-
-        document.getElementById(OrderInfo).style.display = "block";
-        event.currentTarget.className += "active";
+        newsletter() {
+            this.$router.push('/newsletter')
         },
 
-        openNewsletter(event, Newsletter) {
-        var i, tabcontent, tablink;
-
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
+        priceEstimate() {
+            this.$router.push('/priceEstimate')
         }
-
-        tablink = document.getElementsByClassName("tablink");
-        for (i = 0; i < tablink.length; i++) {
-            tablink[i].className = tablink[i].className.replace("active", "");
-        }
-
-        document.getElementById(Newsletter).style.display = "block";
-        event.currentTarget.className += "active";
-        },
-
-        openPriceEstimate(event, priceEstimate) {
-        var i, tabcontent, tablink;
-
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-
-        tablink = document.getElementsByClassName("tablink");
-        for (i = 0; i < tablink.length; i++) {
-            tablink[i].className = tablink[i].className.replace("active", "");
-        }
-
-        document.getElementById(priceEstimate).style.display = "block";
-        event.currentTarget.className += "active";
-        },
-
-        openReport5(event, Report5) {
-        var i, tabcontent, tablink;
-
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-
-        tablink = document.getElementsByClassName("tablink");
-        for (i = 0; i < tablink.length; i++) {
-            tablink[i].className = tablink[i].className.replace("active", "");
-        }
-
-        document.getElementById(Report5).style.display = "block";
-        event.currentTarget.className += "active";
-        }
-
-        
 
         },
 

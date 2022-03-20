@@ -51,7 +51,7 @@
     export default {
         methods: {
             home() {
-                this.$router.push('/')
+                this.$router.push('/customerList')
             }
         }
     }

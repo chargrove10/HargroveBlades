@@ -22,55 +22,57 @@
 
         <div class="tab-div2">
 
-            <div id="SteelType" class="tabcontent" style="display:block">
-                <div style="background-color:lightgray; text-align:center"><header>Steel Information</header></div>
+            <div id="KnifeStyle" class="tabcontent" style="display:block">
+                <div style="background-color:lightgray; text-align:center"><header>Knife Information</header></div>
                 
-                <div class="tab-divider"></div>
+               <div class="tab-divider"></div>
                 <div>
                     <div class="cform1">
-                        <label>Steel Name</label>
-                        <input type="text" id="steelName" name="steelName" value="Test"/><br/>
+                        <label>Style</label>
+                        <input type="text" id="styleName" name="styleName" value="Test"/><br/>
                     </div>
                     <div class="cform2">
-                        <label>Steel Description</label>
-                        <input type="text" id="steelDesc" name="steelDesc" value="Test" /><br />
+                        <label>Style Description</label>
+                        <input type="text" id="styleDesc" name="styleDesc" value="Test" /><br />
                     
                     </div>
 
                     <div class="tab-divider"></div>
                 </div>
                 
-
                 <div class="search-button">
                         <button>Search</button>
                 </div>
-                
-                <div class="tab-divider"></div>
-                
-                <form>
-                    <table>
-                        <tr>
-                            <th>Steel Name</th>
-                            <th>Description</th>
-                            <th>Active</th>
-                        </tr>
-                        <tr>
-                            <td>Carbon Steel</td>
-                            <td>Most common 10XX steel</td>
-                            <td>1</td>
-                        </tr>
-                    </table>
-                </form>
 
+                <div class="tab-divider"></div>
+           
+                <div>
+                    <form>
+                        <table>
+                            <tr>
+                                <th>Style Name</th>
+                                <th>Description</th>
+                                <th>Active</th>
+                            </tr>
+                             <tr>
+                                <td>Chef's Knife</td>
+                                <td>Knife of a Chef</td>
+                                <td>1</td>
+                             </tr>
+                         </table>
+                    </form>
+                </div>
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'SteelType'}"><button>Edit</button></router-link>
+                    <router-link :to="{ name: 'KnifeStyle'}"><button>Edit</button></router-link>
                     <div class="divider "></div>
-                    <router-link :to="{ name: 'SteelType'}"><button>Add</button></router-link>
+                    <router-link :to="{ name: 'KnifeStyle'}"><button>Add</button></router-link>
                 </div>
-            </div>
+                
 
+            </div>
+        
         </div>
         
     </div>

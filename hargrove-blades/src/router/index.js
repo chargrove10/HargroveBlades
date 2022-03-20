@@ -7,10 +7,17 @@ import BladeDetails from '../components/BladeDetails.vue'
 import KnifeStyle from '../components/KnifeStyle.vue'
 import SteelType from '../components/SteelType.vue'
 import Reports from '../components/Reports.vue'
+import ProductList from '../components/ProductList.vue'
+import OrderList from '../components/OrderList.vue'
+import KnifeStyleList from '../components/KnifeStyleList.vue'
+import KnifeAvail from '../components/KnifeAvail.vue'
+import OrderInfo from '../components/OrderInfo.vue'
+import NewsLetter from '../components/NewsLetter.vue'
+import PriceEstimator from '../components/PriceEstimate.vue'
 
 const routes = [
     {
-        path:"/",
+        path:"/customerList",
         name: "MainPage",
         component: MainPage
     },
@@ -46,10 +53,46 @@ const routes = [
         component: SteelType
     },
     {
-        path: "/reports",
+        path: "/",
         name: "Reports",
         component: Reports
+    },
+    {
+        path: "/productList",
+        name: "ProductList",
+        component: ProductList
+    },
+    {
+        path: "/orderList",
+        name: "OrderList",
+        component: OrderList
+    },
+    {
+        path: "/knifeStyleList",
+        name: "KnifeStyleList",
+        component: KnifeStyleList
+    },
+    {
+        path: "/knifeAvailability",
+        name: "KnifeAvailability",
+        component: KnifeAvail
+    },
+    {
+        path: "/orderInfo",
+        name: "OrderInfo",
+        component: OrderInfo
+    },
+    {
+        path: "/newsletter",
+        name: "NewsLetter",
+        component: NewsLetter
+    },
+    {
+        path: "/priceEstimate",
+        name: "PriceEstimate",
+        component: PriceEstimator
     }
+
 ]
 
 const router = createRouter({
