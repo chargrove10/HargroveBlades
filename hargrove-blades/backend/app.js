@@ -1,6 +1,7 @@
 const express = require('express');
 const sql = require('mssql');
 const bodyParser = require('body-parser');
+var router = express.Router();
 
 
 const app = express();
@@ -39,4 +40,44 @@ app.get('/', (req,res) => {
 
 })
 
-app.findOne()
+router.get('/customerList', function (req, res) {
+    sql.connect(database).then(() => {
+        //Query selects everything but we selecting specifics for tables
+        return sql.query("SELECT CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, ADDRESS.City, STATE.StateName "+ 
+        "FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID=ADDRESS.CUSTOMERID" +  
+        "JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID" + 
+        "JOIN STATE ON ADDRESS.STATEID=STATE.STATEID");
+    }).then (data => {
+        res.send(data.recordset);
+    }).catch(err => {
+        res.status(500).send(err);
+    })
+});
+
+
+router.get('/productList', function (req, res) {
+    sql.connect(database).then(() => {
+        //Query selects everything but we selecting specifics for tables
+        return sql.query("SELECT P.SerialNo, PS.ProductStatusName, style.StyleName, steel.SteelName" + 
+        "P.HandleMaterial, P.BladeLength, P.OverallLength, P.Embellishments" +
+        "FROM Product P JOIN KnifeStyle style ON P.StyleID = style.StyleId" + 
+        "JOIN KnifeSteel steel ON P.SteelID = steel.SteelID" + 
+        "JOIN ProductStatus PS ON P.ProductStatusId = PS.ProductStatusID");
+    }).then (data => {
+        res.send(data.recordset);
+    }).catch(err => {
+        res.status(500).send(err);
+    })
+});
+
+router.get('/orderList', function (req, res) {
+    sql.connect(database).then(() => {
+        //Query selects everything but we selecting specifics for tables
+        return sql.query("SELECT C.CustomerFirstName, C.CustomerLastName, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance"+
+        "FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID");
+    }).then (data => {
+        res.send(data.recordset);
+    }).catch(err => {
+        res.status(500).send(err);
+    })
+});
