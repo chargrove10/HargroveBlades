@@ -102,7 +102,7 @@ export default {
             },
 
             reports() {
-                this.$router.push('/reports')
+                this.$router.push('/')
             },
 
             bladeDetails() {
