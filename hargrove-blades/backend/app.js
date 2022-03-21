@@ -54,6 +54,24 @@ router.get('/customerList', function (req, res) {
     })
 });
 
+router.get('/customerList/:customerName/:customerPhone', function (req, res) {
+
+    const name = req.params.customerName
+    const phone = req.params.customerPhone
+
+    sql.connect(database).then(() => {
+        //Query selects everything but we selecting specifics for tables
+        return sql.query("SELECT CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, ADDRESS.City, STATE.StateName "+ 
+        "FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID=ADDRESS.CUSTOMERID" +  
+        "JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID" + 
+        "JOIN STATE ON ADDRESS.STATEID=STATE.STATEID WHERE CUSTOMER.CustomerLastName = ? AND CUSTOMER.CustomerPhone = ?", name, phone);
+    }).then (data => {
+        res.send(data.recordset);
+    }).catch(err => {
+        res.status(500).send(err);
+    })
+});
+
 
 router.get('/productList', function (req, res) {
     sql.connect(database).then(() => {

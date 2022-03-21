@@ -45,19 +45,14 @@
                 <div class="tab-divider"></div>
                 <div>
                     <div class="cform1">
-                        <label>Customer Name</label>
-                        <input type="search" placeholder="Search" class="search-field" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>
-                        
+                        <label>Customer Last Name</label>
+                        <input type="search" v-model="nameValue" placeholder="Name" class="search-field" />
                     </div>
                     <div class="cform2">
                         <label>Phone Number</label>
-                        <input type="search" placeholder="Search" class="search-field" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>                    
+                        <input type="search" v-model="phoneValue" placeholder="Phone Number" class="search-field" />
+                        <button @click="applyFilter($event)" type="submit" style="margin-left:2%">Apply Filter</button>
+                    
                     </div>
         
                     <div class="tab-divider"></div>
@@ -135,7 +130,7 @@ export default {
         created() {
 
             axios.get('/customerList').then((res) => {
-                this.Customer=res.data;
+                this.Customers=res.data;
             }).catch(err => {
                 console.log(err)
             })
@@ -165,6 +160,43 @@ export default {
                 this.$router.push('/customerList')
             },
 
+            async applyFilter() {
+                const name = this.customerName;
+                const phone = this.customerPhone;
+
+                await this.$axios.get('/customerList', {
+                    params: {
+                        name,
+                        phone
+                    }
+                }).then(function (response) {
+                    this.Customers=response.data
+                })
+            }
+
+        },
+
+        computed: {
+            customerName: {
+                get() {
+                    if (!this.value) return null;
+                    return this.value.nameValue;
+                },
+                set(value) {
+                    const payload = this.value;
+                    this.$emit('input', {...payload, nameValue: value})
+                }
+            },
+            customerPhone: {
+                get() {
+                    if (!this.value) return null;
+                    return this.value.phoneValue;
+                },
+                set(value) {
+                    const payload = this.value;
+                    this.$emit('input', {...payload, phoneValue: value})
+                }
+            },
         }
 
   
