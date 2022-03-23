@@ -6,12 +6,16 @@
     </div>
       
     <div class="tab-div1">
-        
-        <div class="tab">
-        <button v-on:click=home()>Home</button>
-        </div>
 
-    </div>
+            <div class="tab">
+                
+                <router-link to="/customerList" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Home</a>
+                </router-link>
+                
+            </div>
+
+        </div>
     
     <div class="tab-div2" style="min-height:auto">
         <div style="background-color: lightgrey">
@@ -35,7 +39,7 @@
 
             <div>
                 <div class="tab-divider"/>
-                <button style="transform:translate(40%,0)">Save</button>  
+                <button style="transform:translate(90%,0)">Save</button>  
             </div> 
 
         </div>
