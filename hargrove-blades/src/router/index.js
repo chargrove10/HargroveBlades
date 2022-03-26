@@ -14,12 +14,19 @@ import KnifeAvail from '../components/KnifeAvail.vue'
 import OrderInfo from '../components/OrderInfo.vue'
 import NewsLetter from '../components/NewsLetter.vue'
 import PriceEstimator from '../components/PriceEstimate.vue'
+import EditCustomer from '../components/EditCustomer.vue'
 
 const routes = [
     {
         path:"/customerList",
         name: "MainPage",
         component: MainPage
+    },
+
+    {
+        path:"/editCustomer/:id",
+        name: "EditCustomer",
+        component: EditCustomer
     },
     
     {

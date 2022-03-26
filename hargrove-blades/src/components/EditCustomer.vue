@@ -7,16 +7,8 @@
 
     <div class="tab-div1">
         
-        <div class="tab-div1">
-
-            <div class="tab">
-                
-                <router-link to="/customerList" custom v-slot="{navigate, href}">
-                <a :href="href" @click="navigate">Home</a>
-                </router-link>
-                
-            </div>
-
+        <div class="tab">
+        <button v-on:click=home()>Home</button>
         </div>
 
     </div>
@@ -54,7 +46,8 @@
                         <input type="text" id="city" name="city" v-model="customer.City"/><br/>
                         <label for="State-select">State:</label><br/>
                         <select name="st" id="st" v-model="customer.StateInitials">
-                            <option v-for="state in State" :key="state.id" > {{state.StateInitials}} </option>
+                            <option value="TX" > Texas </option>
+                            <option value="NM"> New Mexico </option>
                         </select><br />
                         <label for="Zip">Zip Code:</label><br/>
                         <input type="text" id="zip" name="zip" v-model="customer.ZipCode"/><br/>
@@ -64,7 +57,7 @@
                     </form>
                 </div>
 
-                <button style="transform:translate(90%,0)" v-on:click=handleAdd()>Save</button>
+                <button style="transform:translate(40%,0)">Save</button>
 
         </div>
     </div>
@@ -72,7 +65,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+
     export default {
         data() {
             return {
@@ -92,20 +85,12 @@ import axios from 'axios'
                     StateInitials: '',
                     ZipCode: '',
                     Country: ''
-                },
-                State: [],
-                state: {}
+                }
             }
         },
 
         created() {
-            let url = 'http://localhost:3000/customer';
-
-            axios.get(url).then((response) => {
-                this.State = response.data
-            }).catch(err => {
-                console.log(err)
-            });
+            
         },
         methods: {
             home() {
@@ -113,35 +98,9 @@ import axios from 'axios'
             },
 
             handleAdd() {
-                
-
-                let url = 'http://localhost:3000/customer';
-
-                axios.post(url, this.customer).then(() => {
-                    //this.$router.push('/customerList')
-                    // this.customer = {
-                    //     CustomerFirstName: '',
-                    //     CustomerLastName: '',
-                    //     CustomerPhone: '',
-                    //     CustomerEmail: '',
-                    //     CustomerNote: '',
-                    //     AddressLine1: '',
-                    //     AddressLine2: '',
-                    //     DefaultAddress: '',
-                    //     City: '',
-                    //     StateInitials: '',
-                    //     ZipCode: '',
-                    //     Country: ''
-                    // }
-                }).catch(err => {
-                    console.log(err)
-                });
+                //let url = 'http://localhost:3000/customer/${this.$route.params.id}';
 
                 
-            },
-
-            buttonPress() {
-                console.log(this.customer)
             }
         }
     }
