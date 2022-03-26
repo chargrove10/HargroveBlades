@@ -1,5 +1,5 @@
 <template>
-<div id = 'app'>
+<div id = 'app' >
   <div class="main-title">
     
         <img src='../assets/sponsor.jpg' height='100' width='100' align="left">
@@ -46,12 +46,12 @@
                 <div>
                     <div class="cform1">
                         <label>Customer Last Name</label>
-                        <input type="search" v-model="nameValue" placeholder="Name" class="search-field" />
+                        <input type="search" id="nameValue" v-model="nameValue" placeholder="Name" class="search-field" />
                     </div>
                     <div class="cform2">
                         <label>Phone Number</label>
-                        <input type="search" v-model="phoneValue" placeholder="Phone Number" class="search-field" />
-                        <button @click="applyFilter($event)" type="submit" style="margin-left:2%">Apply Filter</button>
+                        <input type="search" id="phoneValue" v-model="phoneValue" placeholder="Phone Number" class="search-field" />
+                        <button v-on:click="applyFilter()" type="submit" style="margin-left:2%">Apply Filter</button>
                     
                     </div>
         
@@ -79,12 +79,12 @@
                                 
                             </tr>
                            
-                            <tr v-for="customers in Customers" :key="customers._id">
-                                <td>{{customers.CustomerFirstName}}</td>
-                                <td>{{customers.CustomerLastName}}</td>
-                                <td>{{customers.CustomerPhone}}</td>
-                                <td>{{customers.AddressLine1}}</td>
-                                <td>{{customers.StateName}}</td>
+                            <tr id = "cTable" v-for="customer in Customers" :key="customer.CustomerID">
+                                <td>{{customer.CustomerFirstName}}</td>
+                                <td>{{customer.CustomerLastName}}</td>
+                                <td>{{customer.CustomerPhone}}</td>
+                                <td>{{customer.City}}</td>
+                                <td>{{customer.StateName}}</td>
                                 
                                 
                             </tr>
@@ -95,9 +95,11 @@
                 <div class="tab-divider"></div>
 
                 <div>
+                    <!--Need to pass primary key to pull data!-->
                     <router-link :to="{ name: 'CustomerDetail'}"><button>Edit</button></router-link>
                     <div class="divider "></div>
-                    <router-link :to="{ name: 'CustomerDetail'}"><button>Add</button></router-link>
+                    <!--Need to pass a flag variable to push customer data data!-->
+                    <router-link :to="{ name: 'CustomerDetail' }"><button>Add</button></router-link>
                     <div class="divider"></div>
                     <router-link :to="{ name: 'CreateOrder'}"><button>Create Order</button></router-link>
                 </div>
@@ -123,17 +125,20 @@ export default {
             return {
                 Customers: [],
                 isShow: false,
-                customers: {}
+                customer: {}
+                //pass over to customer detail to see if we are posting or editing
+                
             }
         },
 
         created() {
 
-            axios.get('/customerList').then((res) => {
+            axios.get('http://localhost:3000/customerList').then((res) => {
                 this.Customers=res.data;
+                
             }).catch(err => {
                 console.log(err)
-            })
+            });
 
         },
 
@@ -156,48 +161,46 @@ export default {
                 this.$router.push('/orderList')
             },
 
-            customer() {
-                this.$router.push('/customerList')
-            },
+            //customer() {
+            //    this.$router.push('/customerList')
+            //},
 
             async applyFilter() {
-                const name = this.customerName;
-                const phone = this.customerPhone;
+                
+                
+                let Cname = document.getElementById('nameValue').value;
+                let Cphone = document.getElementById('phoneValue').value;
+                
 
-                await this.$axios.get('/customerList', {
-                    params: {
-                        name,
-                        phone
-                    }
-                }).then(function (response) {
+                if ((Cname =="" || Cname ==null) & (Cphone =="" || Cphone==null)) {
+                    this.refreshPage();
+                }
+                
+                //this is the link to filter by the fields selected
+                let url = 'http://localhost:3000/customerList/' + "'"+Cname+"'" + '&' + "'" +Cphone+"'";
+                
+
+                axios.get(url)
+                    .then(response => {
+                    
                     this.Customers=response.data
-                })
+                    console.log(response.data)
+                });
+                
+                
+
+                
+            },
+
+            refreshPage() {
+                //This is refreshing the page so that the table will load properly once he zeroes out search fields
+                this.$router.go(0);
+
             }
 
         },
 
-        computed: {
-            customerName: {
-                get() {
-                    if (!this.value) return null;
-                    return this.value.nameValue;
-                },
-                set(value) {
-                    const payload = this.value;
-                    this.$emit('input', {...payload, nameValue: value})
-                }
-            },
-            customerPhone: {
-                get() {
-                    if (!this.value) return null;
-                    return this.value.phoneValue;
-                },
-                set(value) {
-                    const payload = this.value;
-                    this.$emit('input', {...payload, phoneValue: value})
-                }
-            },
-        }
+        
 
   
     }
