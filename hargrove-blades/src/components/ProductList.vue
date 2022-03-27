@@ -39,30 +39,24 @@
 
         <div class="tab-div2" style="min-height:auto">
 
-            <div id="Product" class="tabcontent" style="display:block">
+            <div class="tabcontent" style="display:block">
                 <div style="background-color:lightgray; text-align:center"><header>Product Information</header></div>
                 <div class="tab-divider"></div>
                 <div>
                     <div class="pform1">
                         <label>Serial Number</label>
                         <input type="search" placeholder="Search" class="search-field" style="width:40%" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>
+
                     </div>
                     <div class="pform2">
                         <label>Knife Style</label>
                         <input type="search" placeholder="Search" class="search-field" style="width:40%" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>               
+                                     
                     </div>
                     <div class="pform3">
                         <label>Steel Type</label>
                         <input type="search" placeholder="Search" class="search-field" style="width:40%" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>
+                        <button type="submit" style="margin-left:2%">Apply Filter</button>
                     </div>
                     
                     <div class="tab-divider"></div>
@@ -76,7 +70,7 @@
            
                 <div>
                     <form>
-                        <table>
+                        <table style="width:60%">
                             <tr>
                                 <th>Serial Number</th>
                                 <th>Product Status</th>
@@ -87,15 +81,17 @@
                                 <th>Overall Length</th>
                                 <th>Embellishments</th>
                             </tr>
-                            <tr>
-                                <td>AE12344e</td>
-                                <td>Pending</td>
-                                <td>Test</td>
-                                <td>Test</td>
-                                <td>Test</td>
-                                <td>Test</td>
-                                <td>Test</td>
-                                <td>Test</td>
+                            <tr id="pTable" v-for="products in Products" :key="products.ProductID">
+                                <td>{{products.SerialNo}}</td>
+                                <td>{{products.ProductStatusName}}</td>
+                                <td>{{products.StyleName}}</td>
+                                <td>{{products.SteelName}}</td>
+                                <td>{{products.HandleMaterial}}</td>
+                                <td>{{products.BladeLength}}</td>
+                                <td>{{products.OverallLength}}</td>
+                                <td>{{products.Embellishments}}</td>
+                                <td><router-link :to="{ name: 'Reports'}">Edit</router-link></td>
+                                <!-- Place holder !-->
                             </tr>
                         </table>
                     </form>
@@ -103,8 +99,6 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'ProductDetail'}"><button>Edit</button></router-link>
-                    <div class="divider "></div>
                     <router-link :to="{ name: 'ProductDetail'}"><button>Add</button></router-link>
                 </div>
             </div>
@@ -120,11 +114,19 @@
 
 <script>
 
-
+import axios from 'axios'
 
 export default {
 
-
+        data() {
+            return {
+                Products: [],
+                isShow: false,
+                products: {}
+                //pass over to product detail to see if we are posting or editing
+                
+            }
+        },
         methods: {
 
             product() {
@@ -147,7 +149,17 @@ export default {
                 this.$router.push('/customerList')
             },
 
-        }
+        },
+        created() {
+
+            axios.get('http://localhost:3000/productList').then((res) => {
+                this.Products=res.data;
+                
+            }).catch(err => {
+                console.log(err)
+            });
+
+        },
 
   
     }

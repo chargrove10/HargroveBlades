@@ -161,14 +161,18 @@ input:not([type=submit]):not([type=file])
 
 table {
     border-collapse: collapse;
+    margin-left:20%;
+    width:100%;
+    
 }
 
 td, tr, th {
     
-    padding: 10px;      
-    font-size: 14px;
+    padding: 10px;
+    font-size: 18px;
     font-weight:bold;
     border-bottom: 1px solid black;
+    text-align: center;
 }
 
 .cform1 {

@@ -29,10 +29,23 @@ app.listen(PORT, () => {
 //       }
 // };
 
+//Chris Computer
+// var config = {
+//     user: 'CZ',
+//     password: 'CZ1',
+//     server: 'DESKTOP-O78Q1FG',
+//     database: 'HargroveBlades',
+//     port: 1433,
+//     options: {
+//         trustServerCertificate: true
+//     }
+// }
+
+//Bryan Comnputer
 var config = {
-    user: 'CZ',
-    password: 'CZ1',
-    server: 'DESKTOP-O78Q1FG',
+    user: 'BG2',
+    password: 'BG2',
+    server: 'DESKTOP-94E3EIO',
     database: 'HargroveBlades',
     port: 1433,
     options: {
@@ -43,6 +56,7 @@ var config = {
 //customer List Page
 
 //populates drop down list
+//Customer CRUD Starts Here
 app.get('/customer', async (req,res) => {
 
     try {
@@ -203,77 +217,120 @@ app.put('/editCustomer/', async (req, res) => {
     }
 });
 
-// app.get('/editCustomer/:id&:flag', function (req, res) {
-//     let id = req.params.id
-//     let flag = req.params.flag
-
-//     sql.connect(config).then(() => {
-//         return sql.query("SELECT CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, CUSTOMER.CustomerEmail," + 
-//         " ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.DefaultAddress, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode," +
-//         " ADDRESS.Country FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID = ADDRESS.CUSTOMERID" + 
-//         " JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID" + 
-//         " JOIN STATE ON ADDRESS.STATEID = STATE.STATEID WHERE CUSTOMER.CUSTOMERID = " + id + "AND ADDRESS.DefaultAddress = " + flag)
-//     }).then (data => {
-//         res.send(data.recordset)
-//     }).catch(err => {
-//         console.log(err)
-//     })
-// });
-
-//using method above but with promises
-// app.get('/customerList2', function(req, res) {
-//     sql.connect(config).then(pool => {
-//         return pool.request()
-//             .query("SELECT * FROM CUSTOMER")
-//     }).then (result => {
-//         res.json(result)
-//     }).catch (err => {
-//         console.log(err)
-//     })
-// })
-
-// app.get('/customerList/:name&:phone', function (req, res) {
-
-//     let name = req.params.name;
-//     let phone = req.params.phone;
-
-//     sql.connect(config).then(() => {
-//         //Query selects everything but we selecting specifics for tables
-//         return sql.query("SELECT CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, ADDRESS.City, STATE.StateName "+ 
-//         "FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID=ADDRESS.CUSTOMERID " +
-//         "JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID " + 
-//         "JOIN STATE ON ADDRESS.STATEID=STATE.STATEID WHERE CUSTOMER.CustomerLastName = "+name+" OR CUSTOMER.CustomerPhone = "+phone);
-//     }).then (data => {
-//         res.send(data.recordset);
-//     }).catch(err => {
-//         res.status(500).send(err);
-//     })
-// });
 
 
-app.get('/productList', function (req, res) {
-    sql.connect(config).then(() => {
-        //Query selects everything but we selecting specifics for tables
-        return sql.query("SELECT P.SerialNo, PS.ProductStatusName, style.StyleName, steel.SteelName " + 
-        "P.HandleMaterial, P.BladeLength, P.OverallLength, P.Embellishments " +
-        "FROM Product P JOIN KnifeStyle style ON P.StyleID = style.StyleId " + 
-        "JOIN KnifeSteel steel ON P.SteelID = steel.SteelID " + 
-        "JOIN ProductStatus PS ON P.ProductStatusId = PS.ProductStatusID");
-    }).then (data => {
-        res.send(data.recordset);
-    }).catch(err => {
-        res.status(500).send(err);
-    })
+//Product CRUD Starts Here
+app.get('/productList', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT P.SerialNo, PS.ProductStatusName, style.StyleName, steel.SteelName, " + 
+            "P.HandleMaterial, P.BladeLength, P.OverallLength, P.Embellishments " +
+            "FROM Product P JOIN KnifeStyle style ON P.StyleID = style.StyleId " + 
+            "JOIN KnifeSteel steel ON P.SteelID = steel.SteelID " + 
+            "JOIN ProductStatus PS ON P.ProductStatusId = PS.ProductStatusID");
+        const products = result.recordset;
+
+        res.send(products)
+    } catch (err){
+        res.status(500).json(err)
+    }
 });
 
-app.get('/orderList', function (req, res) {
-    sql.connect(config).then(() => {
-        //Query selects everything but we selecting specifics for tables
-        return sql.query("SELECT C.CustomerFirstName, C.CustomerLastName, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance "+
-        "FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID");
-    }).then (data => {
-        res.send(data.recordset);
-    }).catch(err => {
-        res.status(500).send(err);
-    })
+
+
+
+
+//Order CRUD starts here
+app.get('/orderList', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT C.CustomerFirstName, C.CustomerLastName, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance "+
+            "FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID");
+        const orders = result.recordset;
+
+        res.send(orders)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
+//Blade Detail CRUD Starts Here
+app.get('/bladeDetails', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT SteelName, SteelDesc, KnifeSteelActive FROM KnifeSteel");
+        const blade = result.recordset;
+
+        res.send(blade)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
+//Knife Style CRUD Starts Here
+app.get('/knifeStyleList', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT StyleName, StyleDesc, KnifeStyleActive FROM KnifeStyle");
+        const style = result.recordset;
+
+        res.send(style)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
+
+//Reports Start Here
+app.get('/priceEstimate', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT StyleName, BladeFinish, HandleMaterial, OverallLength, BladeLength, Embellishments, CustomerFirstName, CustomerLastName, CustomerEmail, CustomerStatusName "+
+            "from Product JOIN KnifeStyle ON product.StyleID = KnifeStyle.StyleID JOIN OrderLineItem ON product.ProductID = OrderLineItem.ProductID "+
+            "JOIN ProductOrder ON OrderLineItem.OrderID = ProductOrder.OrderID JOIN Customer on ProductOrder.CustomerID = Customer.CustomerID "+
+            "JOIN CustomerStatus on Customer.CustomerStatusID = CustomerStatus.CustomerStatusID ");
+        const priceEst = result.recordset;
+
+        res.send(priceEst)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
+app.get('/', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT OrderNumber ,CONCAT(CustomerFirstName , ' ', CustomerLastName) AS 'Customer Name' ,CustomerPhone ,CustomerEmail ,OrderDate ,OrderStatusName ,CONCAT('$', OrderTotal) AS 'Order Total' ,PickUpDateTime ,OrderNote "+
+            "FROM ProductOrder JOIN Customer ON ProductOrder.CustomerID = Customer.CustomerID JOIN OrderStatus ON ProductOrder.OrderStatusID = OrderStatus.OrderStatusID " +
+            "WHERE ProductOrder.OrderStatusID IN (2, 3) ORDER BY ProductOrder.OrderStatusID, OrderDate ASC");
+        const order = result.recordset;
+
+        res.send(order)
+    } catch (err){
+        res.status(500).json(err)
+    }
 });

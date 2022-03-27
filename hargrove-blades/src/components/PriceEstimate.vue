@@ -46,24 +46,17 @@
                     <div class="pform1">
                         <label>Knife Style</label>
                         <input type="search" placeholder="Search" class="search-field" style="width:40%" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>
+                      
                     </div>
                     <div class="pform2">
                         <label>Steel Type</label>
                         <input type="search" placeholder="Search" class="search-field" style="width:40%" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>
-                    
+                     
                     </div>
                     <div class="pform3">
                         <label>Handle Material</label>
                         <input type="search" placeholder="Search" class="search-field" style="width:40%" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>
+                        <button type="submit" style="margin-left:2%">Apply Filter</button>
                     
                     </div>
 
@@ -79,27 +72,32 @@
                 <div class="tab-divider"></div>
 
                 <form>
-                    <table>
+                    <table style="width:30%">
                         <tr>
                             <th>Knife Style</th>
-                            <th>Steel Type</th>
-                            <th>Handle Material</th>
-                            <th>Embellishment</th>
-                            <th>Blade Length</th>
                             <th>Blade Finish</th>
+                            <th>Handle Material</th>
                             <th>Overall Length</th>
-                            <th>Price</th>
+                            <th>Blade Length</th>
+                            <th>Embellishments</th>
+                            <th>Customer FirstName</th>
+                            <th>Customer Last Name</th>
+                            <th>Customer Email</th>
+                            <th>Customer Status Name</th>
                         </tr>
                         
-                        <tr>
-                            <td>Kitchen</td>
-                            <td>Damascus</td>
-                            <td>Redwood</td>
-                            <td>Branding</td>
-                            <td>8</td>
-                            <td>Polished</td>
-                            <td>13</td>
-                            <td>350</td>
+                        <tr id="pTable" v-for="price in Price" :key="price.ProductID">
+                            <td>{{price.StyleName}}</td>
+                            <td>{{price.BladeFinish}}</td>
+                            <td>{{price.HandleMaterial}}</td>
+                            <td>{{price.OverallLength}}</td>
+                            <td>{{price.BladeLength}}</td>
+                            <td>{{price.Embellishments}}</td>
+                            <td>{{price.CustomerFirstName}}</td>
+                            <td>{{price.CustomerLastName}}</td>
+                            <td>{{price.CustomerEmail}}</td>
+                            <td>{{price.CustomerStatusName}}</td>
+
                         </tr>
                     </table>
                 </form>
@@ -117,9 +115,18 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
-
+        data() {
+            return {
+                Price: [],
+                isShow: false,
+                price: {}
+                //pass over to product detail to see if we are posting or editing
+                
+            }
+        },
 
         methods: {
 
@@ -144,8 +151,18 @@ export default {
         }
 
         },
+    created() {
 
-    }
+            axios.get('http://localhost:3000/priceEstimate').then((res) => {
+                this.Price=res.data;
+                
+            }).catch(err => {
+                console.log(err)
+            });
+
+        },
+
+}
 </script>
 
 

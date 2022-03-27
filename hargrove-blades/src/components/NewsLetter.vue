@@ -46,16 +46,12 @@
                     <div class="cform1">
                         <label>Knife Style</label>
                         <input type="search" placeholder="Search" class="search-field" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>
+                       
                     </div>
                     <div class="cform2">
                         <label>Steel Description</label>
                         <input type="search" placeholder="Search" class="search-field" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>
+                        <button type="submit" style="margin-left:2%">Apply Filter</button>
                     
                     </div>
 
@@ -73,7 +69,7 @@
                 <div class="tab-divider"></div>
                 
                 <form>
-                    <table>
+                    <table style="width:50%">
                         <tr>
                             <th>Customer First Name</th>
                             <th>Customer Last Name</th>

@@ -39,7 +39,7 @@
 
         <div class="tab-div2" style="min-height:auto">
 
-            <div id="Order" class="tabcontent" style="display:block">
+            <div class="tabcontent" style="display:block">
                 <div style="background-color:lightgray; text-align:center"><header>Order Information</header></div>
                 
                 <div class="tab-divider"></div>
@@ -47,16 +47,12 @@
                     <div class="cform1">
                         <label>Order Number</label>
                         <input type="search" placeholder="Search" class="search-field" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>
+                       
                     </div>
                     <div class="cform2">
                         <label>Order Date</label>
                         <input type="search" placeholder="Search" class="search-field" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>
+                         <button type="submit" style="margin-left:2%">Apply Filter</button>
                     
                     </div>
 
@@ -71,7 +67,7 @@
                 <div class="tab-divider"></div>
                 
                 <form>
-                    <table>
+                    <table style="width:40%">
                         <tr>
                             <th>First Name</th>
                             <th>Last Name</th>
@@ -80,13 +76,15 @@
                             <th>Order Total</th>
                             <th>Balance</th>
                         </tr>
-                        <tr>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>AE1342R</td>
-                            <td>03/2022</td>
-                            <td>1</td>
-                            <td>$324</td>
+                        <tr id="oTable" v-for="orders in Orders" :key="orders.OrderID">
+                            <td>{{orders.CustomerFirstName}}</td>
+                            <td>{{orders.CustomerLastName}}</td>
+                            <td>{{orders.OrderNumber}}</td>
+                            <td>{{orders.OrderDate}}</td>
+                            <td>{{orders.OrderTotal}}</td>
+                            <td>{{orders.Balance}}</td>
+                            <td><router-link :to="{ name: 'Reports'}">Edit</router-link></td>
+                            <!-- Place holder !-->
                         </tr>
                     </table>
                 </form>
@@ -106,11 +104,19 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 
 
 export default {
-
+        data() {
+            return {
+                Orders: [],
+                isShow: false,
+                orders: {}
+                //pass over to product detail to see if we are posting or editing
+                
+            }
+        },
 
         methods: {
 
@@ -134,7 +140,17 @@ export default {
                 this.$router.push('/customerList')
             },
 
-        }
+        },
+        created() {
+
+            axios.get('http://localhost:3000/orderList').then((res) => {
+                this.Orders=res.data;
+                
+            }).catch(err => {
+                console.log(err)
+            });
+
+        },
 
   
     }

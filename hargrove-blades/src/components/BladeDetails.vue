@@ -29,7 +29,7 @@
 
         <div class="tab-div2">
 
-            <div id="SteelType" class="tabcontent">
+            <div class="tabcontent">
                 <div style="background-color:lightgray; text-align:center"><header>Steel Information</header></div>
                 
                 <div class="tab-divider"></div>
@@ -37,16 +37,12 @@
                     <div class="cform1">
                         <label>Steel Name</label>
                         <input type="search" placeholder="Search" class="search-field" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>
+                        
                     </div>
                     <div class="cform2">
                         <label>Steel Description</label>
                         <input type="search" placeholder="Search" class="search-field" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>
+                        <button type="submit" style="margin-left:2%">Apply Filter</button>
                     
                     </div>
 
@@ -61,16 +57,18 @@
                 <div class="tab-divider"></div>
                 
                 <form>
-                    <table>
+                    <table style="width:40%">
                         <tr>
                             <th>Steel Name</th>
                             <th>Description</th>
                             <th>Active</th>
                         </tr>
-                        <tr>
-                            <td>Carbon Steel</td>
-                            <td>Most common 10XX steel</td>
-                            <td>1</td>
+                        <tr id="dTable" v-for="steel in Steels" :key="steel.SteelID">
+                            <td>{{steel.SteelName}}</td>
+                            <td>{{steel.SteelDesc}}</td>
+                            <td>{{steel.KnifeSteelActive}}</td>
+                            <td><router-link :to="{ name: 'Reports'}">Edit</router-link></td>
+                                <!-- Place holder !-->
                         </tr>
                     </table>
                 </form>
@@ -78,8 +76,6 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'SteelType'}"><button>Edit</button></router-link>
-                    <div class="divider "></div>
                     <router-link :to="{ name: 'SteelType'}"><button>Add</button></router-link>
                 </div>
             </div>
@@ -94,9 +90,18 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
-
+         data() {
+            return {
+                Steels: [],
+                isShow: false,
+                steel: {}
+                //pass over to product detail to see if we are posting or editing
+                
+            }
+        },
 
         methods: {
 
@@ -108,13 +113,20 @@ export default {
                 this.$router.push('/knifeStyleList')
             },
 
-            steelTypeList() {
-                this.$router.push('/bladeDetails')
-            }
-
-            
-
+            // steelTypeList() {
+            //     this.$router.push('/bladeDetails')
+            // },
         },
+            created() {
+                axios.get('http://localhost:3000/bladeDetails').then((res) => {
+                    this.Steels=res.data;
+                    
+                }).catch(err => {
+                     console.log(err)
+                });
+
+            },    
+
 
   
     }

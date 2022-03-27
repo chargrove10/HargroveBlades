@@ -5,10 +5,14 @@
         <header>Input Customer Information</header>
     </div>
 
-    <div class="tab-div1">
-        
+   <div class="tab-div1">
+
         <div class="tab">
-        <button v-on:click=home()>Home</button>
+                
+            <router-link to="/customerList" custom v-slot="{navigate, href}">
+            <a :href="href" @click="navigate">Home</a>
+            </router-link>
+                
         </div>
 
     </div>
@@ -59,7 +63,7 @@
                     </form>
                 </div>
 
-                <button style="transform:translate(40%,0)" v-on:click=handleEdit() >Save</button>
+                <button style="transform:translate(90%,0)" v-on:click=handleEdit() >Save</button>
 
         </div>
     </div>

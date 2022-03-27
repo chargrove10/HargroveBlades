@@ -42,7 +42,7 @@
                 <div style="background-color:lightgray; text-align:center"><header>Order Information</header></div>
                 
                 <form>
-                    <table>
+                    <table style="width:60%">
                         <tr>
                             <th>Order Number</th>
                             <th>Order Date</th>

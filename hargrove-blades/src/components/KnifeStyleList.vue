@@ -37,16 +37,12 @@
                     <div class="cform1">
                         <label>Style</label>
                         <input type="search" placeholder="Search" class="search-field" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>
+                         
                     </div>
                     <div class="cform2">
                         <label>Style Description</label>
                         <input type="search" placeholder="Search" class="search-field" />
-                            <button type="submit" class="search-button">
-                                <img src="../assets/search.png">
-                            </button>
+                        <button type="submit" style="margin-left:2%">Apply Filter</button>
                     
                     </div>
 
@@ -61,16 +57,18 @@
            
                 <div>
                     <form>
-                        <table>
+                        <table style="width:40%">
                             <tr>
                                 <th>Style Name</th>
                                 <th>Description</th>
                                 <th>Active</th>
                             </tr>
-                             <tr>
-                                <td>Chef's Knife</td>
-                                <td>Knife of a Chef</td>
-                                <td>1</td>
+                             <tr id="sTable" v-for="knife in Knives" :key="knife.StyleID">
+                                <td>{{knife.StyleName}}</td>
+                                <td>{{knife.StyleDesc}}</td>
+                                <td>{{knife.KnifeStyleActive}}</td>
+                                <td><router-link :to="{ name: 'Reports'}">Edit</router-link></td>
+                                <!-- Place holder !-->
                              </tr>
                          </table>
                     </form>
@@ -78,8 +76,6 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'KnifeStyle'}"><button>Edit</button></router-link>
-                    <div class="divider "></div>
                     <router-link :to="{ name: 'KnifeStyle'}"><button>Add</button></router-link>
                 </div>
                 
@@ -96,12 +92,21 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
-
+        data() {
+            return {
+                Knives: [],
+                isShow: false,
+                knife: {}
+                //pass over to product detail to see if we are posting or editing
+                
+            }
+        },
 
         methods: {
-
+            
             home() {
                 this.$router.push('/customerList')
             },
@@ -113,10 +118,19 @@ export default {
             steelTypeList() {
                 this.$router.push('/bladeDetails')
             }
-
-            
-
         },
+
+        created() {
+            axios.get('http://localhost:3000/knifeStyleList').then((res) => {
+                this.Knives=res.data;
+                    
+            }).catch(err => {
+                console.log(err)
+            });
+
+        },    
+
+
 
   
     }
