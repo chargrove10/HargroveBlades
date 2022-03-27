@@ -75,6 +75,7 @@
                                 <th>Phone Number</th>
                                 <th>City</th>
                                 <th>State</th>
+                                <th>Default</th>
                                 
                                 
                             </tr>
@@ -85,6 +86,10 @@
                                 <td>{{customer.CustomerPhone}}</td>
                                 <td>{{customer.City}}</td>
                                 <td>{{customer.StateName}}</td>
+                                <td>{{customer.DefaultAddress}}</td>
+                                
+                                
+                                <td><router-link :to="{ name: 'EditCustomer', params: {customerID: customer.CustomerID, flag: customer.DefaultAddress}}">Edit</router-link></td>
                                 
                                 
                             </tr>
@@ -95,10 +100,7 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <!--Need to pass primary key to pull data!-->
-                    <router-link :to="{ name: 'CustomerDetail'}"><button>Edit</button></router-link>
-                    <div class="divider "></div>
-                    <!--Need to pass a flag variable to push customer data data!-->
+                       
                     <router-link :to="{ name: 'CustomerDetail' }"><button>Add</button></router-link>
                     <div class="divider"></div>
                     <router-link :to="{ name: 'CreateOrder'}"><button>Create Order</button></router-link>
@@ -196,7 +198,7 @@ export default {
                 //This is refreshing the page so that the table will load properly once he zeroes out search fields
                 this.$router.go(0);
 
-            }
+            },
 
         },
 

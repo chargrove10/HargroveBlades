@@ -53,8 +53,8 @@
                         <label for="City">City:</label><br/>
                         <input type="text" id="city" name="city" v-model="customer.City"/><br/>
                         <label for="State-select">State:</label><br/>
-                        <select name="st" id="st" v-model="customer.StateInitials">
-                            <option v-for="state in State" :key="state.id" > {{state.StateInitials}} </option>
+                        <select name="st" id="st" @change="stateDetail($event)" v-model="customer.StateInitials">
+                            <option v-for="state in State" :value="state.StateID" :key="state.StateID" > {{state.StateInitials}} </option>
                         </select><br />
                         <label for="Zip">Zip Code:</label><br/>
                         <input type="text" id="zip" name="zip" v-model="customer.ZipCode"/><br/>
@@ -89,12 +89,16 @@ import axios from 'axios'
                     AddressLine2: '',
                     DefaultAddress: '',
                     City: '',
-                    StateInitials: '',
+                    //Assigned through the onchange event
+                    StateID: '',
                     ZipCode: '',
                     Country: ''
                 },
                 State: [],
-                state: {}
+                state: {
+                    StateID: '',
+                    StateInitials: ''
+                }
             }
         },
 
@@ -103,6 +107,7 @@ import axios from 'axios'
 
             axios.get(url).then((response) => {
                 this.State = response.data
+                console.log(this.State)
             }).catch(err => {
                 console.log(err)
             });
@@ -113,35 +118,40 @@ import axios from 'axios'
             },
 
             handleAdd() {
-                
 
                 let url = 'http://localhost:3000/customer';
 
-                axios.post(url, this.customer).then(() => {
-                    //this.$router.push('/customerList')
-                    // this.customer = {
-                    //     CustomerFirstName: '',
-                    //     CustomerLastName: '',
-                    //     CustomerPhone: '',
-                    //     CustomerEmail: '',
-                    //     CustomerNote: '',
-                    //     AddressLine1: '',
-                    //     AddressLine2: '',
-                    //     DefaultAddress: '',
-                    //     City: '',
-                    //     StateInitials: '',
-                    //     ZipCode: '',
-                    //     Country: ''
-                    // }
-                }).catch(err => {
-                    console.log(err)
-                });
+                var vm = this;
+
+                 axios.post(url, vm.customer).then(() => {
+                     this.$router.push('/customerList')
+                      this.customer = {
+                          //assigning all values as empty
+                          CustomerFirstName: '',
+                          CustomerLastName: '',
+                          CustomerPhone: '',
+                          CustomerEmail: '',
+                          CustomerNote: '',
+                          AddressLine1: '',
+                          AddressLine2: '',
+                          DefaultAddress: '',
+                          City: '',
+                          StateID: '',
+                          ZipCode: '',
+                          Country: ''
+                      }
+                 }).catch(err => {
+                     console.log(err)
+                 });
 
                 
             },
 
-            buttonPress() {
-                console.log(this.customer)
+            stateDetail(event) {
+                //handle event to grab data from the dropdown and use a lookup value to send
+                //this is assigning the StateID value from dropdown to the customer.StateID object
+                this.customer.StateID = event.target.value
+                console.log(this.customer.StateID)
             }
         }
     }
