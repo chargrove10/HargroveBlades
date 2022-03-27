@@ -71,22 +71,22 @@
                 <div class="tab-divider"></div>
                 
                 <form>
-                    <table>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Order Number</th>
-                            <th>Order Date</th>
-                            <th>Order Total</th>
-                            <th>Balance</th>
+                    <table style="width:40%">
+                        <tr style="font-size:18px">
+                            <th style="font-size:18px">First Name</th>
+                            <th style="font-size:18px">Last Name</th>
+                            <th style="font-size:18px">Order Number</th>
+                            <th style="font-size:18px">Order Date</th>
+                            <th style="font-size:18px">Order Total</th>
+                            <th style="font-size:18px">Balance</th>
                         </tr>
-                        <tr>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>AE1342R</td>
-                            <td>03/2022</td>
-                            <td>1</td>
-                            <td>$324</td>
+                        <tr style="font-size:18px">
+                            <td style="font-size:18px">John</td>
+                            <td style="font-size:18px">Doe</td>
+                            <td style="font-size:18px">AE1342R</td>
+                            <td style="font-size:18px">03/2022</td>
+                            <td style="font-size:18px">1</td>
+                            <td style="font-size:18px">$324</td>
                         </tr>
                     </table>
                 </form>

@@ -99,7 +99,7 @@
                 </div>
                 <div class="tab-divider"></div>
 
-                <div>
+                <div style="margin-left:15%">
                        
                     <router-link :to="{ name: 'CustomerDetail' }"><button>Add</button></router-link>
                     <div class="divider"></div>
