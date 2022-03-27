@@ -9,6 +9,7 @@ const PORT = 3000;
 
 //app.use(bodyParser)
 app.use(cors())
+app.use(express.json())
 
 //router.use(cors())
 //router.use(bodyParser)
@@ -63,73 +64,39 @@ app.get('/customer', async (req,res) => {
 
 app.post('/customer', async (req,res) => {
 
-    let state = req.customer.StateInitials;
-
-    try {
-        //making 'pool' awaiting the connection
-        let pool = await sql.connect(config)
-        
-        //making result awaiting the request to the connection
-        let result = await pool.request()
-         
-            .query("SELECT StateID from State where StateInitials = " + state)
-            const stateID = result.recordset
-            
-        res.send(stateID)
-        console.log(stateID)
-        sql.close()
-    } catch (err){
-        res.send(err)
-        console.log(err)
-    }
-
-        // try {
-        //     //making 'pool' awaiting the connection
-        //     let pool = await sql.connect(config)
-        //     //making result awaiting the request to the connection
-        //     let result = await pool.request()
+         try {
+             //making 'pool' awaiting the connection
+             let pool = await sql.connect(config)
+             //making result awaiting the request to the connection
+             let result = await pool.request()
                 
-        //         //gather inputs
-        //         .input('CustomerFirstName_p', sql.VarChar, req.query.CustomerFirstName)
-        //         .input('CustomerLastName_p',sql.VarChar, req.query.CustomerLastName)
-        //         .input('CustomerPhone_p', sql.VarChar, req.query.CustomerPhone)
-        //         .input('CustomerEmail_p', sql.VarChar, req.query.CustomerEmail)
-        //         .input('CustomerNote_p', sql.VarChar, req.query.CustomerNote)
-        //         .input('AddressLine1_p', sql.VarChar, req.query.AddressLine1)
-        //         .input('AddressLine2_p', sql.VarChar, req.query.AddressLine2)
-        //         .input('DefaultAddress_p', sql.Bit, req.query.DefaultAddress)
-        //         .input('City_p', sql.VarChar, req.query.City)
-        //         .input('StateID_p', sql.Int, this.stateID)
-        //         .input('ZipCode_p', sql.VarChar, req.query.ZipCode)
-        //         .input('Country_p', sql.VarChar, req.query.Country)
+                 //gather inputs
+                 .input('CustomerFirstName_p', req.body.CustomerFirstName)
+                 .input('CustomerLastName_p', req.body.CustomerLastName)
+                 .input('CustomerPhone_p',  req.body.CustomerPhone)
+                 .input('CustomerEmail_p',  req.body.CustomerEmail)
+                 .input('CustomerNote_p',  req.body.CustomerNote)
+                 .input('AddressLine1_p',  req.body.AddressLine1)
+                 .input('AddressLine2_p',  req.body.AddressLine2)
+                 .input('DefaultAddress_p',  req.body.DefaultAddress)
+                 .input('City_p',  req.body.City)
+                 //need to pass over StateID from the dropdown
+                 .input('StateID_p',  req.body.StateID)
+                 .input('ZipCode_p',  req.body.ZipCode)
+                 .input('Country_p',  req.body.Country)
                 
-        //         //executes the stored procedure "GetCustomers"
-        //         .execute("dbo.CreateNewCustomer");
-        //     const customers = result.recordset;
+                 //executes the stored procedure "GetCustomers"
+                 .execute("dbo.CreateNewCustomer");
+             const customers = result.recordset;
 
-        //     res.send(customers)
-        //     console.log(customers)
-        // } catch (err){
-        //     res.send(err)
-        //     console.log(err)
-        // }
+             res.send(customers)
+             console.log(customers)
+         } catch (err){
+             res.send(err)
+             console.log(err)
+         }
     
 })
-
-//using normal method to query with entire query string
-app.get('/customerList1', function (req, res) {
-    new sql.connect(config).then(() => {
-        //Query selects everything but we selecting specifics for tables
-        return sql.query("SELECT CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, ADDRESS.City, STATE.StateName "+ 
-        "FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID=ADDRESS.CUSTOMERID " +  
-        "JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID " + 
-        "JOIN STATE ON ADDRESS.STATEID=STATE.STATEID");
-    }).then (data => {
-        res.send(data.recordset);
-    }).catch(err => {
-        res.status(500).send(err);
-    })
-});
 
 //this should run a stored procedure using async functions
 app.get('/customerList', async (req, res) => {
@@ -139,10 +106,10 @@ app.get('/customerList', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, ADDRESS.City, STATE.StateName "+ 
+            .query("SELECT CUSTOMER.CustomerID, CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, ADDRESS.City, STATE.StateName, ADDRESS.DefaultAddress "+ 
             "FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID=ADDRESS.CUSTOMERID " +  
             "JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID " + 
-            "JOIN STATE ON ADDRESS.STATEID=STATE.STATEID");
+            "JOIN STATE ON ADDRESS.STATEID=STATE.STATEID WHERE ADDRESS.DefaultAddress = 'true'");
         const customers = result.recordset;
 
         res.send(customers)
@@ -162,7 +129,7 @@ app.get('/customerList/:name&:phone', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, ADDRESS.City, STATE.StateName "+ 
+            .query("SELECT CUSTOMER.CustomerID, CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, ADDRESS.City, STATE.StateName, ADDRESS.DefaultAddress "+ 
             "FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID=ADDRESS.CUSTOMERID " +
             "JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID " + 
             "JOIN STATE ON ADDRESS.STATEID=STATE.STATEID WHERE CUSTOMER.CustomerLastName = "+name+" OR CUSTOMER.CustomerPhone = "+phone);
@@ -173,6 +140,85 @@ app.get('/customerList/:name&:phone', async (req, res) => {
         res.status(500).json(err)
     }
 });
+
+app.get('/editCustomer/:id&:flag', async (req, res) => {
+
+    let id = req.params.id
+    let flag = req.params.flag
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT TOP 1 CUSTOMER.CustomerID, CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, CUSTOMER.CustomerEmail," + 
+            " ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.DefaultAddress, ADDRESS.City, STATE.StateInitials, ADDRESS.StateID, ADDRESS.ZipCode," +
+            " ADDRESS.Country FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID = ADDRESS.CUSTOMERID" + 
+            " JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID" + 
+            " JOIN STATE ON ADDRESS.STATEID = STATE.STATEID WHERE CUSTOMER.CUSTOMERID = " + id + "AND ADDRESS.DefaultAddress = " + flag);
+        //let customers = result.recordset;
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+    } catch (err){
+        console.log(err)
+    }
+});
+
+app.put('/editCustomer/', async (req, res) => {
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+            //gather inputs
+            .input('CustomerFirstName_p', req.body.CustomerFirstName)
+            .input('CustomerLastName_p', req.body.CustomerLastName)
+            .input('CustomerPhone_p',  req.body.CustomerPhone)
+            .input('CustomerEmail_p',  req.body.CustomerEmail)
+            .input('CustomerNote_p',  req.body.CustomerNote)
+            .input('AddressLine1_p',  req.body.AddressLine1)
+            .input('AddressLine2_p',  req.body.AddressLine2)
+            .input('DefaultAddress_p',  req.body.DefaultAddress)
+            .input('City_p',  req.body.City)
+            //need to pass over StateID from the dropdown
+            .input('StateID_p',   req.body.StateID)
+            .input('ZipCode_p',  req.body.ZipCode)
+            .input('Country_p',  req.body.Country)
+            .input('AddressID_p', req.body.AddressID)
+            .input('CustomerID_p', req.body.CustomerID)
+           
+            //executes the stored procedure "GetCustomers"
+            .execute("dbo.UpdateCustomer");
+        const customers = result.recordset;
+
+        res.send(customers)
+        console.log(customers)
+    } catch (err){
+        res.send(err)
+        console.log(err)
+    }
+});
+
+// app.get('/editCustomer/:id&:flag', function (req, res) {
+//     let id = req.params.id
+//     let flag = req.params.flag
+
+//     sql.connect(config).then(() => {
+//         return sql.query("SELECT CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, CUSTOMER.CustomerEmail," + 
+//         " ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.DefaultAddress, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode," +
+//         " ADDRESS.Country FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID = ADDRESS.CUSTOMERID" + 
+//         " JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID" + 
+//         " JOIN STATE ON ADDRESS.STATEID = STATE.STATEID WHERE CUSTOMER.CUSTOMERID = " + id + "AND ADDRESS.DefaultAddress = " + flag)
+//     }).then (data => {
+//         res.send(data.recordset)
+//     }).catch(err => {
+//         console.log(err)
+//     })
+// });
 
 //using method above but with promises
 // app.get('/customerList2', function(req, res) {

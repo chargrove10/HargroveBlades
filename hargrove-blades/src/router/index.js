@@ -24,7 +24,7 @@ const routes = [
     },
 
     {
-        path:"/editCustomer/:id",
+        path:"/editCustomer/:customerID",
         name: "EditCustomer",
         component: EditCustomer
     },
