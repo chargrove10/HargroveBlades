@@ -324,7 +324,7 @@ app.get('/', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT OrderNumber ,CONCAT(CustomerFirstName , ' ', CustomerLastName) AS 'Customer Name' ,CustomerPhone ,CustomerEmail ,OrderDate ,OrderStatusName ,CONCAT('$', OrderTotal) AS 'Order Total' ,PickUpDateTime ,OrderNote "+
+            .query("SELECT OrderNumber ,CustomerFirstName, CustomerLastName, CustomerPhone ,CustomerEmail ,OrderDate ,OrderStatusName, OrderTotal ,PickUpDateTime ,OrderNote "+
             "FROM ProductOrder JOIN Customer ON ProductOrder.CustomerID = Customer.CustomerID JOIN OrderStatus ON ProductOrder.OrderStatusID = OrderStatus.OrderStatusID " +
             "WHERE ProductOrder.OrderStatusID IN (2, 3) ORDER BY ProductOrder.OrderStatusID, OrderDate ASC");
         const order = result.recordset;

@@ -56,12 +56,12 @@
                         </tr>
                         <tr id="mTable" v-for="order in Order" :key="order.OrderID">
                             <td>{{order.OrderNumber}}</td>
-                            <td>{{order.CustomerFirstName}}</td>  
+                            <td>{{order.CustomerFirstName.concat(' '+ order.CustomerLastName)}}</td>  
                             <td>{{order.CustomerPhone}}</td>
                             <td>{{order.CustomerEmail}}</td>
                             <td>{{order.OrderDate.slice(0,10)}}</td>
                             <td>{{order.OrderStatusName}}</td>
-                            <td>{{order.OrderTotal}}</td>
+                            <td>${{order.OrderTotal}}</td>
                             <td>{{order.PickUpDateTime.slice(0,10)}}</td>
                             <td>{{order.OrderNote}}</td>
                         </tr>
