@@ -15,6 +15,10 @@ import OrderInfo from '../components/OrderInfo.vue'
 import NewsLetter from '../components/NewsLetter.vue'
 import PriceEstimator from '../components/PriceEstimate.vue'
 import EditCustomer from '../components/EditCustomer.vue'
+import Status from '../components/Status.vue'
+import OrderStatus from '../components/OrderStatus.vue'
+import ProductStatus from '../components/ProductStatus.vue'
+import OrderLineStatus from '../components/OrderLineStatus.vue'
 
 const routes = [
     {
@@ -98,7 +102,27 @@ const routes = [
         path: "/priceEstimate",
         name: "PriceEstimate",
         component: PriceEstimator
-    }
+    },
+    {
+        path: "/status",
+        name: "Status",
+        component: Status
+    },
+    {
+        path: "/orderStatus",
+        name: "OrderStatus",
+        component: OrderStatus
+    },
+    {
+        path: "/productStatus",
+        name: "ProductStatus",
+        component: ProductStatus
+    },
+    {
+        path: "/orderLinestatus",
+        name: "OrderLineStatus",
+        component: OrderLineStatus
+    },
 
 ]
 

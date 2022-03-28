@@ -39,7 +39,7 @@
 
             <div id="knifeAvail" class="tabcontent" style="display:block">
                 
-                <div style="background-color:lightgray; text-align:center"><header>Available Knives</header></div>
+                <div style="background-color:lightgray; text-align:center"><header>On Going Orders</header></div>
                 
                 <form>
                     <table style="width:40%">

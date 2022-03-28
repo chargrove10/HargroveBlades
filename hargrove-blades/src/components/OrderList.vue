@@ -80,7 +80,7 @@
                             <td>{{orders.CustomerFirstName}}</td>
                             <td>{{orders.CustomerLastName}}</td>
                             <td>{{orders.OrderNumber}}</td>
-                            <td>{{orders.OrderDate}}</td>
+                            <td>{{orders.OrderDate.slice(0,10)}}</td>
                             <td>{{orders.OrderTotal}}</td>
                             <td>{{orders.Balance}}</td>
                             <td><router-link :to="{ name: 'Reports'}">Edit</router-link></td>

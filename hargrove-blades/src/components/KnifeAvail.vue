@@ -37,35 +37,35 @@
 
         <div class="tab-div2">
 
-            <div id="knifeAvail" class="tabcontent" style="display:block">
+            <div class="tabcontent" style="display:block">
                 
                 <div style="background-color:lightgray; text-align:center"><header>Available Knives</header></div>
                 
                 <form>
                     <table style="width:60%">
                         <tr>
-                            <th>Order Number</th>
-                            <th>Order Status</th>
-                            <th>Product Status</th>
-                            <th>Knife Style</th>
-                            <th>Steel Used</th>
-                            <th>Blade Length</th>
+                            <th>SerialNo</th>
+                            <th>Style Name</th>
+                            <th>Steel Name</th>
                             <th>Overall Length</th>
-                            <th>Blade Finish</th>
+                            <th>Blade Length</th>
                             <th>Handle Material</th>
+                            <th>Embellishments</th>
+                            <th>Product Note</th>
                             <th>Price</th>
+                            <th>Product Status Name</th>
                         </tr>
-                        <tr>
-                            <td>166ae4tr</td>
-                            <td>Cancelled</td>
-                            <td>Available</td>
-                            <td>Kitchen</td>
-                            <td>Steel</td>
-                            <td>9</td>
-                            <td>14</td>
-                            <td>Polished</td>
-                            <td>Redwood</td>
-                            <td>$308</td>
+                        <tr id = "aTable" v-for="knifeAvailable in KnifeAvail" :key="knifeAvailable.ProductID">
+                            <td>{{knifeAvailable.SerialNo}}</td>
+                            <td>{{knifeAvailable.StyleName}}</td>
+                            <td>{{knifeAvailable.SteelName}}</td>
+                            <td>{{knifeAvailable.overalllength}}</td>
+                            <td>{{knifeAvailable.bladelength}}</td>
+                            <td>{{knifeAvailable.handlematerial}}</td>
+                            <td>{{knifeAvailable.embellishments}}</td>
+                            <td>{{knifeAvailable.productnote}}</td>
+                            <td>{{knifeAvailable.Price}}</td>
+                            <td>{{knifeAvailable.ProductStatusName}}</td>
                         </tr>
                     </table>
                 </form>
@@ -84,9 +84,18 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
-
+        data() {
+            return {
+                KnifeAvail: [],
+                isShow: false,
+                knifeAvailable: {}
+                //pass over to product detail to see if we are posting or editing
+                
+            }
+        },
 
         methods: {
 
@@ -109,6 +118,16 @@ export default {
         priceEstimate() {
             this.$router.push('/priceEstimate')
         }
+
+        },
+        created() {
+
+            axios.get('http://localhost:3000/knifeAvailability').then((res) => {
+                this.KnifeAvail=res.data;
+                
+            }).catch(err => {
+                console.log(err)
+            });
 
         },
 

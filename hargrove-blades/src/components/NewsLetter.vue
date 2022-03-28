@@ -37,20 +37,25 @@
 
         <div class="tab-div2">
 
-            <div id="Newsletter" class="tabcontent" style="display:block">
+            <div class="tabcontent" style="display:block">
                 
-                <div style="background-color:lightgray; text-align:center"><header>Newsletter</header></div>
+                <div style="background-color:lightgray; text-align:center"><header>Price Estimate</header></div>
                 
                 <div class="tab-divider"></div>
                 <div>
-                    <div class="cform1">
+                    <div class="pform1">
                         <label>Knife Style</label>
-                        <input type="search" placeholder="Search" class="search-field" />
-                       
+                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
+                      
                     </div>
-                    <div class="cform2">
-                        <label>Steel Description</label>
-                        <input type="search" placeholder="Search" class="search-field" />
+                    <div class="pform2">
+                        <label>Steel Type</label>
+                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
+                     
+                    </div>
+                    <div class="pform3">
+                        <label>Handle Material</label>
+                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
                         <button type="submit" style="margin-left:2%">Apply Filter</button>
                     
                     </div>
@@ -59,31 +64,40 @@
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
+                    
                 </div>
 
                 <div class="tab-divider"></div>
-
-                
                 
                 <div class="tab-divider"></div>
-                
+
                 <form>
-                    <table style="width:50%">
+                    <table style="width:30%">
                         <tr>
-                            <th>Customer First Name</th>
+                            <th>Knife Style</th>
+                            <th>Blade Finish</th>
+                            <th>Handle Material</th>
+                            <th>Overall Length</th>
+                            <th>Blade Length</th>
+                            <th>Embellishments</th>
+                            <th>Customer FirstName</th>
                             <th>Customer Last Name</th>
                             <th>Customer Email</th>
-                            <th>Knife Style</th>
-                            <th>Steel Type</th>
-
+                            <th>Customer Status Name</th>
                         </tr>
-                        <tr>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>something@gmail.com</td>
-                            <td>Butcher's Knife</td>
-                            <td>Random Type</td>
+                        
+                        <tr id="pTable" v-for="news in News" :key="news.ProductID">
+                            <td>{{news.StyleName}}</td>
+                            <td>{{news.BladeFinish}}</td>
+                            <td>{{news.HandleMaterial}}</td>
+                            <td>{{news.OverallLength}}</td>
+                            <td>{{news.BladeLength}}</td>
+                            <td>{{news.Embellishments}}</td>
+                            <td>{{news.CustomerFirstName}}</td>
+                            <td>{{news.CustomerLastName}}</td>
+                            <td>{{news.CustomerEmail}}</td>
+                            <td>{{news.CustomerStatusName}}</td>
+
                         </tr>
                     </table>
                 </form>
@@ -101,9 +115,18 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
-
+        data() {
+            return {
+                News: [],
+                isShow: false,
+                news: {}
+                //pass over to product detail to see if we are posting or editing
+                
+            }
+        },
 
         methods: {
 
@@ -128,8 +151,18 @@ export default {
         }
 
         },
+    created() {
 
-    }
+            axios.get('http://localhost:3000/newsletter').then((res) => {
+                this.News=res.data;
+                
+            }).catch(err => {
+                console.log(err)
+            });
+
+        },
+
+}
 </script>
 
 

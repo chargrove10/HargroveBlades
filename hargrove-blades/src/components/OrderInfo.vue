@@ -37,27 +37,35 @@
 
         <div class="tab-div2">
 
-            <div id="OrderInfo" class="tabcontent" style="display:block">
+            <div class="tabcontent" style="display:block">
                 
                 <div style="background-color:lightgray; text-align:center"><header>Order Information</header></div>
                 
                 <form>
                     <table style="width:60%">
                         <tr>
-                            <th>Order Number</th>
-                            <th>Order Date</th>
-                            <th>Order Status</th>
-                            <th>Product Status</th>
-                            <th>Complete Date</th>
-                            
+                            <th>SerialNo</th>
+                            <th>Style Name</th>
+                            <th>Steel Name</th>
+                            <th>Overall Length</th>
+                            <th>Blade Length</th>
+                            <th>Handle Material</th>
+                            <th>Embellishments</th>
+                            <th>Product Note</th>
+                            <th>Price</th>
+                            <th>Product Status Name</th>
                         </tr>
-                        <tr>
-                            <td>166ae4tr</td>
-                            <td>03/2022</td>
-                            <td>In Progress</td>
-                            <td>Pending</td>
-                            <td>null</td>
-                            
+                        <tr id = "orTable" v-for="orderInfos in OrderInfo" :key="orderInfos.ProductID">
+                            <td>{{orderInfos.SerialNo}}</td>
+                            <td>{{orderInfos.StyleName}}</td>
+                            <td>{{orderInfos.SteelName}}</td>
+                            <td>{{orderInfos.overalllength}}</td>
+                            <td>{{orderInfos.bladelength}}</td>
+                            <td>{{orderInfos.handlematerial}}</td>
+                            <td>{{orderInfos.embellishments}}</td>
+                            <td>{{orderInfos.productnote}}</td>
+                            <td>{{orderInfos.Price}}</td>
+                            <td>{{orderInfos.ProductStatusName}}</td>
                         </tr>
                     </table>
                 </form>
@@ -74,9 +82,18 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
-
+        data() {
+            return {
+                OrderInfo: [],
+                isShow: false,
+                orderInfos: {}
+                //pass over to product detail to see if we are posting or editing
+                
+            }
+        },
 
         methods: {
 
@@ -99,6 +116,16 @@ export default {
         priceEstimate() {
             this.$router.push('/priceEstimate')
         }
+
+        },
+        created() {
+
+            axios.get('http://localhost:3000/orderInfo').then((res) => {
+                this.OrderInfo=res.data;
+                
+            }).catch(err => {
+                console.log(err)
+            });
 
         },
 
