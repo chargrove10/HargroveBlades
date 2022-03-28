@@ -75,28 +75,14 @@
                     <table style="width:30%">
                         <tr>
                             <th>Knife Style</th>
-                            <th>Blade Finish</th>
-                            <th>Handle Material</th>
-                            <th>Overall Length</th>
-                            <th>Blade Length</th>
-                            <th>Embellishments</th>
-                            <th>Customer FirstName</th>
-                            <th>Customer Last Name</th>
-                            <th>Customer Email</th>
-                            <th>Customer Status Name</th>
+                            <th>Steel Name</th>
+                            <th>Average price for specs</th>
                         </tr>
                         
-                        <tr id="pTable" v-for="price in Price" :key="price.ProductID">
-                            <td>{{price.StyleName}}</td>
-                            <td>{{price.BladeFinish}}</td>
-                            <td>{{price.HandleMaterial}}</td>
-                            <td>{{price.OverallLength}}</td>
-                            <td>{{price.BladeLength}}</td>
-                            <td>{{price.Embellishments}}</td>
-                            <td>{{price.CustomerFirstName}}</td>
-                            <td>{{price.CustomerLastName}}</td>
-                            <td>{{price.CustomerEmail}}</td>
-                            <td>{{price.CustomerStatusName}}</td>
+                        <tr id="pTable" v-for="prices in Price" :key="prices.ProductID">
+                            <td>{{prices.StyleName}}</td>
+                            <td>{{prices.steelname}}</td>
+                            <td>$ {{prices.Average.toFixed(2)}}</td>
 
                         </tr>
                     </table>
@@ -122,7 +108,7 @@ export default {
             return {
                 Price: [],
                 isShow: false,
-                price: {}
+                prices: {}
                 //pass over to product detail to see if we are posting or editing
                 
             }

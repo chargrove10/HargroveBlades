@@ -371,6 +371,25 @@ app.get('/newsletter', async (req, res) => {
     }
 });
 
+app.get('/priceEstimate', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetNewsLetter"
+            .query("SELECT StyleName, steelname, AVG(price) as 'Average' "+
+            "from Product JOIN KnifeStyle  ON product.StyleID = KnifeStyle.StyleID " +
+            "JOIN KnifeSteel ON KnifeSteel.SteelID = Product.SteelID Group By StyleName, Steelname "+
+            "ORDER BY StyleName");
+        const priceEst = result.recordset;
+
+        res.send(priceEst)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
 
 
 //Status CRUD starts here
