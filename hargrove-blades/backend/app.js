@@ -239,9 +239,83 @@ app.get('/productList', async (req, res) => {
         res.status(500).json(err)
     }
 });
+//product inserting
+app.post('/productAdd/', async (req,res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
 
+            .input('StyleID_p', sql.Int,  req.body.StyleID)
+            .input('SteelID_p', sql.Int,  req.body.SteelID)
+            .input('ProductStatusID_p', sql.Int, req.body.ProductStatusID)
+            .input('CompleteDate_p', sql.Date,  req.body.CompleteDate)
+            .input('Price_p',sql.Float, req.body.Price)
+            .input('SerialNo_p', req.body.SerialNo)
+            .input('OverallLength_p',sql.Float, req.body.OverallLength)
+            .input('BladeFinish_p', req.body.BladeFinish)
+            .input('BladeLength_p',sql.Float, req.body.BladeLength)
+            .input('Embellishments_p', req.body.Embellishments)
+            .input('HandleMaterial_p', req.body.HandleMaterial)
+            .input('ProductNotes_p', req.body.ProductNotes)
+            //sample script will be changed later
+            .execute('dbo.InsertProduct')
 
+        const product = result.recordset
+        res.send(product)
+    } catch (err) {
+        res.send(err)
+    }
+});
+//product Productstatus drop down
+app.get('/productDropDown', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT ProductStatusID, ProductStatusName FROM ProductStatus");
+        const productStatus = result.recordset;
 
+        res.send(productStatus)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+//Knife Type Drop down
+app.get('/knifeDropDown', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT StyleID, StyleName FROM KnifeStyle ORDER BY StyleID");
+        const knifeStatus = result.recordset;
+
+        res.send(knifeStatus)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+//Steel Type Drop down
+app.get('/steelDropDown', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT SteelID, SteelName FROM KnifeSteel ORDER BY SteelID");
+        const steelStatus = result.recordset;
+
+        res.send(steelStatus)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
 
 
 //Order CRUD starts here
