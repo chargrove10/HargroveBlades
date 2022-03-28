@@ -62,11 +62,12 @@
                                 <th>Description</th>
                                 <th>Active</th>
                             </tr>
-                             <tr id="sTable" v-for="knife in Knives" :key="knife.StyleID">
+                             <tr id="sTable" v-for="knife in Knives" v-bind:key="knife.StyleID">
                                 <td>{{knife.StyleName}}</td>
                                 <td>{{knife.StyleDesc}}</td>
                                 <td>{{knife.KnifeStyleActive}}</td>
-                                <td><router-link :to="{ name: 'EditKnifeStyle'}">Edit</router-link></td>
+                                <td><router-link :to="{ name: 'EditKnifeStyle', params: {knifeID: knife.StyleID, flag: knife.KnifeStyleActive}}">Edit</router-link></td>
+                                
                                 <!-- Place holder !-->
                              </tr>
                          </table>
@@ -98,7 +99,13 @@ export default {
             return {
                 Knives: [],
                 isShow: false,
-                knife: {}
+                knife: {
+                   StyleID: '',
+                   StyleName: '',
+                   StyleDesc: '',
+                   KnifeStyleActive: ''
+
+                }
                 //pass over to product detail to see if we are posting or editing
                 
             }

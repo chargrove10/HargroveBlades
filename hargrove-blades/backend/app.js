@@ -3,7 +3,7 @@ const sql = require('mssql');
 //const bodyParser = require('body-parser');
 //var router = express.Router();
 const cors = require('cors');
-const res = require('express/lib/response');
+
 
 const app = express();
 const PORT = 3000;
@@ -384,7 +384,7 @@ app.get('/knifeStyleList', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetKnifeStyle"
-            .query("SELECT StyleName, StyleDesc, KnifeStyleActive FROM KnifeStyle");
+            .query("SELECT StyleID, StyleName, StyleDesc, KnifeStyleActive FROM KnifeStyle");
         const style = result.recordset;
 
         res.send(style)
@@ -413,10 +413,10 @@ app.post('/knifeStyleAdd', async (req,res) =>{
     }
 });
 
-app.get('/ediKnifeStyle/:id&:flag', async (req, res) => {
+app.get('/editKnifeStyle/:id', async (req, res) => {
 
     let id = req.params.id
-    let flag = req.params.flag
+    
 
     try {
         //making 'pool' awaiting the connection
@@ -424,7 +424,7 @@ app.get('/ediKnifeStyle/:id&:flag', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT StyleName. KnifeStyleActive, StyleDesc WHERE StyleID = "+id +"AND StyleDesc = "+flag);
+            .query("SELECT StyleName, KnifeStyleActive, StyleDesc FROM KnifeStyle WHERE StyleID = " +id);
         //let customers = result.recordset;
 
         res.send(result.recordset)
@@ -433,6 +433,27 @@ app.get('/ediKnifeStyle/:id&:flag', async (req, res) => {
         console.log(err)
     }
 });
+
+app.put('/knifeStyleEdit/', async (req,res) => {
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+        .input('StyleID', req.body.StyleID)
+        .input('StyleName' , req.body.StyleName)
+        .input('StyleDesc', req.body.StyleDesc)
+        .input('KnifeStyleActive', sql.Bit, req.body.KnifeStyleActive)
+        .query("UPDATE KnifeStyle SET StyleName = @StyleName, StyleDesc = @StyleDesc, KnifeStyleActive = @KnifeStyleActive WHERE StyleID = @StyleID")
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+
+    }catch(err) {
+        console.log(err)
+    }
+})
 
 //Reports Start Here
 app.get('/', async (req, res) => {

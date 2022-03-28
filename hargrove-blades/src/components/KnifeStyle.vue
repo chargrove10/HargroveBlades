@@ -34,7 +34,8 @@
                 <div style="width:40%; margin-left: 50%">
                     <form>
                         <label for="styleDesc">Style Description:</label><br/>
-                        <textarea id="styleDesc" v-model="knife.StyleDesc" rows="4" cols="24"></textarea><br /> 
+                        <textarea id="styleDesc" v-model="knife.StyleDesc" rows="4" cols="24"></textarea><br />
+                        
                     </form>
                 </div>
 

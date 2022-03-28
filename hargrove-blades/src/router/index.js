@@ -149,7 +149,7 @@ const routes = [
         component: CreateOrderLineStatus
     },
     {
-        path: "/editKnifeStyle/",
+        path: "/editKnifeStyle/:knifeID",
         name: "EditKnifeStyle",
         component: EditKnifeStyle
     },

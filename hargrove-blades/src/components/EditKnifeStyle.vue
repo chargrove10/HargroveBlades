@@ -18,7 +18,7 @@
         </div>
     
     <div class="tab-div2" style="min-height:auto">
-        <div style="background-color: lightgrey" >
+        <div style="background-color: lightgrey" v-for="knife in Knives" :key="knife.StyleID" >
 
                 <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
@@ -35,12 +35,15 @@
                     <form>
                         <label for="styleDesc">Style Description:</label><br/>
                         <textarea id="styleDesc" v-model="knife.StyleDesc" rows="4" cols="24"></textarea><br /> 
+                        
                     </form>
                 </div>
 
             <div>
                 <div class="tab-divider"/>
-                <button style="transform:translate(90%,0)" v-on:click="addKnifeStyle()">Save</button>  
+                <button style="transform:translate(90%,0)" v-on:click="editKnifeStyle()">Save</button>  
+                <br />
+                <button v-on:click="getChecked()">Get Checked Value</button>
             </div> 
 
         </div>
@@ -58,6 +61,7 @@ import axios from 'axios'
             return{
                 Knives: [],
                 knife: {
+                    StyleID: '',
                     StyleName: '',
                     KnifeStyleActive: '',
                     StyleDesc: '',
@@ -69,15 +73,20 @@ import axios from 'axios'
                 this.$router.push('/customerList')
             },
 
-            addKnifeStyle(){
+            editKnifeStyle(){
 
-                let url = 'http://localhost:3000/knifeStyleAdd'
+                var flag = document.getElementById("active").checked;
+                if (flag === true)
+                    this.knife.KnifeStyleActive = true;
+                else
+                    this.knife.KnifeStyleActive = false;
 
-                let vm = this
+                let url = 'http://localhost:3000/knifeStyleEdit/'
 
-                axios.post(url, vm.knife).then(() =>{
+                axios.put(url, this.knife).then(() =>{
                     this.$router.push('/knifeStyleList')
                     this.knife = {
+                        StyleID: '',
                         StyleName: '',
                         KnifeStyleActive: '',
                         StyleDesc: ''
@@ -86,14 +95,24 @@ import axios from 'axios'
                     console.log(err)
                 });
 
+            },
+
+            getChecked() {
+                var flag = document.getElementById("active").checked;
+                if (flag === true)
+                    this.knife.KnifeStyleActive = 1;
+                else
+                    this.knife.KnifeStyleActive = 0;
+
+                console.log(this.knife.KnifeStyleActive)
             }
+
         },
         created(){
-            let sid = this.$route.params.styleID;
+            let sid = this.$route.params.knifeID;
             
-            let active = this.$route.params.flag
 
-            let url2 = 'http://localhost:3000/editKnifeStyle/' + sid + '&' + "'"+active+"'"
+            let url2 = 'http://localhost:3000/editKnifeStyle/' + sid
 
              axios.get(url2).then((response) => {
                  const data = response.data
