@@ -31,16 +31,16 @@ app.listen(PORT, () => {
 // };
 
 //Chris Computer
-// var config = {
-//     user: 'CZ',
-//     password: 'CZ1',
-//     server: 'DESKTOP-O78Q1FG',
-//     database: 'HargroveBlades',
-//     port: 1433,
-//     options: {
-//         trustServerCertificate: true
-//     }
-// }
+var config = {
+    user: 'CZ',
+    password: 'CZ1',
+    server: 'DESKTOP-O78Q1FG',
+    database: 'HargroveBlades',
+    port: 1433,
+    options: {
+        trustServerCertificate: true
+    }
+}
 
 //Bryan Comnputer
 // var config = {
@@ -189,21 +189,21 @@ app.put('/editCustomer/', async (req, res) => {
         let result = await pool.request()
            
             //gather inputs
-            .input('CustomerFirstName_p', req.body.CustomerFirstName)
-            .input('CustomerLastName_p', req.body.CustomerLastName)
-            .input('CustomerPhone_p',  req.body.CustomerPhone)
-            .input('CustomerEmail_p',  req.body.CustomerEmail)
-            .input('CustomerNote_p',  req.body.CustomerNote)
-            .input('AddressLine1_p',  req.body.AddressLine1)
-            .input('AddressLine2_p',  req.body.AddressLine2)
-            .input('DefaultAddress_p',  req.body.DefaultAddress)
-            .input('City_p',  req.body.City)
+            .input('CustomerFirstName_p', sql.VarChar, req.body.CustomerFirstName)
+            .input('CustomerLastName_p', sql.VarChar, req.body.CustomerLastName)
+            .input('CustomerPhone_p', sql.VarChar,  req.body.CustomerPhone)
+            .input('CustomerEmail_p', sql.VarChar,  req.body.CustomerEmail)
+            .input('CustomerNote_p', sql.VarChar,  req.body.CustomerNote)
+            .input('AddressLine1_p', sql.VarChar,  req.body.AddressLine1)
+            .input('AddressLine2_p', sql.VarChar,  req.body.AddressLine2)
+            .input('DefaultAddress_p', sql.Bit,  req.body.DefaultAddress)
+            .input('City_p', sql.VarChar,  req.body.City)
             //need to pass over StateID from the dropdown
-            .input('StateID_p',   req.body.StateID)
-            .input('ZipCode_p',  req.body.ZipCode)
-            .input('Country_p',  req.body.Country)
-            .input('AddressID_p', req.body.AddressID)
-            .input('CustomerID_p', req.body.CustomerID)
+            .input('StateID_p', sql.Int, req.body.StateID)
+            .input('ZipCode_p', sql.VarChar,  req.body.ZipCode)
+            .input('Country_p', sql.VarChar,  req.body.Country)
+            .input('AddressID_p', sql.Int, req.body.AddressID)
+            .input('CustomerID_p', sql.Int, req.body.CustomerID)
            
             //executes the stored procedure "GetCustomers"
             .execute("dbo.UpdateCustomer");
@@ -384,7 +384,7 @@ app.get('/knifeStyleList', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetKnifeStyle"
-            .query("SELECT StyleID, StyleName, StyleDesc, KnifeStyleActive FROM KnifeStyle");
+            .query("SELECT * FROM KnifeStyle");
         const style = result.recordset;
 
         res.send(style)
@@ -424,7 +424,7 @@ app.get('/editKnifeStyle/:id', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT StyleName, KnifeStyleActive, StyleDesc FROM KnifeStyle WHERE StyleID = " +id);
+            .query("SELECT StyleID, StyleName, KnifeStyleActive, StyleDesc FROM KnifeStyle WHERE StyleID = " +id);
         //let customers = result.recordset;
 
         res.send(result.recordset)
@@ -436,16 +436,25 @@ app.get('/editKnifeStyle/:id', async (req, res) => {
 
 app.put('/knifeStyleEdit/', async (req,res) => {
 
+    // let bit = req.body.KnifeStyleActive;
+    // if (bit === true) bit = 1;
+    // else bit = 0;
+    // console.log(bit)
+    console.log(req.body.StyleID)
+    console.log(req.body.StyleName)
+    console.log(req.body.StyleDesc)
+    console.log(req.body.KnifeStyleActive)
+
     try {
         let pool = await sql.connect(config)
 
         let result = await pool.request()
 
-        .input('StyleID', req.body.StyleID)
-        .input('StyleName' , req.body.StyleName)
-        .input('StyleDesc', req.body.StyleDesc)
-        .input('KnifeStyleActive', sql.Bit, req.body.KnifeStyleActive)
-        .query("UPDATE KnifeStyle SET StyleName = @StyleName, StyleDesc = @StyleDesc, KnifeStyleActive = @KnifeStyleActive WHERE StyleID = @StyleID")
+        .input('StyleID_p', sql.Int, req.body.StyleID)
+        .input('StyleName_p', sql.VarChar, req.body.StyleName)
+        .input('StyleDesc_p', sql.VarChar, req.body.StyleDesc)
+        .input('KnifeStyleActive_p', sql.Bit, req.body.KnifeStyleActive)
+        .execute('UpdateKnifeStyle')
 
         res.send(result.recordset)
         console.log(result.recordset)

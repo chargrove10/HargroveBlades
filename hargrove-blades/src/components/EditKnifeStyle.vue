@@ -25,7 +25,7 @@
                         <label for="styleName">Style Name:</label><br/>
                         <input type="text" id="styleName" name="styleName" v-model="knife.StyleName"/><br/>
                         <label >Knife Style Active:</label>
-                        <input type="checkbox" id="active" name="active" v-model="knife.KnifeStyleActive"/>                                        
+                        <input type="checkbox" id="active" @change="getChecked($event)" name="active" v-model="knife.KnifeStyleActive"/>                                        
                         <br/>  
                         
                     </form>
@@ -35,6 +35,7 @@
                     <form>
                         <label for="styleDesc">Style Description:</label><br/>
                         <textarea id="styleDesc" v-model="knife.StyleDesc" rows="4" cols="24"></textarea><br /> 
+                        <input id="styleID" type="hidden" v-model="knife.StyleID"/>
                         
                     </form>
                 </div>
@@ -43,7 +44,8 @@
                 <div class="tab-divider"/>
                 <button style="transform:translate(90%,0)" v-on:click="editKnifeStyle()">Save</button>  
                 <br />
-                <button v-on:click="getChecked()">Get Checked Value</button>
+                <button v-on:click="getCheckedValue()">Get Checked Value</button>
+
             </div> 
 
         </div>
@@ -73,15 +75,22 @@ import axios from 'axios'
                 this.$router.push('/customerList')
             },
 
+            getChecked(e) {
+                this.knife.KnifeStyleActive = e.target.checked;
+                console.log(e.target.checked)
+                console.log(this.knife.StyleID)
+            },
+
             editKnifeStyle(){
 
-                var flag = document.getElementById("active").checked;
-                if (flag === true)
-                    this.knife.KnifeStyleActive = true;
-                else
-                    this.knife.KnifeStyleActive = false;
+                this.knife.StyleID = document.getElementById("styleID").value
+                this.knife.StyleName = document.getElementById("styleName").value
+                this.knife.StyleDesc = document.getElementById("styleDesc").value
+                this.knife.KnifeStyleActive = document.getElementById("active").checked
+                
 
                 let url = 'http://localhost:3000/knifeStyleEdit/'
+                
 
                 axios.put(url, this.knife).then(() =>{
                     this.$router.push('/knifeStyleList')
@@ -97,14 +106,8 @@ import axios from 'axios'
 
             },
 
-            getChecked() {
-                var flag = document.getElementById("active").checked;
-                if (flag === true)
-                    this.knife.KnifeStyleActive = 1;
-                else
-                    this.knife.KnifeStyleActive = 0;
-
-                console.log(this.knife.KnifeStyleActive)
+            getCheckedValue() {
+                console.log(this.knife.StyleID)
             }
 
         },
@@ -118,6 +121,8 @@ import axios from 'axios'
                  const data = response.data
                  //had to loop through Customer to assign to customers{}
                  this.Knives = data
+                 console.log(this.Knives)
+                 
 
              }).catch(err => {
                  console.log(err)

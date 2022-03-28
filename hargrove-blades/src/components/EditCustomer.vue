@@ -137,13 +137,6 @@ import axios from 'axios'
 
             handleEdit() {
 
-                //sending a bit value to the stored procedure
-                var flag = document.getElementById("default").checked;
-                if (flag === true)
-                    this.customers.DefaultAddress = 1;
-                else
-                    this.customers.DefaultAddress = 0;
-
                 this.customers.CustomerFirstName = document.getElementById("fname").value
                 this.customers.CustomerLastName = document.getElementById("lname").value
                 this.customers.CustomerPhone = document.getElementById("phone").value
@@ -151,12 +144,14 @@ import axios from 'axios'
                 this.customers.CustomerNote = document.getElementById("note").value
                 this.customers.AddressLine1 = document.getElementById("address").value
                 this.customers.AddressLine2 = document.getElementById("address2").value
-                
+                this.customers.DefaultAddress = document.getElementById("default").checked
                 this.customers.City = document.getElementById("city").value
                 this.customers.ZipCode = document.getElementById("zip").value
                 this.customers.Country = document.getElementById("country").value
                 this.customers.AddressID = document.getElementById("addID").value
-                this.customers.CustomerID = document.getElementById("cusID").value                 
+                this.customers.CustomerID = document.getElementById("cusID").value   
+                
+                console.log(this.customers)
 
                  let url = 'http://localhost:3000/editCustomer/';
 
