@@ -30,16 +30,16 @@ app.listen(PORT, () => {
 // };
 
 //Chris Computer
-// var config = {
-//     user: 'CZ',
-//     password: 'CZ1',
-//     server: 'DESKTOP-O78Q1FG',
-//     database: 'HargroveBlades',
-//     port: 1433,
-//     options: {
-//         trustServerCertificate: true
-//     }
-// }
+var config = {
+    user: 'CZ',
+    password: 'CZ1',
+    server: 'DESKTOP-O78Q1FG',
+    database: 'HargroveBlades',
+    port: 1433,
+    options: {
+        trustServerCertificate: true
+    }
+}
 
 //Bryan Comnputer
 // var config = {
