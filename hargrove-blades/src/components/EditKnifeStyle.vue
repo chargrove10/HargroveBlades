@@ -18,9 +18,9 @@
         </div>
     
     <div class="tab-div2" style="min-height:auto">
-        <div style="background-color: lightgrey">
+        <div style="background-color: lightgrey" >
 
-                <div style="width:40%; float: left; transform:translate(10%,0) ">
+                <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
                         <label for="styleName">Style Name:</label><br/>
                         <input type="text" id="styleName" name="styleName" v-model="knife.StyleName"/><br/>
@@ -57,7 +57,6 @@ import axios from 'axios'
         data(){
             return{
                 Knives: [],
-                isShow: false,
                 knife: {
                     StyleName: '',
                     KnifeStyleActive: '',
@@ -89,6 +88,22 @@ import axios from 'axios'
 
             }
         },
+        created(){
+            let sid = this.$route.params.styleID;
+            
+            let active = this.$route.params.flag
+
+            let url2 = 'http://localhost:3000/editKnifeStyle/' + sid + '&' + "'"+active+"'"
+
+             axios.get(url2).then((response) => {
+                 const data = response.data
+                 //had to loop through Customer to assign to customers{}
+                 this.Knives = data
+
+             }).catch(err => {
+                 console.log(err)
+             })
+        }
 
     }
 

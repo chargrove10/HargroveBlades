@@ -24,9 +24,10 @@
                 <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
                         <label for="steelName">Steel Name:</label><br/>
-                        <input type="text" id="steelName" name="steelName" value="Test"/><br/>
+                        <input type="text" id="steelName" name="steelName"  v-model="steel.SteelName"/><br/>
                         <label for="steelActive">Steel Ative:</label><br/>
-                        <input type="text" id="steelActive" name="steelActive" value="Test"/><br/>   
+                       <input type="checkbox" id="active" name="active" v-model="steel.KnifeSteelActive"/>                                        
+                        <br/>  
                         
                     </form>
                 </div>
@@ -34,13 +35,13 @@
                 <div style="width:40%; margin-left: 50%">
                     <form>
                         <label for="steelDesc">Steel Description:</label><br/>
-                        <textarea id="steelDesc" rows="4" cols="24"></textarea><br /> 
+                        <textarea id="steelDesc"  v-model="steel.SteelDesc" rows="4" cols="24"></textarea><br /> 
                     </form>
                 </div>
                 
             <div>
                 <div class="tab-divider"/>
-                <button style="transform:translate(90%,0)">Save</button>  
+                <button style="transform:translate(90%,0)" v-on:click="addKnifeSteel()">Save</button>  
             </div>
     
 
@@ -51,13 +52,45 @@
 </template>
 
 <script>
+import axios from 'axios'
 
     export default {
+        data(){
+            return{
+                Steels: [],
+                isShow: false,
+                steel: {
+                    SteelName: '',
+                    KnifeSteelActive: '',
+                    SteelDesc: '',
+                }
+            }
+        },
         methods: {
             home() {
                 this.$router.push('/customerList')
+            },
+
+            addKnifeSteel(){
+
+                let url = 'http://localhost:3000/steelTypeAdd'
+
+                let vm = this
+
+                axios.post(url, vm.steel).then(() =>{
+                    this.$router.push('/bladeDetails')
+                    this.steel = {
+                        SteelName: '',
+                        KnifeSteelActive: '',
+                        SteelDesc: '',
+                    }
+                }).catch(err =>{
+                    console.log(err)
+                });
+
             }
-        }
+        },
+
     }
 
 </script>

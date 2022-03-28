@@ -19,6 +19,11 @@ import Status from '../components/Status.vue'
 import OrderStatus from '../components/OrderStatus.vue'
 import ProductStatus from '../components/ProductStatus.vue'
 import OrderLineStatus from '../components/OrderLineStatus.vue'
+import EditKnifeStyle from '../components/EditKnifeStyle.vue'
+import CreateCustomerStatus from '../components/CreateCustomerStatus.vue'
+import CreateOrderStatus from '../components/CreateOrderStatus.vue'
+import CreateProductStatus from '../components/CreateProductStatus.vue'
+import CreateOrderLineStatus from '../components/CreateOrderLineStatus.vue'
 
 const routes = [
     {
@@ -122,6 +127,31 @@ const routes = [
         path: "/orderLinestatus",
         name: "OrderLineStatus",
         component: OrderLineStatus
+    },
+    {
+        path: "/createCustomerStatus",
+        name: "CreateCustomerStatus",
+        component: CreateCustomerStatus
+    },
+    {
+        path: "/createOrderStatus",
+        name: "CreateOrderStatus",
+        component: CreateOrderStatus
+    },
+    {
+        path: "/createProductStatus",
+        name: "CreateProductStatus",
+        component: CreateProductStatus
+    },
+    {
+        path: "/createOrderLineStatus",
+        name: "CreateOrderLineStatus",
+        component: CreateOrderLineStatus
+    },
+    {
+        path: "/editKnifeStyle/",
+        name: "EditKnifeStyle",
+        component: EditKnifeStyle
     },
 
 ]

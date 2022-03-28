@@ -2,7 +2,7 @@
 <div class="form-div">
 
     <div style="text-align:center;margin-bottom:20px">
-        <header>Add New Knife Style</header>
+        <header>Add New Order Line Status</header>
     </div>
       
     <div class="tab-div1">
@@ -22,25 +22,22 @@
 
                 <div style="width:40%; float: left; transform:translate(10%,0) ">
                     <form>
-                        <label for="styleName">Style Name:</label><br/>
-                        <input type="text" id="styleName" name="styleName" v-model="knife.StyleName"/><br/>
-                        <label >Knife Style Active:</label>
-                        <input type="checkbox" id="active" name="active" v-model="knife.KnifeStyleActive"/>                                        
-                        <br/>  
+                        <label for="statusName">Status Name:</label><br/>
+                        <input type="text" id="statuseName" name="statusName" v-model="orLStatus.OrderLineStatusName"/><br/>
                         
                     </form>
                 </div>
 
                 <div style="width:40%; margin-left: 50%">
                     <form>
-                        <label for="styleDesc">Style Description:</label><br/>
-                        <textarea id="styleDesc" v-model="knife.StyleDesc" rows="4" cols="24"></textarea><br /> 
+                        <label for="statusDesc">Status Description:</label><br/>
+                        <textarea id="statusDesc" v-model="orLStatus.OrderLineStatusDesc" rows="4" cols="24"></textarea><br /> 
                     </form>
                 </div>
 
             <div>
                 <div class="tab-divider"/>
-                <button style="transform:translate(90%,0)" v-on:click="addKnifeStyle()">Save</button>  
+                <button style="transform:translate(90%,0)" v-on:click="addOrderLineStatus()">Save</button>  
             </div> 
 
         </div>
@@ -56,12 +53,11 @@ import axios from 'axios'
     export default {
         data(){
             return{
-                Knives: [],
+                OrLStatus: [],
                 isShow: false,
-                knife: {
-                    StyleName: '',
-                    KnifeStyleActive: '',
-                    StyleDesc: '',
+                orLStatus: {
+                    OrderLineStatusName: '',
+                    OrderLineStatusDesc: '',
                 }
             }
         },
@@ -70,18 +66,17 @@ import axios from 'axios'
                 this.$router.push('/customerList')
             },
 
-            addKnifeStyle(){
+            addOrderLineStatus(){
 
-                let url = 'http://localhost:3000/knifeStyleAdd'
+                let url = 'http://localhost:3000/addOrderLineStatus'
 
                 let vm = this
 
-                axios.post(url, vm.knife).then(() =>{
-                    this.$router.push('/knifeStyleList')
-                    this.knife = {
-                        StyleName: '',
-                        KnifeStyleActive: '',
-                        StyleDesc: ''
+                axios.post(url, vm.orLStatus).then(() =>{
+                    this.$router.push('/orderLineStatus')
+                    this.orLStatus = {
+                        OrderStatusName: '',
+                        OrderStatusDesc: '',
                     }
                 }).catch(err =>{
                     console.log(err)

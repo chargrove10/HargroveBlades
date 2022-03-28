@@ -64,7 +64,7 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'CreateOrder'}"><button>Create Status</button></router-link>
+                    <router-link :to="{ name: 'CreateCustomerStatus'}"><button>Create Status</button></router-link>
                 </div>
                 
         </div>

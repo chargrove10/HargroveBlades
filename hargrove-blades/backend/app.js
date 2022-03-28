@@ -2,7 +2,8 @@ const express = require('express');
 const sql = require('mssql');
 //const bodyParser = require('body-parser');
 //var router = express.Router();
-const cors = require('cors')
+const cors = require('cors');
+const res = require('express/lib/response');
 
 const app = express();
 const PORT = 3000;
@@ -181,7 +182,6 @@ app.get('/editCustomer/:id&:flag', async (req, res) => {
 });
 
 app.put('/editCustomer/', async (req, res) => {
-
     try {
         //making 'pool' awaiting the connection
         let pool = await sql.connect(config)
@@ -239,6 +239,7 @@ app.get('/productList', async (req, res) => {
         res.status(500).json(err)
     }
 });
+
 //product inserting
 app.post('/productAdd/', async (req,res) => {
     try {
@@ -268,6 +269,7 @@ app.post('/productAdd/', async (req,res) => {
         res.send(err)
     }
 });
+
 //product Productstatus drop down
 app.get('/productDropDown', async (req, res) => {
     try {
@@ -284,6 +286,7 @@ app.get('/productDropDown', async (req, res) => {
         res.status(500).json(err)
     }
 });
+
 //Knife Type Drop down
 app.get('/knifeDropDown', async (req, res) => {
     try {
@@ -300,6 +303,7 @@ app.get('/knifeDropDown', async (req, res) => {
         res.status(500).json(err)
     }
 });
+
 //Steel Type Drop down
 app.get('/steelDropDown', async (req, res) => {
     try {
@@ -353,6 +357,25 @@ app.get('/bladeDetails', async (req, res) => {
     }
 });
 
+app.post('/steelTypeAdd', async (req,res) =>{
+    try{
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            .input('SteelName', req.body.SteelName)
+            .input('KnifeSteelActive', req.body.KnifeSteelActive)
+            .input('SteelDesc', req.body.SteelDesc)
+            .query('INSERT INTO KnifeSteel (SteelName, KnifeSteelActive, SteelDesc) Values(@Steelname, @KnifeSteelActive, @SteelDesc) SELECT SCOPE_IDENTITY() AS SteelID');
+
+        const steel = result.recordset;
+
+        res.send(steel)
+    } catch (err){
+        console.log(err)
+    }
+});
+
 //Knife Style CRUD Starts Here
 app.get('/knifeStyleList', async (req, res) => {
     try {
@@ -370,6 +393,46 @@ app.get('/knifeStyleList', async (req, res) => {
     }
 });
 
+app.post('/knifeStyleAdd', async (req,res) =>{
+    try{
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //Inserts into the table KnifeStyle
+            .input('StyleName', req.body.StyleName)
+            .input('KnifeStyleActive', req.body.KnifeStyleActive)
+            .input('StyleDesc', req.body.StyleDesc)
+            .query('INSERT INTO KnifeStyle (StyleName, KnifeStyleActive, StyleDesc) Values(@StyleName, @KnifeStyleActive, @StyleDesc) SELECT SCOPE_IDENTITY() AS StyleID');
+
+        const style = result.recordset;
+
+        res.send(style)
+    } catch (err){
+        console.log(err)
+    }
+});
+
+app.get('/ediKnifeStyle/:id&:flag', async (req, res) => {
+
+    let id = req.params.id
+    let flag = req.params.flag
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT StyleName. KnifeStyleActive, StyleDesc WHERE StyleID = "+id +"AND StyleDesc = "+flag);
+        //let customers = result.recordset;
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+    } catch (err){
+        console.log(err)
+    }
+});
 
 //Reports Start Here
 app.get('/', async (req, res) => {
@@ -464,9 +527,7 @@ app.get('/priceEstimate', async (req, res) => {
     }
 });
 
-
-
-//Status CRUD starts here
+//Customer Status CRUD starts here
 app.get('/status', async (req, res) => {
     try {
         //making 'pool' awaiting the connection
@@ -483,6 +544,26 @@ app.get('/status', async (req, res) => {
     }
 });
 
+app.post('/addCustomerStatus', async (req,res) =>{
+    try{
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //Inserts into the table CustomerStatus
+            .input('CustomerStatusName', req.body.CustomerStatusName)
+            .input('CustomerStatusDesc', req.body.CustomerStatusDesc)
+            .query('INSERT INTO CustomerStatus (CustomerStatusName, CustomerStatusDesc) Values(@CustomerStatusName, @CustomerStatusDesc) SELECT SCOPE_IDENTITY() AS CustomerStatusID');
+
+        const cStatus = result.recordset;
+
+        res.send(cStatus)
+    } catch (err){
+        console.log(err)
+    }
+});
+
+//Order Status CRUD starts here
 app.get('/orderStatus', async (req, res) => {
     try {
         //making 'pool' awaiting the connection
@@ -499,6 +580,26 @@ app.get('/orderStatus', async (req, res) => {
     }
 });
 
+app.post('/addOrderStatus', async (req,res) =>{
+    try{
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //Inserts into the table OrderStatus
+            .input('OrderStatusName', req.body.OrderStatusName)
+            .input('OrderStatusDesc', req.body.OrderStatusDesc)
+            .query('INSERT INTO OrderStatus (OrderStatusName, OrderStatusDesc) Values(@OrderStatusName, @OrderStatusDesc) SELECT SCOPE_IDENTITY() AS OrderStatusID');
+
+        const cStatus = result.recordset;
+
+        res.send(cStatus)
+    } catch (err){
+        console.log(err)
+    }
+});
+
+//Product Status CRUD starts here
 app.get('/productStatus', async (req, res) => {
     try {
         //making 'pool' awaiting the connection
@@ -515,6 +616,26 @@ app.get('/productStatus', async (req, res) => {
     }
 });
 
+app.post('/addProductStatus', async (req,res) =>{
+    try{
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //Inserts into the table OrderStatus
+            .input('ProductStatusName', req.body.ProductStatusName)
+            .input('ProductStatusDesc', req.body.ProductStatusDesc)
+            .query('INSERT INTO ProductStatus (ProductStatusName, ProductStatusDesc) Values(@ProductStatusName, @ProductStatusDesc) SELECT SCOPE_IDENTITY() AS ProductStatusID');
+
+        const cStatus = result.recordset;
+
+        res.send(cStatus)
+    } catch (err){
+        console.log(err)
+    }
+});
+
+//Order Line Status CRUD starts here
 app.get('/orderLineStatus', async (req, res) => {
     try {
         //making 'pool' awaiting the connection
@@ -528,5 +649,24 @@ app.get('/orderLineStatus', async (req, res) => {
         res.send(orderLineStat)
     } catch (err){
         res.status(500).json(err)
+    }
+});
+
+app.post('/addOrderLineStatus', async (req,res) =>{
+    try{
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //Inserts into the table OrderStatus
+            .input('OrderLineStatusName', req.body.OrderLineStatusName)
+            .input('OrderLineStatusDesc', req.body.OrderLineStatusDesc)
+            .query('INSERT INTO OrderLineStatus (OrderLineStatusName, OrderLineStatusDesc) Values(@OrderLineStatusName, @OrderLineStatusDesc) SELECT SCOPE_IDENTITY() AS OrderLineStatusID');
+
+        const cStatus = result.recordset;
+
+        res.send(cStatus)
+    } catch (err){
+        console.log(err)
     }
 });

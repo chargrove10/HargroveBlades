@@ -15,14 +15,13 @@
                 <a :href="href" @click="navigate">Home</a>
                 </router-link>
                 <div class="tab-divider"></div>
-                <router-link to="/knifeStyleList" custom v-slot="{navigate, href}">
-                <a :href="href" @click="navigate">Knife Style</a>
-                </router-link>
-                <div class="tab-divider"></div>
                 <router-link to="/bladeDetails" custom v-slot="{navigate, href}">
                 <a :href="href" @click="navigate">Steel Type</a>
                 </router-link>
-                
+                <div class="tab-divider"></div>
+                <router-link to="/knifeStyleList" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Knife Style</a>
+                </router-link>
             </div>
 
         </div>
