@@ -30,28 +30,28 @@ app.listen(PORT, () => {
 // };
 
 //Chris Computer
-// var config = {
-//     user: 'CZ',
-//     password: 'CZ1',
-//     server: 'DESKTOP-O78Q1FG',
-//     database: 'HargroveBlades',
-//     port: 1433,
-//     options: {
-//         trustServerCertificate: true
-//     }
-// }
-
-//Bryan Comnputer
 var config = {
-    user: 'BG2',
-    password: 'BG2',
-    server: 'DESKTOP-94E3EIO',
+    user: 'CZ',
+    password: 'CZ1',
+    server: 'DESKTOP-O78Q1FG',
     database: 'HargroveBlades',
     port: 1433,
     options: {
         trustServerCertificate: true
     }
 }
+
+//Bryan Comnputer
+// var config = {
+//     user: 'BG2',
+//     password: 'BG2',
+//     server: 'DESKTOP-94E3EIO',
+//     database: 'HargroveBlades',
+//     port: 1433,
+//     options: {
+//         trustServerCertificate: true
+//     }
+// }
 
 //customer List Page
 
@@ -239,9 +239,74 @@ app.get('/productList', async (req, res) => {
         res.status(500).json(err)
     }
 });
+//product creation screen
+app.get('/product33', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT P.SerialNo, PS.ProductStatusID, PS.ProductStatusName, style.StyleID, style.StyleName, steel.SteelID, steel.SteelName, " + 
+            "P.HandleMaterial, P.BladeLength, P.OverallLength, P.Embellishments " +
+            "FROM Product P JOIN KnifeStyle style ON P.StyleID = style.StyleId " + 
+            "JOIN KnifeSteel steel ON P.SteelID = steel.SteelID " + 
+            "JOIN ProductStatus PS ON P.ProductStatusId = PS.ProductStatusID");
+        const products = result.recordset;
 
+        res.send(products)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+//product Productstatus drop down
+app.get('/productDropDown', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT ProductStatusID, ProductStatusName FROM ProductStatus");
+        const productStatus = result.recordset;
 
+        res.send(productStatus)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+//Knife Type Drop down
+app.get('/knifeDropDown', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT StyleID, StyleName FROM KnifeStyle ORDER BY StyleID");
+        const knifeStatus = result.recordset;
 
+        res.send(knifeStatus)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+//Steel Type Drop down
+app.get('/steelDropDown', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT SteelID, SteelName FROM KnifeSteel ORDER BY SteelID");
+        const steelStatus = result.recordset;
+
+        res.send(steelStatus)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
 
 
 //Order CRUD starts here
