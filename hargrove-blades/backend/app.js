@@ -30,16 +30,16 @@ app.listen(PORT, () => {
 // };
 
 //Chris Computer
-var config = {
-    user: 'CZ',
-    password: 'CZ1',
-    server: 'DESKTOP-O78Q1FG',
-    database: 'HargroveBlades',
-    port: 1433,
-    options: {
-        trustServerCertificate: true
-    }
-}
+// var config = {
+//     user: 'CZ',
+//     password: 'CZ1',
+//     server: 'DESKTOP-O78Q1FG',
+//     database: 'HargroveBlades',
+//     port: 1433,
+//     options: {
+//         trustServerCertificate: true
+//     }
+// }
 
 //Bryan Comnputer
 // var config = {
@@ -239,24 +239,33 @@ app.get('/productList', async (req, res) => {
         res.status(500).json(err)
     }
 });
-//product creation screen
-app.get('/product33', async (req, res) => {
+//product inserting
+app.post('/productAdd/', async (req,res) => {
     try {
         //making 'pool' awaiting the connection
         let pool = await sql.connect(config)
         //making result awaiting the request to the connection
         let result = await pool.request()
-            //executes the stored procedure "GetCustomers"
-            .query("SELECT P.SerialNo, PS.ProductStatusID, PS.ProductStatusName, style.StyleID, style.StyleName, steel.SteelID, steel.SteelName, " + 
-            "P.HandleMaterial, P.BladeLength, P.OverallLength, P.Embellishments " +
-            "FROM Product P JOIN KnifeStyle style ON P.StyleID = style.StyleId " + 
-            "JOIN KnifeSteel steel ON P.SteelID = steel.SteelID " + 
-            "JOIN ProductStatus PS ON P.ProductStatusId = PS.ProductStatusID");
-        const products = result.recordset;
 
-        res.send(products)
-    } catch (err){
-        res.status(500).json(err)
+            .input('StyleID_p', sql.Int,  req.body.StyleID)
+            .input('SteelID_p', sql.Int,  req.body.SteelID)
+            .input('ProductStatusID_p', sql.Int, req.body.ProductStatusID)
+            .input('CompleteDate_p', sql.Date,  req.body.CompleteDate)
+            .input('Price_p',sql.Float, req.body.Price)
+            .input('SerialNo_p', req.body.SerialNo)
+            .input('OverallLength_p',sql.Float, req.body.OverallLength)
+            .input('BladeFinish_p', req.body.BladeFinish)
+            .input('BladeLength_p',sql.Float, req.body.BladeLength)
+            .input('Embellishments_p', req.body.Embellishments)
+            .input('HandleMaterial_p', req.body.HandleMaterial)
+            .input('ProductNotes_p', req.body.ProductNotes)
+            //sample script will be changed later
+            .execute('dbo.InsertProduct')
+
+        const product = result.recordset
+        res.send(product)
+    } catch (err) {
+        res.send(err)
     }
 });
 //product Productstatus drop down
