@@ -46,13 +46,13 @@
                 <div>
                     <div class="cform1">
                         <label>Order Number</label>
-                        <input type="search" placeholder="Search" class="search-field" />
+                        <input type="search" id="number" placeholder="Search" class="search-field" />
                        
                     </div>
                     <div class="cform2">
                         <label>Order Date</label>
-                        <input type="search" placeholder="Search" class="search-field" />
-                         <button type="submit" style="margin-left:2%">Apply Filter</button>
+                        <input type="search" id="date" placeholder="Search" class="search-field" />
+                         <button type="submit" style="margin-left:2%" v-on:click="applyFilter()">Apply Filter</button>
                     
                     </div>
 
@@ -139,6 +139,38 @@ export default {
 
             customer() {
                 this.$router.push('/customerList')
+            },
+
+            async applyFilter() {
+                               
+                let number = document.getElementById('number').value;
+                let date = document.getElementById('date').value;
+
+                console.log(number)
+                console.log(date)
+                
+
+                if ((number =="" || number ==null) & (date =="" || date==null)) {
+                    this.refreshPage();
+                }
+                
+                //this is the link to filter by the fields selected
+                let url = 'http://localhost:3000/orderList/' + "'"+number+"'" + '&' + "'" +date+"'";
+                
+
+                axios.get(url)
+                    .then(response => {
+                    
+                    this.Orders=response.data
+                    console.log(response.data)
+                });
+  
+            },
+
+            refreshPage() {
+                //This is refreshing the page so that the table will load properly once he zeroes out search fields
+                this.$router.go(0);
+
             },
 
         },

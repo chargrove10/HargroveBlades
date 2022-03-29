@@ -390,6 +390,28 @@ app.get('/orderList', async (req, res) => {
     }
 });
 
+//Order List Filtering
+app.get('/orderList/:number&:date', async (req, res) => {
+
+    let number = req.params.number;
+    let date = req.params.date;
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT C.CustomerFirstName, C.CustomerLastName, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance "+
+            "FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID WHERE OrderNumber = " + number + "OR OrderDate = " + date);
+        const customers = result.recordset;
+
+        res.send(customers)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
 //Blade Detail CRUD Starts Here
 app.get('/bladeDetails', async (req, res) => {
     try {

@@ -172,8 +172,7 @@ export default {
             //},
 
             async applyFilter() {
-                
-                
+                               
                 let Cname = document.getElementById('nameValue').value;
                 let Cphone = document.getElementById('phoneValue').value;
                 
@@ -192,10 +191,7 @@ export default {
                     this.Customers=response.data
                     console.log(response.data)
                 });
-                
-                
-
-                
+  
             },
 
             refreshPage() {
