@@ -111,7 +111,38 @@ app.post('/customer', async (req,res) => {
              console.log(err)
          }
     
-})
+});
+
+app.post('/addAddress', async (req,res) => {
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+            //gather inputs
+            .input('AddressLine1_p',  req.body.AddressLine1)
+            .input('AddressLine2_p',  req.body.AddressLine2)
+            .input('DefaultAddress_p',  req.body.DefaultAddress)
+            .input('City_p',  req.body.City)
+            //need to pass over StateID from the dropdown
+            .input('StateID_p',  req.body.StateID)
+            .input('ZipCode_p',  req.body.ZipCode)
+            .input('Country_p',  req.body.Country)
+           
+            //executes the stored procedure "GetCustomers"
+            .execute("dbo.CreateNewCustomer");
+        const customers = result.recordset;
+
+        res.send(customers)
+        console.log(customers)
+    } catch (err){
+        res.send(err)
+        console.log(err)
+    }
+
+});
 
 //this should run a stored procedure using async functions
 app.get('/customerList', async (req, res) => {
@@ -189,11 +220,11 @@ app.put('/editCustomer/', async (req, res) => {
         let result = await pool.request()
            
             //gather inputs
-            .input('CustomerFirstName_p', sql.VarChar, req.body.CustomerFirstName)
-            .input('CustomerLastName_p', sql.VarChar, req.body.CustomerLastName)
-            .input('CustomerPhone_p', sql.VarChar,  req.body.CustomerPhone)
-            .input('CustomerEmail_p', sql.VarChar,  req.body.CustomerEmail)
-            .input('CustomerNote_p', sql.VarChar,  req.body.CustomerNote)
+            .input('CustomerFirstName_p', req.body.CustomerFirstName)
+            .input('CustomerLastName_p',  req.body.CustomerLastName)
+            .input('CustomerPhone_p',  req.body.CustomerPhone)
+            .input('CustomerEmail_p',  req.body.CustomerEmail)
+            .input('CustomerNote_p',  req.body.CustomerNote)
             .input('AddressLine1_p', sql.VarChar,  req.body.AddressLine1)
             .input('AddressLine2_p', sql.VarChar,  req.body.AddressLine2)
             .input('DefaultAddress_p', sql.Bit,  req.body.DefaultAddress)
@@ -206,7 +237,7 @@ app.put('/editCustomer/', async (req, res) => {
             .input('CustomerID_p', sql.Int, req.body.CustomerID)
            
             //executes the stored procedure "GetCustomers"
-            .execute("dbo.UpdateCustomer");
+            .execute("UpdateCustomer");
         const customers = result.recordset;
 
         res.send(customers)

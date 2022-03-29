@@ -90,6 +90,7 @@
                                 <td>{{customer.City}}</td>
                                 <td>{{customer.StateName}}</td>
                                 <td>{{customer.DefaultAddress}}</td>
+                                <td>{{customer.CustomerID}}</td>
                                 
                                 
                                 <td><router-link :to="{ name: 'EditCustomer', params: {customerID: customer.CustomerID, flag: customer.DefaultAddress}}">Edit</router-link></td>

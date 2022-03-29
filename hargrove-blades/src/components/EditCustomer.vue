@@ -63,7 +63,8 @@
                     </form>
                 </div>
 
-                <button style="transform:translate(90%,0)" v-on:click=handleEdit() >Save</button>
+                <button style="transform:translate(60%,0)"> Add Address </button>
+                <button style="transform:translate(130%,0)" v-on:click="handleEdit()" >Save</button>
 
         </div>
     </div>
@@ -95,7 +96,7 @@ import axios from 'axios'
                     AddressID: '',
                     CustomerID: ''
                 },
-                
+                State: [],
                 state: {},
             
             }
@@ -153,7 +154,7 @@ import axios from 'axios'
                 
                 console.log(this.customers)
 
-                 let url = 'http://localhost:3000/editCustomer/';
+                  let url = 'http://localhost:3000/editCustomer/';
 
                  axios.put(url, this.customers).then((response) => {
                      console.log(response)
@@ -170,6 +171,7 @@ import axios from 'axios'
                 //this is assigning the StateID value from dropdown to the customer.StateID object
                 this.customers.StateID = event.target.value
                 console.log(this.customers.StateID)
+                
                 
             }
         }
