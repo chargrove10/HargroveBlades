@@ -149,6 +149,35 @@ export default {
                 this.$router.push('/customerList')
             },
 
+            async applyFilter() {
+                               
+                let Cname = document.getElementById('nameValue').value;
+                let Cphone = document.getElementById('phoneValue').value;
+                
+
+                if ((Cname =="" || Cname ==null) & (Cphone =="" || Cphone==null)) {
+                    this.refreshPage();
+                }
+                
+                //this is the link to filter by the fields selected
+                let url = 'http://localhost:3000/customerList/' + "'"+Cname+"'" + '&' + "'" +Cphone+"'";
+                
+
+                axios.get(url)
+                    .then(response => {
+                    
+                    this.Customers=response.data
+                    console.log(response.data)
+                });
+  
+            },
+
+            refreshPage() {
+                //This is refreshing the page so that the table will load properly once he zeroes out search fields
+                this.$router.go(0);
+
+            },
+
         },
         created() {
 
