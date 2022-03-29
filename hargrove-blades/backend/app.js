@@ -122,6 +122,7 @@ app.post('/addAddress', async (req,res) => {
         let result = await pool.request()
            
             //gather inputs
+            .input('CustomerID_p', req.body.CustomerID)
             .input('AddressLine1_p',  req.body.AddressLine1)
             .input('AddressLine2_p',  req.body.AddressLine2)
             .input('DefaultAddress_p',  req.body.DefaultAddress)
@@ -131,18 +132,19 @@ app.post('/addAddress', async (req,res) => {
             .input('ZipCode_p',  req.body.ZipCode)
             .input('Country_p',  req.body.Country)
            
-            //executes the stored procedure "GetCustomers"
-            .execute("dbo.CreateNewCustomer");
-        const customers = result.recordset;
+            //executes the stored procedure "AddAddress"
+            .execute("dbo.Address_Create");
+        const address = result.recordset;
 
-        res.send(customers)
-        console.log(customers)
+        res.send(address)
+        console.log(address)
     } catch (err){
         res.send(err)
         console.log(err)
     }
 
 });
+
 
 //this should run a stored procedure using async functions
 app.get('/customerList', async (req, res) => {

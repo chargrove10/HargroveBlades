@@ -24,6 +24,7 @@ import CreateCustomerStatus from '../components/CreateCustomerStatus.vue'
 import CreateOrderStatus from '../components/CreateOrderStatus.vue'
 import CreateProductStatus from '../components/CreateProductStatus.vue'
 import CreateOrderLineStatus from '../components/CreateOrderLineStatus.vue'
+import AddAddress from '../components/AddAddress.vue'
 
 const routes = [
     {
@@ -42,6 +43,11 @@ const routes = [
         path:"/customer",
         name: "CustomerDetail",
         component: CustomerDetail
+    },
+    {
+        path:"/addAddress/:customerID",
+        name: "AddAddress",
+        component: AddAddress
     },
     {
         path: "/product",

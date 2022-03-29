@@ -19,7 +19,7 @@
       
 
     <div class="tab-div2" style="min-height:0">
-        <div style="background-color: lightgrey" v-for="customers in Customer" :key="customers.CustomerID">
+        <div style="background-color: lightgrey">
 
                 <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
@@ -55,6 +55,7 @@
                 </div>
 
                 <button style="transform:translate(90%,0)" v-on:click="handleAdd()" >Save</button>
+                
 
         </div>
     </div>
@@ -98,12 +99,13 @@ import axios from 'axios'
             }).catch(err => {
                 console.log(err)
             });
+
+            let cid = this.$route.params.customerID;
+            this.address.CustomerID = cid;
+            console.log(this.address.CustomerID)
   
         },
         methods: {
-            home() {
-                this.$router.push('/customerList')
-            },
 
             handleAdd() {
 
@@ -119,7 +121,7 @@ import axios from 'axios'
                 console.log(this.address)
 
                 //change to add an address
-                  let url = 'http://localhost:3000/addAddress/';
+                  let url = 'http://localhost:3000/addAddress';
 
                  axios.post(url, this.address).then((response) => {
                      console.log(response)
