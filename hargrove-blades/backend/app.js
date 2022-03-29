@@ -206,6 +206,77 @@ app.get('/customerList/:name&:phone', async (req, res) => {
     }
 });
 
+//Get Customer data based on id
+app.get('/getCustomer/:id', async (req,res) => {
+    let id = req.params.id;
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            //might need to make it so customerstatus is active here or on the main screen
+            .query("Select CustomerID, CustomerFirstName, CustomerLastName FROM Customer WHERE CustomerID = " +id)
+
+        const customer = result.recordset
+        res.send(customer)
+    } catch(err){
+        console.log(err)
+    }
+});
+//Get Product information for Order Creation
+app.get('/getProduct', async (req,res) => {
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            .query("Select ProductID, SerialNo FROM Product WHERE ProductStatusID = 2")
+
+        const product = result.recordset
+        res.send(product)
+    } catch(err){
+        console.log(err)
+    }
+});
+//Get Address information for Order Creation
+app.get('/getAddress/:id', async (req,res) => {
+    let id = req.params.id;
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            //might need to make it so customerstatus is active here or on the main screen
+            .query("Select ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode" +
+            " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.CustomerID = " +id)
+
+        const address = result.recordset
+        res.send(address)
+    } catch(err){
+        console.log(err)
+    }
+});
+//Get OrderStatus Information for Order Creation
+app.get('/getOrderStatus', async (req,res) => {
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            //might need to make it so customerstatus is active here or on the main screen
+            .query("SELECT * FROM OrderStatus")
+
+        const status = result.recordset
+        res.send(status)
+    } catch(err){
+        console.log(err)
+    }
+});
+
 app.get('/editCustomer/:id&:flag', async (req, res) => {
 
     let id = req.params.id

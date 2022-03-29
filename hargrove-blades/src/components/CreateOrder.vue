@@ -18,42 +18,67 @@
         </div>
     
     <div class="tab-div2">
-        <div style="background-color: lightgrey">
+        <div style="background-color: lightgrey; height:auto">
 
-                <div style="width:40%; float: left; transform:translate(10%,0)">
+                <div style="width:40%; float: left; transform:translate(10%,0)" v-for="customer in Customer" :key="customer.CustomerID">
                     <form>
-                        <label for="customerId">Customer ID:</label><br/>
-                        <input type="text" id="customerId" name="customerId" value="Test"/><br/>
-                        <label for="orderNumber">Order Number:</label><br/>
-                        <input type="text" id="orderNumber" name="orderNumber" value="Test"/><br/>
-                        <label for="orderDate">Order Date:</label><br/>
-                        <input type="date" id="orderDate" name="orderDate"/><br/>
-                        <label for="billingAddress">Billing Address:</label><br/>
-                        <input type="text" id="billingAddress" name="billingAddress" value="Test"/><br/>   
-                        <label for="shippingAddresses">Shipping Address:</label><br/>
-                        <input type="text" id="shippingAddress" name="shippingAddress" value="Test"/><br/>  
-                        
+                          <input type="hidden" id="cusID" v-model="customer.CustomerID"/>
+                          <label> Order Status</label><br/>
+                          <select @change="statusChange($event)">
+                            <option v-for="orderStatus in OrderStatus" :value="orderStatus.OrderStatusID" :key="orderStatus.OrderStatusID">{{orderStatus.OrderStatusName}}</option>
+                          </select><br/>
+                          <label> Customer First Name</label><br/>
+                          <input type="text" id="fname" v-model="customer.CustomerFirstName"><br/>
+                          <label> Customer Last Name</label><br/>
+                          <input type="text" id="lname" v-model="customer.CustomerLastName"><br/>
+                          <label> Serial Number</label><br/> <!-- Populate dropdown with get for Products -->
+                          <select @change="productChange($event)">
+                            <option v-for="product in Product" :value="product.ProductID" :key="product.ProductID">{{product.SerialNo}}</option>
+                          </select><br/>
+                          <label> Billing Address </label><br/>
+                          <select @change="billingChange($event)" v-model="productOrder.BillingAddressID">
+                            <option v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
+                          </select><br/>
+                          <label> Shipping Address </label><br/>
+                          <select @change="shippingChange($event)" v-model="productOrder.ShippingAddressID">
+                            <option v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
+                          </select><br/>
+                          <label> Order Notes </label><br/>
+                          <textarea id="Note" v-model="productOrder.OrderNote" rows="4" cols="24"></textarea><br />
+                          <label> Order Total </label><br/>
+                          <input type="text" id="total" v-model="productOrder.OrderTotal"><br/>
+                          <input type="hidden"/>
                     </form>
                 </div>
 
                 <div style="width:40%; margin-left: 60%">
                     <form>
-                        <label for="orderTotal">Order Total:</label><br/>
-                        <input type="text" id="orderTotal" name="orderTotal" value="Test"/><br/>
-                        <label for="payment">Payment Method:</label><br/>
-                        <input type="text" id="payment" name="payment" value="Test"/><br/>
-                        <label for="billingAmount">Billing Amount:</label><br/>
-                        <input type="text" id="billingAmount" name="billingAmount" value="Test"/><br/>
-                        <label for="balance">Balance:</label><br/>
-                        <input type="text" id="balance" name="balance" value="Test"/><br/>
-                        <label for="trackingNumber">Tracking Number:</label><br/>
-                        <input type="text" id="trackingNumber" name="trackingNumber" value="Test"/><br/>
-                        <label for="notes">Order Notes:</label><br/>
-                        <textarea id="Note" rows="4" cols="24"></textarea><br /> 
+                        <label> Balance </label><br/>
+                        <input type="text" id="balance" v-model="productOrder.Balance"><br/>
+                        <label> Billed Amount </label><br/>
+                        <input type="text" id="billed" v-model="productOrder.BilledAmount"><br/>
+                        <label> Method Of Payment </label><br/>
+                        <input type="text" id="method" v-model="productOrder.MethodOfPayment"><br/>
+                        <label> Tracking Number </label><br/>
+                        <input type="text" id="tracking" v-model="productOrder.TrackingNumber"><br/>
+                        <label> Pickup </label><br/>
+                        <input type="text" id="pickup" v-model="productOrder.CustomerPickup"><br/>
+                        <label> Pickup Date and Time </label><br/>
+                        <input type="datetime-local" id="time" v-model="productOrder.PickUpDateTime"><br/>
+                        
                         
                     </form>
                 </div>
-                
+                <div class="tab-divider"></div>
+                <div class="tab-divider"></div>
+                <div class="tab-divider"></div>
+                <div class="tab-divider"></div>
+                <div class="tab-divider"></div>
+                <div class="tab-divider"></div>
+                <div class="tab-divider"></div>
+                <div class="tab-divider"></div>
+                <div class="tab-divider"></div>
+                <div class="tab-divider"></div>
                 <button style="transform:translate(90%,0)">Save</button>
 
         </div>
@@ -63,11 +88,124 @@
 </template>
 
 <script>
-
+    import axios from 'axios'
     export default {
+
+        data() {
+            return {
+                Customer: [],
+                customer: {
+                    CustomerID: '',
+                    CustomerFirstName: '',
+                    CustomerLastName: ''
+                    },
+                Address: [],
+                address: {
+                    AddressID: '',
+                    AddressLine1: '',
+                    AddressLine2: '',
+                    StateInitials: ''
+                    //Test to add more stuff to this later
+                },
+                Product: [],
+                product:{
+                    ProductID: '',
+                    SerialNo: ''
+                },
+                ProductOrder: [],
+                productOrder: {
+                    //take from customer.CustomerID and add it here
+                    //assign with save button when pushed using getElementById
+                    CustomerID: '',
+                    OrderStatusID: '',
+                    BillingAddressID: '',
+                    ShippingAddressID: '',
+                    OrderNote: '',
+                    OrderTotal: '',
+                    MethodOfPayment: '',
+                    BilledAmount: '',
+                    Balance: '',
+                    TrackingNumber: '',
+                    CustomerPickup: '',
+                    PickUpDateTime: ''
+                },
+                OrderStatus: [],
+                orderStatus: {
+                    OrderStatusID: '',
+                    OrderStatusName: '',
+                    OrderStatusDesc: ''
+                }
+            }
+        },
+
+        created() {
+            let cid = this.$route.params.customerID;
+
+            let url2 = 'http://localhost:3000/getCustomer/' + cid 
+
+             axios.get(url2).then((response) => {
+                 const data = response.data
+                 //had to loop through Customer to assign to customers{}
+                 this.Customer = data
+
+             }).catch(err => {
+                 console.log(err)
+             });
+
+            let url = 'http://localhost:3000/getProduct';
+
+            axios.get(url).then((response) => {
+                this.Product = response.data
+                
+            }).catch(err => {
+                console.log(err)
+            });
+
+            let url3 = 'http://localhost:3000/getAddress/' + cid;
+
+            axios.get(url3).then((response) => {
+                this.Address = response.data
+                
+            }).catch(err => {
+                console.log(err)
+            });
+
+            let url4 = 'http://localhost:3000/getOrderStatus';
+
+            axios.get(url4).then((response) => {
+                this.OrderStatus = response.data
+                
+            }).catch(err => {
+                console.log(err)
+            });
+
+            
+        },
+
         methods: {
             home() {
                 this.$router.push('/customerList')
+            },
+
+            productChange(event) {
+                this.product.ProductID = event.target.value
+                console.log(this.product.ProductID)
+            },
+
+            billingChange(event) {
+                this.productOrder.BillingAddressID = event.target.value
+                console.log(this.productOrder.BillingAddressID)
+            },
+
+            shippingChange(event) {
+                this.productOrder.ShippingAddressID = event.target.value
+                console.log(this.productOrder.ShippingAddressID)
+            },
+
+            statusChange(event) {
+                this.orderStatus.OrderStatusID = event.target.value
+                console.log(this.orderStatus.OrderStatusID)
+                
             }
         }
     }

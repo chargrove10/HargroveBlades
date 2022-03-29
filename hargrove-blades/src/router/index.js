@@ -55,7 +55,7 @@ const routes = [
         component: ProductDetail
     },
     {
-        path: "/createOrder",
+        path: "/createOrder/:customerID",
         name: "CreateOrder",
         component: CreateOrder
     },

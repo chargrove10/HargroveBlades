@@ -94,6 +94,7 @@
                                 
                                 
                                 <td><router-link :to="{ name: 'EditCustomer', params: {customerID: customer.CustomerID, flag: customer.DefaultAddress}}">Edit</router-link></td>
+                                <td><router-link :to="{ name: 'CreateOrder', params: {customerID: customer.CustomerID}}"><button>Create Order</button></router-link></td>
                                 
                                 
                             </tr>
@@ -107,7 +108,6 @@
                        
                     <router-link :to="{ name: 'CustomerDetail' }"><button>Add</button></router-link>
                     <div class="divider"></div>
-                    <router-link :to="{ name: 'CreateOrder'}"><button>Create Order</button></router-link>
                 </div>
                 
 
