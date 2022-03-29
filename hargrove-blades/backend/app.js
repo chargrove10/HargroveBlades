@@ -57,6 +57,23 @@ var config = {
 //customer List Page
 
 //populates drop down list
+app.get('/cStatus', async (req,res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT CustomerStatusID, CustomerStatusName, CustomerStatusDesc FROM CustomerStatus");
+        
+        const status = result.recordset
+
+        res.send(status)
+        
+    } catch (err){
+        res.send(err)
+    }
+})
 //Customer CRUD Starts Here
 app.get('/customer', async (req,res) => {
 

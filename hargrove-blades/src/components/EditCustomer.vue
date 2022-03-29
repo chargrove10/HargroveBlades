@@ -57,6 +57,10 @@
                         <input type="text" id="zip" name="zip" v-model="customers.ZipCode"/><br/>
                         <label for="country">Country:</label><br/>
                         <input type="text" id="country" name="country" v-model="customers.Country"/><br/>
+                        <label for="status">Customer Status</label><br/>
+                        <select @change="statusChange($event)">
+                            <option v-for="status in Status" :value="status.CustomerStatusID" :key="status.CustomerStatusID">{{status.CustomerStatusName}}</option>
+                        </select>
                         <input type="hidden" id="addID" v-model="customers.AddressID"/>
                         <input type="hidden" id="cusID" v-model="customers.CustomerID"/>
                         
@@ -94,10 +98,13 @@ import axios from 'axios'
                     ZipCode: '',
                     Country: '',
                     AddressID: '',
-                    CustomerID: ''
+                    CustomerID: '',
+                    CustomerStatusID: ''
                 },
                 State: [],
                 state: {},
+                Status: [],
+                status: {}
             
             }
         },
@@ -113,6 +120,14 @@ import axios from 'axios'
             }).catch(err => {
                 console.log(err)
             });
+
+            let statusURL = 'http://localhost:3000/cStatus';
+
+            axios.get(statusURL).then((response) => {
+                this.Status = response.data
+            }).catch(err => {
+                console.log(err)
+            })
 
             let cid = this.$route.params.customerID;
             
@@ -172,7 +187,11 @@ import axios from 'axios'
                 this.customers.StateID = event.target.value
                 console.log(this.customers.StateID)
                 
-                
+            },
+
+            statusChange(event) {
+                this.customers.CustomerStatusID = event.target.value
+                console.log(this.customers.CustomerStatusID)
             }
         }
     }
