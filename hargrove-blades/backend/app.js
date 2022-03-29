@@ -290,6 +290,34 @@ app.get('/productList', async (req, res) => {
     }
 });
 
+//product filtering
+//Order List Filtering
+app.get('/productList/:serial&:knife&:steel', async (req, res) => {
+
+    let serial = req.params.serial;
+    let knife = req.params.knife;
+    let steel = req.params.steel
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT P.SerialNo, PS.ProductStatusName, style.StyleName, steel.SteelName, " + 
+            "P.HandleMaterial, P.BladeLength, P.OverallLength, P.Embellishments " +
+            "FROM Product P JOIN KnifeStyle style ON P.StyleID = style.StyleId " + 
+            "JOIN KnifeSteel steel ON P.SteelID = steel.SteelID " + 
+            "JOIN ProductStatus PS ON P.ProductStatusId = PS.ProductStatusID " +
+            "WHERE p.SerialNo = " +serial+ " OR style.StyleName = " + knife + " OR steel.SteelName = " + steel);
+        const customers = result.recordset;
+
+        res.send(customers)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
 //product inserting
 app.post('/productAdd/', async (req,res) => {
     try {

@@ -45,18 +45,18 @@
                 <div>
                     <div class="pform1">
                         <label>Serial Number</label>
-                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
+                        <input type="search" id="serial" placeholder="Search" class="search-field" style="width:40%" />
 
                     </div>
                     <div class="pform2">
                         <label>Knife Style</label>
-                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
+                        <input type="search" id="knife" placeholder="Search" class="search-field" style="width:40%" />
                                      
                     </div>
                     <div class="pform3">
                         <label>Steel Type</label>
-                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
-                        <button type="submit" style="margin-left:2%">Apply Filter</button>
+                        <input type="search" id="steel" placeholder="Search" class="search-field" style="width:40%" />
+                        <button type="submit" style="margin-left:2%" v-on:click="applyFilter()">Apply Filter</button>
                     </div>
                     
                     <div class="tab-divider"></div>
@@ -151,22 +151,22 @@ export default {
 
             async applyFilter() {
                                
-                let Cname = document.getElementById('nameValue').value;
-                let Cphone = document.getElementById('phoneValue').value;
-                
+                let serial = document.getElementById('serial').value;
+                let knife = document.getElementById('knife').value;
+                let steel = document.getElementById('steel').value
 
-                if ((Cname =="" || Cname ==null) & (Cphone =="" || Cphone==null)) {
+                if ((serial =="" || serial ==null) & (knife =="" || knife==null) & (steel =="" || steel==null)) {
                     this.refreshPage();
                 }
                 
                 //this is the link to filter by the fields selected
-                let url = 'http://localhost:3000/customerList/' + "'"+Cname+"'" + '&' + "'" +Cphone+"'";
+                let url = 'http://localhost:3000/productList/' + "'"+serial+"'" + '&' + "'" +knife+"'" + '&' + "'" +steel+"'";
                 
 
                 axios.get(url)
                     .then(response => {
                     
-                    this.Customers=response.data
+                    this.Products=response.data
                     console.log(response.data)
                 });
   
