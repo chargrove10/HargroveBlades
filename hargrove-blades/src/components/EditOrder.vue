@@ -65,9 +65,9 @@
                         <label> Tracking Number </label><br/>
                         <input type="text" id="tracking" v-model="productOrder.TrackingNumber"><br/>
                         <label> Pickup </label><br/>
-                        <input type="checkbox" id="pickup" v-model="productOrder.CustomerPickup"><br/>
+                        <input type="checkbox" id="pickup" v-model="productOrder.CustomerPickUp"><br/>
                         <label> Pickup Date and Time </label><br/>
-                        <input type="datetime-local" id="time" :value="productOrder.PickUpDateTime.slice(0,16)"><br/>
+                        <input type="datetime-local" id="time" :value="productOrder.PickUpDateTime.slice(0,16)" ><br/>
                         
                         
                         
@@ -129,7 +129,7 @@
                     BilledAmount: '',
                     Balance: '',
                     TrackingNumber: '',
-                    CustomerPickup: '',
+                    CustomerPickUp: '',
                     PickUpDateTime: '',
                     ProductID: ''
                 },
