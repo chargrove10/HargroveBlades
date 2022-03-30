@@ -2,7 +2,7 @@
 <div class="form-div">
 
     <div style="text-align:center;margin-bottom:20px">
-        <header>Add New Knife Style</header>
+        <header>Edit Knife Style</header>
     </div>
       
     <div class="tab-div1">
@@ -43,8 +43,6 @@
             <div>
                 <div class="tab-divider"/>
                 <button style="transform:translate(90%,0)" v-on:click="editKnifeStyle()">Save</button>  
-                <br />
-                <button v-on:click="getCheckedValue()">Get Checked Value</button>
 
             </div> 
 
@@ -83,6 +81,8 @@ import axios from 'axios'
 
             editKnifeStyle(){
 
+
+
                 this.knife.StyleID = document.getElementById("styleID").value
                 this.knife.StyleName = document.getElementById("styleName").value
                 this.knife.StyleDesc = document.getElementById("styleDesc").value
@@ -105,10 +105,6 @@ import axios from 'axios'
                 });
 
             },
-
-            getCheckedValue() {
-                console.log(this.knife.StyleID)
-            }
 
         },
         created(){

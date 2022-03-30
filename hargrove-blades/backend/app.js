@@ -577,7 +577,7 @@ app.get('/bladeDetails', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetKnifeSteel"
-            .query("SELECT SteelName, SteelDesc, KnifeSteelActive FROM KnifeSteel");
+            .query("SELECT SteelID, SteelName, SteelDesc, KnifeSteelActive FROM KnifeSteel");
         const blade = result.recordset;
 
         res.send(blade)
@@ -604,6 +604,56 @@ app.post('/steelTypeAdd', async (req,res) =>{
         console.log(err)
     }
 });
+
+app.get('/editSteelType/:id', async (req, res) => {
+
+    let id = req.params.id
+    
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT SteelID, SteelName, SteelDesc, KnifeSteelActive FROM KnifeSteel WHERE SteelID = " +id);
+        //let customers = result.recordset;
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+    } catch (err){
+        console.log(err)
+    }
+});
+
+app.put('/steelTypeEdit/', async (req,res) => {
+
+    // let bit = req.body.KnifeStyleActive;
+    // if (bit === true) bit = 1;
+    // else bit = 0;
+    // console.log(bit)
+    console.log(req.body.SteelID)
+    console.log(req.body.SteelName)
+    console.log(req.body.SteelDesc)
+    console.log(req.body.KnifeSteelActive)
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+        .input('SteelID_p', sql.Int, req.body.SteelID)
+        .input('SteelName_p', sql.VarChar, req.body.SteelName)
+        .input('SteelDesc_p', sql.VarChar, req.body.SteelDesc)
+        .input('KnifeSteelActive_p', sql.Bit, req.body.KnifeSteelActive)
+        .execute('UpdateKnifeSteel')
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+
+    }catch(err) {
+        console.log(err)
+    }
+})
 
 //Knife Style CRUD Starts Here
 app.get('/knifeStyleList', async (req, res) => {
@@ -794,7 +844,7 @@ app.get('/status', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomerStatus"
-            .query("SELECT CustomerStatusName, CustomerStatusDesc FROM CustomerStatus");
+            .query("SELECT CustomerStatusID, CustomerStatusName, CustomerStatusDesc FROM CustomerStatus");
         const customerStat = result.recordset;
 
         res.send(customerStat)
@@ -822,6 +872,51 @@ app.post('/addCustomerStatus', async (req,res) =>{
     }
 });
 
+app.get('/editCustomerStatus/:id', async (req, res) => {
+
+    let id = req.params.id
+    
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT CustomerStatusID, CustomerStatusName, CustomerStatusDesc FROM CustomerStatus WHERE CustomerStatusID = " +id);
+        //let customers = result.recordset;
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+    } catch (err){
+        console.log(err)
+    }
+});
+
+app.put('/CustomerStatusEdit/', async (req,res) => {
+
+    console.log(req.body.CustomerStatusID)
+    console.log(req.body.CustomerStatusName)
+    console.log(req.body.CustomerStatusDesc)
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+        .input('CustomerStatusID_p', sql.Int, req.body.CustomerStatusID)
+        .input('CustomerStatusName_p', sql.VarChar, req.body.CustomerStatusName)
+        .input('CustomerStatuslDesc_p', sql.VarChar, req.body.CustomerStatusDesc)
+        .execute('UpdateCustomerStatus')
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+
+    }catch(err) {
+        console.log(err)
+    }
+})
+
 //Order Status CRUD starts here
 app.get('/orderStatus', async (req, res) => {
     try {
@@ -830,7 +925,7 @@ app.get('/orderStatus', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetOrderStatus"
-            .query("SELECT OrderStatusName, OrderStatusDesc FROM OrderStatus");
+            .query("SELECT OrderStatusID, OrderStatusName, OrderStatusDesc FROM OrderStatus");
         const orderStat = result.recordset;
 
         res.send(orderStat)
@@ -858,6 +953,51 @@ app.post('/addOrderStatus', async (req,res) =>{
     }
 });
 
+app.get('/editOrderStatus/:id', async (req, res) => {
+
+    let id = req.params.id
+    
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT OrderStatusID, OrderStatusName, OrderStatusDesc FROM OrderStatus WHERE OrderStatusID = " +id);
+        //let customers = result.recordset;
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+    } catch (err){
+        console.log(err)
+    }
+});
+
+app.put('/OrderStatusEdit/', async (req,res) => {
+
+    console.log(req.body.OrderStatusID)
+    console.log(req.body.OrderStatusName)
+    console.log(req.body.OrderStatusDesc)
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+        .input('OrderStatusID_p', sql.Int, req.body.OrderStatusID)
+        .input('OrderStatusName_p', sql.VarChar, req.body.OrderStatusName)
+        .input('OrderStatuslDesc_p', sql.VarChar, req.body.OrderStatusDesc)
+        .execute('UpdateOrderStatus')
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+
+    }catch(err) {
+        console.log(err)
+    }
+})
+
 //Product Status CRUD starts here
 app.get('/productStatus', async (req, res) => {
     try {
@@ -866,7 +1006,7 @@ app.get('/productStatus', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetProductStatus"
-            .query("SELECT ProductStatusName, ProductStatusDesc FROM ProductStatus");
+            .query("SELECT ProductStatusID, ProductStatusName, ProductStatusDesc FROM ProductStatus");
         const productStat = result.recordset;
 
         res.send(productStat)
@@ -894,6 +1034,51 @@ app.post('/addProductStatus', async (req,res) =>{
     }
 });
 
+app.get('/editProductStatus/:id', async (req, res) => {
+
+    let id = req.params.id
+    
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT ProductStatusID, ProductStatusName, ProductStatusDesc FROM ProductStatus WHERE ProductStatusID = " +id);
+        //let customers = result.recordset;
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+    } catch (err){
+        console.log(err)
+    }
+});
+
+app.put('/ProductStatusEdit/', async (req,res) => {
+
+    console.log(req.body.ProductStatusID)
+    console.log(req.body.ProductStatusName)
+    console.log(req.body.ProductStatusDesc)
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+        .input('ProductStatusID_p', sql.Int, req.body.ProductStatusID)
+        .input('ProductStatusName_p', sql.VarChar, req.body.ProductStatusName)
+        .input('ProductStatusDesc_p', sql.VarChar, req.body.ProductStatusDesc)
+        .execute('UpdateProductStatus')
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+
+    }catch(err) {
+        console.log(err)
+    }
+})
+
 //Order Line Status CRUD starts here
 app.get('/orderLineStatus', async (req, res) => {
     try {
@@ -902,7 +1087,7 @@ app.get('/orderLineStatus', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetOrderLineStatus"
-            .query("SELECT OrderLineStatusName, OrderLineStatusDesc FROM OrderLineStatus");
+            .query("SELECT OrderLineStatusID, OrderLineStatusName, OrderLineStatusDesc FROM OrderLineStatus");
         const orderLineStat = result.recordset;
 
         res.send(orderLineStat)
@@ -929,3 +1114,48 @@ app.post('/addOrderLineStatus', async (req,res) =>{
         console.log(err)
     }
 });
+
+app.get('/editOrderLineStatus/:id', async (req, res) => {
+
+    let id = req.params.id
+    
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT OrderLineStatusID, OrderLineStatusName, OrderLineStatusDesc FROM OrderLineStatus WHERE OrderLineStatusID = " +id);
+        //let customers = result.recordset;
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+    } catch (err){
+        console.log(err)
+    }
+});
+
+app.put('/OrderLineStatusEdit/', async (req,res) => {
+
+    console.log(req.body.OrderLineStatusID)
+    console.log(req.body.OrderLineStatusName)
+    console.log(req.body.OrderLineStatusDesc)
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+        .input('OrderLineStatusID_p', sql.Int, req.body.OrderLineStatusID)
+        .input('OrderLineStatusName_p', sql.VarChar, req.body.OrderLineStatusName)
+        .input('OrderLineStatusDesc_p', sql.VarChar, req.body.OrderLineStatusDesc)
+        .execute('UpdateOrderLineStatus')
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+
+    }catch(err) {
+        console.log(err)
+    }
+})

@@ -25,6 +25,11 @@ import CreateOrderStatus from '../components/CreateOrderStatus.vue'
 import CreateProductStatus from '../components/CreateProductStatus.vue'
 import CreateOrderLineStatus from '../components/CreateOrderLineStatus.vue'
 import AddAddress from '../components/AddAddress.vue'
+import EditSteelType from '../components/EditSteelType.vue'
+import EditCustomerStatus from '../components/EditCustomerStatus.vue'
+import EditOrderStatus from '../components/EditOrderStatus.vue'
+import EditProductStatus from '../components/EditProductStatus.vue'
+import EditOrderLineStatus from '../components/EditOrderLineStatus.vue'
 import EditOrder from '../components/EditOrder.vue'
 
 const routes = [
@@ -164,6 +169,31 @@ const routes = [
         path: "/editKnifeStyle/:knifeID",
         name: "EditKnifeStyle",
         component: EditKnifeStyle
+    },
+    {
+        path: "/editSteelType/:steelID",
+        name: "EditSteelType",
+        component: EditSteelType
+    },
+    {
+        path: "/editCustomerStatus/:customerStatID",
+        name: "EditCustomerStatus",
+        component: EditCustomerStatus
+    },
+    {
+        path: "/editOrderStatus/:orderStatID",
+        name: "EditOrderStatus",
+        component: EditOrderStatus
+    },
+    {
+        path: "/editProductStatus/:productStatID",
+        name: "EditProductStatus",
+        component: EditProductStatus
+    },
+    {
+        path: "/editorderLinestatus/:orderLineStatID",
+        name: "EditOrderLineStatus",
+        component: EditOrderLineStatus
     },
 
 ]
