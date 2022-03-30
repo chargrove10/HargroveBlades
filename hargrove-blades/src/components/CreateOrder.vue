@@ -25,23 +25,29 @@
                           <input type="hidden" id="cusID" v-model="customer.CustomerID"/>
                           <label> Order Status</label><br/>
                           <select @change="statusChange($event)">
-                            <option v-for="orderStatus in OrderStatus" :value="orderStatus.OrderStatusID" :key="orderStatus.OrderStatusID">{{orderStatus.OrderStatusName}}</option>
+                            <option disabled selected>Please Select</option>
+                            <option id="status" v-for="orderStatus in OrderStatus" :value="orderStatus.OrderStatusID" :key="orderStatus.OrderStatusID">{{orderStatus.OrderStatusName}}</option>
                           </select><br/>
+                          <label>Order Date</label><br/>
+                          <input type="date" id="orderDate" v-model="productOrder.OrderDate"><br/>
                           <label> Customer First Name</label><br/>
                           <input type="text" id="fname" v-model="customer.CustomerFirstName"><br/>
                           <label> Customer Last Name</label><br/>
                           <input type="text" id="lname" v-model="customer.CustomerLastName"><br/>
                           <label> Serial Number</label><br/> <!-- Populate dropdown with get for Products -->
                           <select @change="productChange($event)">
-                            <option v-for="product in Product" :value="product.ProductID" :key="product.ProductID">{{product.SerialNo}}</option>
+                            <option disabled selected>Please Select</option>
+                            <option id="product"  v-for="product in Product" :value="product.ProductID" :key="product.ProductID">{{product.SerialNo}}</option>
                           </select><br/>
                           <label> Billing Address </label><br/>
-                          <select @change="billingChange($event)" v-model="productOrder.BillingAddressID">
-                            <option v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
+                          <select @change="billingChange($event)" >
+                            <option disabled selected>Please Select</option>
+                            <option id="billing" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
                           <label> Shipping Address </label><br/>
-                          <select @change="shippingChange($event)" v-model="productOrder.ShippingAddressID">
-                            <option v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
+                          <select @change="shippingChange($event)" >
+                            <option disabled selected>Please Select</option>
+                            <option id="shipping" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
                           <label> Order Notes </label><br/>
                           <textarea id="Note" v-model="productOrder.OrderNote" rows="4" cols="24"></textarea><br />
@@ -62,7 +68,7 @@
                         <label> Tracking Number </label><br/>
                         <input type="text" id="tracking" v-model="productOrder.TrackingNumber"><br/>
                         <label> Pickup </label><br/>
-                        <input type="text" id="pickup" v-model="productOrder.CustomerPickup"><br/>
+                        <input type="checkbox" id="pickup" v-model="productOrder.CustomerPickup"><br/>
                         <label> Pickup Date and Time </label><br/>
                         <input type="datetime-local" id="time" v-model="productOrder.PickUpDateTime"><br/>
                         
@@ -79,7 +85,10 @@
                 <div class="tab-divider"></div>
                 <div class="tab-divider"></div>
                 <div class="tab-divider"></div>
-                <button style="transform:translate(90%,0)">Save</button>
+                <div class="tab-divider"></div>
+                <div class="tab-divider"></div>
+                <div class="tab-divider"></div>
+                <button style="transform:translate(90%,0)" v-on:click="CreateOrder()">Save</button>
 
         </div>
     </div>
@@ -118,6 +127,7 @@
                     //assign with save button when pushed using getElementById
                     CustomerID: '',
                     OrderStatusID: '',
+                    OrderDate: '',
                     BillingAddressID: '',
                     ShippingAddressID: '',
                     OrderNote: '',
@@ -127,7 +137,8 @@
                     Balance: '',
                     TrackingNumber: '',
                     CustomerPickup: '',
-                    PickUpDateTime: ''
+                    PickUpDateTime: '',
+                    ProductID: ''
                 },
                 OrderStatus: [],
                 orderStatus: {
@@ -179,7 +190,6 @@
                 console.log(err)
             });
 
-            
         },
 
         methods: {
@@ -187,9 +197,53 @@
                 this.$router.push('/customerList')
             },
 
+            CreateOrder() {
+                
+                this.productOrder.CustomerID = document.getElementById("cusID").value
+                this.productOrder.OrderNote = document.getElementById("Note").value
+                this.productOrder.OrderTotal = document.getElementById("total").value
+                this.productOrder.MethodOfPayment = document.getElementById("method").value
+                this.productOrder.BilledAmount = document.getElementById("billed").value
+                this.productOrder.Balance = document.getElementById("balance").value
+                this.productOrder.TrackingNumber = document.getElementById("tracking").value
+                this.productOrder.CustomerPickup = document.getElementById("pickup").checked
+                this.productOrder.PickUpDateTime = document.getElementById("time").value
+                this.productOrder.OrderDate = document.getElementById("orderDate").value
+                this.productOrder.PickUpDateTime = document.getElementById("time").value
+
+                let url = 'http://localhost:3000/createOrder';
+
+                var vm = this;
+
+                 axios.post(url, vm.productOrder).then(() => {
+                     this.$router.push('/orderList')
+                      this.productOrder = {
+                          //assigning all values as empty
+                            CustomerID: '',
+                            OrderStatusID: '',
+                            OrderDate: '',
+                            BillingAddressID: '',
+                            ShippingAddressID: '',
+                            OrderNote: '',
+                            OrderTotal: '',
+                            MethodOfPayment: '',
+                            BilledAmount: '',
+                            Balance: '',
+                            TrackingNumber: '',
+                            CustomerPickup: '',
+                            PickUpDateTime: '',
+                            ProductID: ''
+                      }
+                 }).catch(err => {
+                     console.log(err)
+                 });
+
+                console.log(this.productOrder)
+            },
+
             productChange(event) {
-                this.product.ProductID = event.target.value
-                console.log(this.product.ProductID)
+                this.productOrder.ProductID = event.target.value
+                console.log(this.productOrder.ProductID)
             },
 
             billingChange(event) {
@@ -203,8 +257,8 @@
             },
 
             statusChange(event) {
-                this.orderStatus.OrderStatusID = event.target.value
-                console.log(this.orderStatus.OrderStatusID)
+                this.productOrder.OrderStatusID = event.target.value
+                console.log(this.productOrder.OrderStatusID)
                 
             }
         }

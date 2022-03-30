@@ -276,6 +276,43 @@ app.get('/getOrderStatus', async (req,res) => {
         console.log(err)
     }
 });
+//Order Creation
+app.post('/createOrder', async (req,res) => {
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+            //gather inputs
+            .input('CustomerID_p', req.body.CustomerID)
+            .input('OrderStatusID_p',  req.body.OrderStatusID)
+            .input('OrderDate_p',  req.body.OrderDate)
+            .input('BillingAddressID',  req.body.BillingAddressID)
+            .input('ShippingAddressID',  req.body.ShippingAddressID)
+            .input('OrderNote_p',  req.body.OrderNote)
+            .input('OrderTotal_p',  req.body.OrderTotal)
+            .input('MethodOfPayment_p',  req.body.MethodOfPayment)
+            .input('BilledAmount_p', req.body.BilledAmount)
+            .input('Balance_p', req.body.Balance)
+            .input('TrackingNumber', req.body.TrackingNumber)
+            .input('CustomerPickup_p', req.body.CustomerPickup)
+            .input('PickUpDateTime', req.body.PickUpDateTime)
+            .input('ProductID', req.body.ProductID)
+           
+            //executes the stored procedure "AddAddress"
+            .execute("dbo.SP_ProductOrder_Create");
+        const order = result.recordset;
+
+        res.send(order)
+        console.log(order)
+    } catch (err){
+        res.send(err)
+        console.log(err)
+    }
+
+});
 
 app.get('/editCustomer/:id&:flag', async (req, res) => {
 
