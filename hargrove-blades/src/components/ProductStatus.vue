@@ -55,7 +55,7 @@
                             <tr id = "cTable" v-for="productStatus in ProductStatus" :key="productStatus.ProductStatusID">
                                 <td>{{productStatus.ProductStatusName}}</td>
                                 <td>{{productStatus.ProductStatusDesc}}</td>
-                                
+                                <td><router-link :to="{ name: 'EditProductStatus', params: {productStatID: productStatus.ProductStatusID}}">Edit</router-link></td>
                             </tr>
                             
                         </table>

@@ -66,7 +66,8 @@
                             <td>{{steel.SteelName}}</td>
                             <td>{{steel.SteelDesc}}</td>
                             <td>{{steel.KnifeSteelActive}}</td>
-                            <td><router-link :to="{ name: 'Reports'}">Edit</router-link></td>
+                            <td><router-link :to="{ name: 'EditSteelType', params: {steelID: steel.SteelID, flag: steel.KnifeSteelActive}}">Edit</router-link></td>
+                            
                                 <!-- Place holder !-->
                         </tr>
                     </table>
@@ -96,7 +97,12 @@ export default {
             return {
                 Steels: [],
                 isShow: false,
-                steel: {}
+                steel: {
+                    SteelID: '',
+                    SteelName: '',
+                    SteelDesc: '',
+                    KnifeSteelDesc: ''
+                }
                 //pass over to product detail to see if we are posting or editing
                 
             }
@@ -119,7 +125,7 @@ export default {
             created() {
                 axios.get('http://localhost:3000/bladeDetails').then((res) => {
                     this.Steels=res.data;
-                    
+                    console.log(this.Steels)
                 }).catch(err => {
                      console.log(err)
                 });
