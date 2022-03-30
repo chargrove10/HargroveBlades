@@ -29,7 +29,7 @@
                             <option id="status" v-for="orderStatus in OrderStatus" :value="orderStatus.OrderStatusID" :key="orderStatus.OrderStatusID">{{orderStatus.OrderStatusName}}</option>
                           </select><br/>
                           <label>Order Date</label><br/>
-                          <input type="date" id="orderDate" v-model="productOrder.OrderDate" ><br/>
+                          <input type="date" id="orderDate" :value="productOrder.OrderDate.slice(0,10)" ><br/>
                           
                           <label> Customer First Name</label><br/>
                           <input type="text" id="fname" v-model="productOrder.CustomerFirstName" readonly><br/>
@@ -67,7 +67,8 @@
                         <label> Pickup </label><br/>
                         <input type="checkbox" id="pickup" v-model="productOrder.CustomerPickup"><br/>
                         <label> Pickup Date and Time </label><br/>
-                        <input type="datetime-local" id="time" v-model="productOrder.PickUpDateTime"><br/>
+                        <input type="datetime-local" id="time" :value="productOrder.PickUpDateTime.slice(0,16)"><br/>
+                        
                         
                         
                     </form>
@@ -151,6 +152,8 @@
                  const data = response.data
                  //had to loop through Customer to assign to customers{}
                  this.ProductOrder = data
+                
+
 
              }).catch(err => {
                  console.log(err)
@@ -224,7 +227,7 @@
             },
 
             test() {
-                console.log(this.productOrder.OrderDate)
+                console.log(document.getElementById("time").value)
             }
         }
     }
