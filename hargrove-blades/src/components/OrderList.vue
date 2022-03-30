@@ -83,8 +83,9 @@
                             <td>{{orders.OrderDate.slice(0,10)}}</td>
                             <td>{{orders.OrderTotal}}</td>
                             <td>{{orders.Balance}}</td>
+                            <td style="display:none">{{orders.CustomerID}}</td>
                             <!--IS GOING TO GO TO EDIT ORDER-->
-                            <td><router-link :to="{ name: 'Reports'}">Edit</router-link></td>
+                            <td><router-link :to="{ name: 'EditOrder', params: {orderID: orders.OrderID, customerID: orders.CustomerID}}">Edit</router-link></td>
                             <!-- Place holder !-->
                         </tr>
                     </table>

@@ -25,6 +25,7 @@ import CreateOrderStatus from '../components/CreateOrderStatus.vue'
 import CreateProductStatus from '../components/CreateProductStatus.vue'
 import CreateOrderLineStatus from '../components/CreateOrderLineStatus.vue'
 import AddAddress from '../components/AddAddress.vue'
+import EditOrder from '../components/EditOrder.vue'
 
 const routes = [
     {
@@ -58,6 +59,11 @@ const routes = [
         path: "/createOrder/:customerID",
         name: "CreateOrder",
         component: CreateOrder
+    },
+    {
+        path: "/editOrder/:orderID&:customerID",
+        name: "EditOrder",
+        component: EditOrder
     },
     {
         path: "/bladeDetails",
