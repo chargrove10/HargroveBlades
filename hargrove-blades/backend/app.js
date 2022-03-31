@@ -516,8 +516,9 @@ app.get('/orderList', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetOrders"
-            .query("SELECT C.CustomerID, C.CustomerFirstName, C.CustomerLastName, PO.OrderID, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance "+
-            "FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID");
+            //only shows on screen when a null value is not shown
+            .query("SELECT C.CustomerID, C.CustomerFirstName, C.CustomerLastName, PO.OrderID, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance, PO.ShippingAddressID , PO.BillingAddressID" + 
+            " FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID");
         const orders = result.recordset;
 
         res.send(orders)
@@ -538,7 +539,7 @@ app.get('/orderList/:number&:date', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT C.CustomerFirstName, C.CustomerLastName, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance "+
+            .query("SELECT C.CustomerID, C.CustomerFirstName, C.CustomerLastName, PO.OrderID, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance, PO.BillingAddressID, PO.ShippingAddressID "+
             "FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID WHERE OrderNumber = " + number + "OR OrderDate = " + date);
         const customers = result.recordset;
 
@@ -566,6 +567,46 @@ app.get('/getOrder/:orderID&:custID', async (req, res) => {
         res.send(order)
     } catch (err){
         res.status(500).json(err)
+    }
+});
+
+//get billing address information for edit order
+app.get('/getBillingAddress/:billingID', async (req,res) => {
+    let id = req.params.billingID;
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            //might need to make it so customerstatus is active here or on the main screen
+            .query("Select ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode" +
+            " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.AddressID = " +id)
+
+        const address = result.recordset
+        res.send(address)
+    } catch(err){
+        console.log(err)
+    }
+});
+
+//get shipping address information for edit order
+app.get('/getShippingAddress/:shippingID', async (req,res) => {
+    let id = req.params.shippingID;
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            //might need to make it so customerstatus is active here or on the main screen
+            .query("Select ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode" +
+            " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.AddressID = " +id)
+
+        const address = result.recordset
+        res.send(address)
+    } catch(err){
+        console.log(err)
     }
 });
 

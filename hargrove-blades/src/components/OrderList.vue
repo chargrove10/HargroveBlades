@@ -87,15 +87,21 @@
                             <td>{{orders.OrderTotal}}</td>
                             <td>{{orders.Balance}}</td>
                             <td style="display:none">{{orders.CustomerID}}</td>
+                            <td ><input type="hidden" v-model="orders.ShippingAddressID"></td>
+                            <td ><input type="hidden" v-model="orders.BillingAddressID"></td>
+                            
+                            
+                            
                             <!--IS GOING TO GO TO EDIT ORDER-->
-                            <td><router-link :to="{ name: 'EditOrder', params: {orderID: orders.OrderID, customerID: orders.CustomerID}}">Edit</router-link></td>
+                            <td><router-link :to="{ name: 'EditOrder', params: {orderID: orders.OrderID, customerID: orders.CustomerID, shippingID: orders.ShippingAddressID, billingID: orders.BillingAddressID}}">Edit</router-link></td>
+                            
                             <!-- Place holder !-->
                         </tr>
                     </table>
                 </form>
 
                 <div class="tab-divider"></div>
-                <button>Edit</button>
+                <button v-on:click="test()">Edit</button>
 
             </div>
         
@@ -117,13 +123,18 @@ export default {
             return {
                 Orders: [],
                 isShow: false,
-                orders: {}
+                orders: {
+                    
+                }
                 //pass over to product detail to see if we are posting or editing
                 
             }
         },
 
         methods: {
+            test() {
+                console.log(this.orders.CustomerID)
+            },
 
             product() {
                 this.$router.push('/productList')

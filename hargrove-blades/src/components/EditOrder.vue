@@ -38,12 +38,12 @@
                           
                           <label> Billing Address </label><br/>
                           <select @change="billingChange($event)" >
-                            <option hidden disabled selected>{{productOrder.AddressLine1.concat(', '+ productOrder.City + ', ' + productOrder.StateInitials + ', ' + productOrder.ZipCode)}}</option>
+                            <option hidden disabled selected v-for="billing in Billing" :value="billing.AddressID" :key="billing.AddressID">{{billing.AddressLine1.concat(', '+ billing.City + ', ' + billing.StateInitials + ', ' + billing.ZipCode)}}</option>
                             <option id="billing" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
                           <label> Shipping Address </label><br/>
                           <select @change="shippingChange($event)" >
-                            <option hidden disabled selected>{{productOrder.AddressLine1.concat(', '+ productOrder.City + ', ' + productOrder.StateInitials + ', ' + productOrder.ZipCode)}}</option>
+                            <option hidden disabled selected v-for="shipping in Shipping" :value="shipping.AddressID" :key="shipping.AddressID">{{shipping.AddressLine1.concat(', '+ shipping.City + ', ' + shipping.StateInitials + ', ' + shipping.ZipCode)}}</option>
                             <option id="shipping" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
                           <label> Order Notes </label><br/>
@@ -67,8 +67,8 @@
                         <label> Pickup </label><br/>
                         <input type="checkbox" id="pickup" v-model="productOrder.CustomerPickUp"><br/>
                         <label> Pickup Date and Time </label><br/>
-                        <input type="datetime-local" id="time" :value="productOrder.PickUpDateTime.slice(0,16)" ><br/>
-                        
+                        <input type="datetime-local" id="time1" v-if="productOrder.PickUpDateTime!==null" :value="productOrder.PickUpDateTime.slice(0,16)" ><br/>
+                        <input type="datetime-local" id="time2" v-if="productOrder.PickUpDateTime===null" :value="productOrder.PickUpDateTime" ><br/>
                         
                         
                     </form>
@@ -106,7 +106,9 @@
                     AddressID: '',
                     AddressLine1: '',
                     AddressLine2: '',
-                    StateInitials: ''
+                    StateInitials: '',
+                    City: '',
+                    ZipCode: ''
                     //Test to add more stuff to this later
                 },
                 Product: [],
@@ -131,20 +133,48 @@
                     TrackingNumber: '',
                     CustomerPickUp: '',
                     PickUpDateTime: '',
-                    ProductID: ''
+                    ProductID: '',
+                    AddressLine1: '',
+                    AddressLine2: '',
+                    StateInitials: ''
                 },
                 OrderStatus: [],
                 orderStatus: {
                     OrderStatusID: '',
                     OrderStatusName: '',
                     OrderStatusDesc: ''
-                }
+                },
+                Billing: [],
+                billing: {
+                    AddressID: '',
+                    AddressLine1: '',
+                    AddressLine2: '',
+                    StateInitials: '',
+                    City: '',
+                    ZipCode: ''
+                    //used for billing address
+                },
+                Shipping: [],
+                shipping: {
+                    AddressID: '',
+                    AddressLine1: '',
+                    AddressLine2: '',
+                    StateInitials: '',
+                    City: '',
+                    ZipCode: ''
+                    //used for shipping address
+                },
             }
         },
 
         created() {
             let id = this.$route.params.orderID;
             let cid = this.$route.params.customerID;
+            let bid = this.$route.params.billingID;
+            let sid = this.$route.params.shippingID;
+
+            
+            console.log(sid)
 
             let url2 = 'http://localhost:3000/getOrder/' + id + "&" + cid
 
@@ -168,6 +198,7 @@
                 console.log(err)
             });
 
+            //Returns all addresses associated with customer
             let url3 = 'http://localhost:3000/getAddress/' + cid;
 
             axios.get(url3).then((response) => {
@@ -177,6 +208,7 @@
                 console.log(err)
             });
 
+            //Gets order status's from status table
             let url4 = 'http://localhost:3000/getOrderStatus';
 
             axios.get(url4).then((response) => {
@@ -186,14 +218,24 @@
                 console.log(err)
             });
             
-            // let url5 = 'http://localhost:3000/getCustomer/' + cid;
+            //Have a get that returns specific address for billing address ID
+            let url5 = 'http://localhost:3000/getBillingAddress/' + bid;
 
-            // axios.get(url5).then((response) => {
-            //     this.Customer = response.data
+            axios.get(url5).then((response) => {
+                this.Billing = response.data
                 
-            // }).catch(err => {
-            //     console.log(err)
-            // });
+            }).catch(err => {
+                console.log(err)
+            });
+
+            //Have a get that returns specific address for Shipping Address ID
+            let url6 = 'http://localhost:3000/getShippingAddress/' + sid;
+
+            axios.get(url6).then((response) => {
+                this.Shipping = response.data
+            }).catch(err => {
+                console.log(err)
+            })
 
 
         },

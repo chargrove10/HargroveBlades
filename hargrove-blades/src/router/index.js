@@ -66,7 +66,7 @@ const routes = [
         component: CreateOrder
     },
     {
-        path: "/editOrder/:orderID&:customerID",
+        path: "/editOrder/:orderID&:customerID&:shippingID&:billingID",
         name: "EditOrder",
         component: EditOrder
     },
