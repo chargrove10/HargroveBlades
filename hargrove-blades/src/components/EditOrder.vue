@@ -18,7 +18,7 @@
         </div>
     
     <div class="tab-div2">
-        <div style="background-color: lightgrey; height:auto" v-for="productOrder in ProductOrder" :key="productOrder.OrderID">
+        <div style="background-color: lightgrey; height:auto" v-for="productOrder in ProductOrder" :value="productOrder.OrderId" :key="productOrder.OrderID">
 
                 <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
@@ -73,6 +73,9 @@
                         
                     </form>
                 </div>
+
+                
+
                 <div class="tab-divider"></div>
                 <div class="tab-divider"></div>
                 <div class="tab-divider"></div>
@@ -89,6 +92,43 @@
                 <button style="transform:translate(90%,0)" v-on:click="test()">Save</button>
 
         </div>
+
+        <div> 
+
+                    <form>
+                    <table style="transform:translate(-17%,0); width:96.5%">
+                        <tr>
+                            <th style="text-align:right">Line Number</th>
+                            <th style="text-align:left">Serial Number</th>
+                            <th style="text-align:right">Blade Length</th>
+                            <th style="text-align:left">Blade Finish</th>
+                            <th style="text-align:left">Handle Material</th>
+                            <th style="text-align:left">Knife Style</th>
+                            <th style="text-align:left">Type of Steel</th>
+                            <th style="text-align:right">Overall Length</th>
+                            <th style="text-align:right">Price</th>
+                            
+                        </tr>
+                        <tr id="oTable" v-for="lineItem in LineItem" :key="lineItem.OrderID">
+                            <td style="text-align:right">{{lineItem.LineNumber}}</td>
+                            <td style="text-align:left">{{lineItem.SerialNo}}</td>
+                            <td style="text-align:right">{{lineItem.BladeLength}}</td>
+                            <td style="text-align:left">{{lineItem.BladeFinish}}</td>
+                            <td style="text-align:left">{{lineItem.HandleMaterial}}</td>
+                            <td style="text-align:left">{{lineItem.StyleName}}</td>
+                            <td style="text-align:left">{{lineItem.SteelName}}</td>
+                            <td style="text-align:right">{{lineItem.OverallLength}}</td>
+                            <td style="text-align:right">{{lineItem.Price}}</td>
+                            <td><button>Edit</button></td>
+
+                        </tr>
+                    </table>
+                    </form>
+
+                    <button> Add Product To Order </button>
+
+        </div>
+
     </div>
         
 </div>
@@ -164,6 +204,18 @@
                     ZipCode: ''
                     //used for shipping address
                 },
+                LineItem: [],
+                lineItem: {
+                    LineNumber: '',
+                    SerialNo: '',
+                    BladeLength: '',
+                    StyleName: '',
+                    SteelName: '',
+                    BladeFinish: '',
+                    HandleMaterial: '',
+                    OverallLength: '',
+                    Price: ''
+                }
             }
         },
 
@@ -173,8 +225,12 @@
             let bid = this.$route.params.billingID;
             let sid = this.$route.params.shippingID;
 
-            
-            console.log(sid)
+            let lineItemURL = 'http://localhost:3000/getLineItems/' +id
+
+            axios.get(lineItemURL).then((response) => {
+                const lineItemData = response.data
+                this.LineItem = lineItemData
+            })
 
             let url2 = 'http://localhost:3000/getOrder/' + id + "&" + cid
 
@@ -270,6 +326,10 @@
 
             test() {
                 console.log(document.getElementById("time").value)
+            },
+
+            handleSave() {
+
             }
         }
     }

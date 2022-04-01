@@ -569,6 +569,30 @@ app.get('/getOrder/:orderID&:custID', async (req, res) => {
         res.status(500).json(err)
     }
 });
+//Get LineItems for Order
+app.get('/getLineItems/:lineID', async (req, res) => {
+
+    let lineID = req.params.lineID
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+            .query("select OLI.OrderID, OLI.LineNumber, P.SerialNo, P.BladeLength, P.HandleMaterial, P.BladeFinish, P.OverallLength ,style.StyleName, steel.SteelName, P.Price " +
+            "from OrderLineItem OLI "+
+            "join Product P on OLI.ProductID = P.ProductID "+
+            "join KnifeStyle style on P.StyleID = style.StyleID "+
+            "join KnifeSteel steel on P.SteelID = steel.SteelID "+
+            "WHERE OLI.OrderID = "+lineID)
+        const lineItems = result.recordset;
+
+        res.send(lineItems)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
 
 //get billing address information for edit order
 app.get('/getBillingAddress/:billingID', async (req,res) => {
