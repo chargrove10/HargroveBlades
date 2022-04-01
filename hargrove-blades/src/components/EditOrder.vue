@@ -68,7 +68,7 @@
                         <input type="checkbox" id="pickup" v-model="productOrder.CustomerPickUp"><br/>
                         <label> Pickup Date and Time </label><br/>
                         <input type="datetime-local" id="time1" v-if="productOrder.PickUpDateTime!==null" :value="productOrder.PickUpDateTime.slice(0,16)" ><br/>
-                        <input type="datetime-local" id="time2" v-if="productOrder.PickUpDateTime===null" :value="productOrder.PickUpDateTime" ><br/>
+                        <input type="datetime-local" id="time2" v-if="productOrder.PickUpDateTime===null" v-model="productOrder.PickUpDateTime" ><br/>
                         
                         
                     </form>
@@ -89,7 +89,7 @@
                 <div class="tab-divider"></div>
                 <div class="tab-divider"></div>
                 <div class="tab-divider"></div>
-                <button style="transform:translate(90%,0)" v-on:click="test()">Save</button>
+                <button style="transform:translate(90%,0)" v-on:click="handleSave()">Save</button>
 
         </div>
 
@@ -124,8 +124,9 @@
                         </tr>
                     </table>
                     </form>
-
-                    <button> Add Product To Order </button>
+                    <div class="tab-divider"/>
+                    <div class="tab-divider"/>
+                    <button style="transform:translate(30%,0)"> Add Product To Order </button>
 
         </div>
 
@@ -329,7 +330,19 @@
             },
 
             handleSave() {
+                var time,
+                data = document.getElementById("time1");
+                if (data != null){
+                    time = data.value
+                    this.productOrder.PickUpDateTime = time
+                }
+                else{
+                    this.productOrder.PickUpDateTime = null
+                }
+                
 
+
+                console.log(this.productOrder.PickUpDateTime)
             }
         }
     }
