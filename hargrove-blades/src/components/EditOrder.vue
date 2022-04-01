@@ -25,7 +25,7 @@
                           <input type="hidden" id="cusID" v-model="productOrder.CustomerID"/>
                           <label> Order Status</label><br/>
                           <select @change="statusChange($event)">
-                            <option hidden disabled selected>{{productOrder.OrderStatusName}}</option>
+                            <option id="startStatus" hidden disabled selected>{{productOrder.OrderStatusName}}</option>
                             <option id="status" v-for="orderStatus in OrderStatus" :value="orderStatus.OrderStatusID" :key="orderStatus.OrderStatusID">{{orderStatus.OrderStatusName}}</option>
                           </select><br/>
                           <label>Order Date</label><br/>
@@ -340,11 +340,16 @@
                     this.productOrder.PickUpDateTime = null
                 }
                 
+                
 
 
-                console.log(this.productOrder.PickUpDateTime)
+
+
+                console.log(this.productOrder.OrderStatusID)
+                console.log(document.getElementById("startStatus").value)
             }
         }
+    
     }
 
 </script>
