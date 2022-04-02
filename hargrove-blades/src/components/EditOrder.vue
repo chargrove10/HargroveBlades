@@ -24,8 +24,8 @@
                     <form>
                           <input type="hidden" id="cusID" v-model="productOrder.CustomerID"/>
                           <label> Order Status</label><br/>
-                          <select @change="statusChange($event)">
-                            <option id="startStatus" hidden disabled selected>{{productOrder.OrderStatusName}}</option>
+                          <select id="statusID" @change="statusChange($event)">
+                            <option id="startStatus" hidden disabled selected :value="productOrder.OrderStatusID">{{productOrder.OrderStatusName}}</option>
                             <option id="status" v-for="orderStatus in OrderStatus" :value="orderStatus.OrderStatusID" :key="orderStatus.OrderStatusID">{{orderStatus.OrderStatusName}}</option>
                           </select><br/>
                           <label>Order Date</label><br/>
@@ -37,12 +37,12 @@
                           <input type="text" id="lname" v-model="productOrder.CustomerLastName" readonly><br/>
                           
                           <label> Billing Address </label><br/>
-                          <select @change="billingChange($event)" >
+                          <select id="billingID" @change="billingChange($event)" >
                             <option hidden disabled selected v-for="billing in Billing" :value="billing.AddressID" :key="billing.AddressID">{{billing.AddressLine1.concat(', '+ billing.City + ', ' + billing.StateInitials + ', ' + billing.ZipCode)}}</option>
                             <option id="billing" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
                           <label> Shipping Address </label><br/>
-                          <select @change="shippingChange($event)" >
+                          <select id="shippingID" @change="shippingChange($event)" >
                             <option hidden disabled selected v-for="shipping in Shipping" :value="shipping.AddressID" :key="shipping.AddressID">{{shipping.AddressLine1.concat(', '+ shipping.City + ', ' + shipping.StateInitials + ', ' + shipping.ZipCode)}}</option>
                             <option id="shipping" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
@@ -119,6 +119,7 @@
                             <td style="text-align:left">{{lineItem.SteelName}}</td>
                             <td style="text-align:right">{{lineItem.OverallLength}}</td>
                             <td style="text-align:right">{{lineItem.Price}}</td>
+                            
                             <td><button>Edit</button></td>
 
                         </tr>
@@ -137,7 +138,10 @@
 
 <script>
     import axios from 'axios'
+    
     export default {
+
+        
 
         data() {
             return {
@@ -302,13 +306,6 @@
                 this.$router.push('/customerList')
             },
 
-            
-
-            productChange(event) {
-                this.productOrder.ProductID = event.target.value
-                console.log(this.productOrder.ProductID)
-            },
-
             billingChange(event) {
                 this.productOrder.BillingAddressID = event.target.value
                 console.log(this.productOrder.BillingAddressID)
@@ -326,10 +323,11 @@
             },
 
             test() {
-                console.log(document.getElementById("time").value)
+                
             },
 
             handleSave() {
+                
                 var time,
                 data = document.getElementById("time1");
                 if (data != null){
@@ -339,6 +337,12 @@
                 else{
                     this.productOrder.PickUpDateTime = null
                 }
+
+                this.productOrder.OrderStatusID = document.getElementById("statusID").value 
+                this.productOrder.BillingAddressID = document.getElementById("billingID").value
+                this.productOrder.ShippingAddressID = document.getElementById("shippingID").value
+                this.productOrder.OrderDate = document.getElementById("orderDate").value
+                
                 
                 
 
@@ -346,11 +350,17 @@
 
 
                 console.log(this.productOrder.OrderStatusID)
-                console.log(document.getElementById("startStatus").value)
+                console.log(this.productOrder.BillingAddressID)
+                console.log(this.productOrder.ShippingAddressID)
+                console.log(this.productOrder.OrderDate)
+                //console.log(document.getElementById("test").value)
             }
         }
+        
     
     }
+
+    
 
 </script>
 
