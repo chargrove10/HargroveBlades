@@ -634,6 +634,42 @@ app.get('/getShippingAddress/:shippingID', async (req,res) => {
     }
 });
 
+//Update ProductOrder
+app.put('/updateProductOrder', async (req,res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+            //gather inputs
+            .input('CustomerID_P', req.params.custID)
+            .input('OrderID_p', req.params.orderID)
+            .input('BillingAddressID_p', req.params.BillingAddressID)
+            .input('ShippingAddressID_p', req.params.ShippingAddressID)
+            .input('OrderDate_p', req.params.OrderDate)
+            .input('OrderStatusID_p', req.params.OrderStatusID)
+            .input('OrderNote_p', req.params.OrderNote)
+            .input('MethodOfPayment_p', req.params.MethodOfPayment)
+            .input('BilledAmount_p', req.params.BilledAmount)
+            .input('Balance_p', req.params.BilledAmount)
+            .input('TrackingNumber_p', req.params.TrackingNumber)
+            .input('CustomerPickup_p', req.params.CustomerPickup)
+            .input('PickUpDateTime_p', req.params.PickUpDateTime)
+            .input('OrderTotal_p', req.params.OrderTotal)
+           
+            //executes the stored procedure "GetCustomers"
+            .execute("UpdateCustomer");
+        const productOrder = result.recordset;
+
+        res.send(productOrder)
+        console.log(productOrder)
+    } catch (err){
+        res.send(err)
+        console.log(err)
+    }
+})
+
 //Blade Detail CRUD Starts Here
 app.get('/bladeDetails', async (req, res) => {
     try {

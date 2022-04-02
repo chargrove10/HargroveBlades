@@ -23,6 +23,7 @@
                 <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
                           <input type="hidden" id="cusID" v-model="productOrder.CustomerID"/>
+                          <input type="hidden" id="orderID" v-model="productOrder.OrderID"/>
                           <label> Order Status</label><br/>
                           <select id="statusID" @change="statusChange($event)">
                             <option id="startStatus" hidden disabled selected :value="productOrder.OrderStatusID">{{productOrder.OrderStatusName}}</option>
@@ -165,6 +166,7 @@
                 productOrder: {
                     //take from customer.CustomerID and add it here
                     //assign with save button when pushed using getElementById
+                    OrderID: '',
                     CustomerID: '',
                     OrderStatusID: '',
                     OrderDate: ' ',
@@ -342,6 +344,15 @@
                 this.productOrder.BillingAddressID = document.getElementById("billingID").value
                 this.productOrder.ShippingAddressID = document.getElementById("shippingID").value
                 this.productOrder.OrderDate = document.getElementById("orderDate").value
+                this.productOrder.CustomerID = document.getElementById("cusID").value
+                this.productOrder.OrderNote = document.getElementById("Note").value
+                this.productOrder.OrderTotal = document.getElementById("total").value
+                this.productOrder.MethodOfPayment = document.getElementById("method").value
+                this.productOrder.BilledAmount = document.getElementById("billed").value
+                this.productOrder.Balance = document.getElementById("balance").value
+                this.productOrder.TrackingNumber = document.getElementById("tracking").value
+                this.productOrder.CustomerPickUp = document.getElementById("pickup").value
+                this.productOrder.OrderID = document.getElementById("orderID").value
                 
                 
                 
@@ -349,11 +360,11 @@
 
 
 
-                console.log(this.productOrder.OrderStatusID)
-                console.log(this.productOrder.BillingAddressID)
-                console.log(this.productOrder.ShippingAddressID)
-                console.log(this.productOrder.OrderDate)
-                //console.log(document.getElementById("test").value)
+                // console.log(this.productOrder.OrderStatusID)
+                // console.log(this.productOrder.BillingAddressID)
+                // console.log(this.productOrder.ShippingAddressID)
+                // console.log(this.productOrder.OrderDate)
+                console.log(this.productOrder)
             }
         }
         
