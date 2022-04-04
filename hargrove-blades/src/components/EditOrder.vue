@@ -133,6 +133,10 @@
         </div>
 
     </div>
+
+    <div id="popup" class="popup">
+        <label>This is a popup window</label>
+    </div>
         
 </div>
 </template>
@@ -160,7 +164,10 @@
                 Product: [],
                 product:{
                     ProductID: '',
-                    SerialNo: ''
+                    SerialNo: '',
+                    StyleName: '',
+                    SteelName: '',
+                    OverallLength: ''
                 },
                 ProductOrder: [],
                 productOrder: {
@@ -180,10 +187,7 @@
                     TrackingNumber: '',
                     CustomerPickUp: '',
                     PickUpDateTime: '',
-                    ProductID: '',
-                    AddressLine1: '',
-                    AddressLine2: '',
-                    StateInitials: ''
+                    
                 },
                 OrderStatus: [],
                 orderStatus: {
@@ -352,19 +356,26 @@
                 this.productOrder.Balance = document.getElementById("balance").value
                 this.productOrder.TrackingNumber = document.getElementById("tracking").value
                 this.productOrder.CustomerPickUp = document.getElementById("pickup").value
-                this.productOrder.OrderID = document.getElementById("orderID").value
-                
-                
-                
-
-
-
-
-                // console.log(this.productOrder.OrderStatusID)
-                // console.log(this.productOrder.BillingAddressID)
-                // console.log(this.productOrder.ShippingAddressID)
-                // console.log(this.productOrder.OrderDate)
+                this.productOrder.OrderID = document.getElementById("orderID").value                           
+    
                 console.log(this.productOrder)
+
+                 let url = 'http://localhost:3000/updateProductOrder/';
+
+                  axios.put(url, this.productOrder).then((response) => {
+                      console.log(response)
+                      this.$router.push('/orderList')
+                  }).catch(err => {
+                      console.log(err)
+                  })
+            },
+
+            handleAddLineItem() {
+                //this method is called when button is pushed to add a productID to an order
+            },
+
+            openAddLineItem() {
+                //This is used to handle the popup so that productID's are available to add to the order
             }
         }
         

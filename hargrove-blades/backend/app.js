@@ -232,7 +232,12 @@ app.get('/getProduct', async (req,res) => {
 
         let result = await pool.request()
 
-            .query("Select ProductID, SerialNo FROM Product WHERE ProductStatusID = 2")
+            // .query("Select ProductID, SerialNo FROM Product WHERE ProductStatusID = 2")
+            .query("SELECT Product.ProductID, Product.SerialNo, Product.OverallLength, KnifeSteel.Steelname, KnifeStyle.StyleName FROM Product " +
+            "JOIN KnifeStyle ON Product.StyleID = KnifeStyle.StyleID " + 
+            "JOIN KnifeSteel ON Product.SteelID = KnifeSteel.SteelID " + 
+            "WHERE Product.ProductStatusID = 2")
+            //Might change to fit a better ProductStatus
 
         const product = result.recordset
         res.send(product)
@@ -636,32 +641,36 @@ app.get('/getShippingAddress/:shippingID', async (req,res) => {
 
 //Update ProductOrder
 app.put('/updateProductOrder', async (req,res) => {
+    console.log(req.body.OrderNote)
+    console.log(req.body.OrderID)
     try {
         //making 'pool' awaiting the connection
         let pool = await sql.connect(config)
         //making result awaiting the request to the connection
         let result = await pool.request()
+        
            
             //gather inputs
-            .input('CustomerID_P', req.params.custID)
-            .input('OrderID_p', req.params.orderID)
-            .input('BillingAddressID_p', req.params.BillingAddressID)
-            .input('ShippingAddressID_p', req.params.ShippingAddressID)
-            .input('OrderDate_p', req.params.OrderDate)
-            .input('OrderStatusID_p', req.params.OrderStatusID)
-            .input('OrderNote_p', req.params.OrderNote)
-            .input('MethodOfPayment_p', req.params.MethodOfPayment)
-            .input('BilledAmount_p', req.params.BilledAmount)
-            .input('Balance_p', req.params.BilledAmount)
-            .input('TrackingNumber_p', req.params.TrackingNumber)
-            .input('CustomerPickup_p', req.params.CustomerPickup)
-            .input('PickUpDateTime_p', req.params.PickUpDateTime)
-            .input('OrderTotal_p', req.params.OrderTotal)
-           
-            //executes the stored procedure "GetCustomers"
-            .execute("UpdateCustomer");
+             .input('CustomerID_p',  req.body.CustomerID)
+             .input('OrderID_p',  req.body.OrderID)
+             .input('BillingAddressID_p',  req.body.BillingAddressID)
+             .input('ShippingAddressID_p',  req.body.ShippingAddressID)
+             .input('OrderDate_p', sql.Date,  req.body.OrderDate)
+             .input('OrderStatusID_p',  req.body.OrderStatusID)
+             .input('OrderNote_p', sql.VarChar,  req.body.OrderNote)
+             .input('MethodOfPayment_p',  req.body.MethodOfPayment)
+             .input('BilledAmount_p',  req.body.BilledAmount)
+             .input('Balance_p',  req.body.Balance)
+             .input('TrackingNumber_p',  req.body.TrackingNumber)
+             .input('CustomerPickUp_p', sql.Bit, req.body.CustomerPickUp)
+             .input('PickUpDateTime_p', sql.DateTime,  req.body.PickUpDateTime)
+             
+            
+            //executes the stored procedure for updating a product order
+            .execute("SP_ProductOrder_Update");
         const productOrder = result.recordset;
 
+        
         res.send(productOrder)
         console.log(productOrder)
     } catch (err){

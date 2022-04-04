@@ -169,7 +169,7 @@ import axios from 'axios'
                 
                 console.log(this.customers)
 
-                  let url = 'http://localhost:3000/editCustomer/';
+                let url = 'http://localhost:3000/editCustomer/';
 
                  axios.put(url, this.customers).then((response) => {
                      console.log(response)
