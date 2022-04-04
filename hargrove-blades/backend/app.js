@@ -233,7 +233,7 @@ app.get('/getProduct', async (req,res) => {
         let result = await pool.request()
 
             // .query("Select ProductID, SerialNo FROM Product WHERE ProductStatusID = 2")
-            .query("SELECT Product.ProductID, Product.SerialNo, Product.OverallLength, KnifeSteel.Steelname, KnifeStyle.StyleName FROM Product " +
+            .query("SELECT Product.ProductID, Product.SerialNo, Product.OverallLength, KnifeSteel.SteelName, KnifeStyle.StyleName FROM Product " +
             "JOIN KnifeStyle ON Product.StyleID = KnifeStyle.StyleID " + 
             "JOIN KnifeSteel ON Product.SteelID = KnifeSteel.SteelID " + 
             "WHERE Product.ProductStatusID = 2")

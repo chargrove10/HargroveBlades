@@ -17,7 +17,7 @@
 
         </div>
     
-    <div class="tab-div2">
+    <div id="main-content" class="tab-div2">
         <div style="background-color: lightgrey; height:auto" v-for="productOrder in ProductOrder" :value="productOrder.OrderId" :key="productOrder.OrderID">
 
                 <div style="width:40%; float: left; transform:translate(10%,0)">
@@ -128,15 +128,39 @@
                     </form>
                     <div class="tab-divider"/>
                     <div class="tab-divider"/>
-                    <button style="transform:translate(30%,0)"> Add Product To Order </button>
+                    <button style="transform:translate(30%,0)" v-on:click="openModal()"> Add Product To Order </button>
 
         </div>
 
     </div>
+    
+    <div id="modal" class="modal">
+        <div id="modal_content">
+            
+            <form>
+                    <table style="transform:translate(-17%,0); width:96.5%">
+                        <tr>
+                            <th>Product</th>
+                            
+                        </tr>
+                        <tr id="pTable" v-for="product in Product" :value="product.ProductID" :key="product.ProductID">
+                            <td>{{product.SerialNo}}</td>
+                            <td>{{product.StyleName}}</td>
+                            <td>{{product.SteelName}}</td>
+                            <td>{{product.OverallLength}}</td>
+                            
+                            <td><button v-on:click="addLineItem()">Add to Order</button></td>
 
-    <div id="popup" class="popup">
-        <label>This is a popup window</label>
+                        </tr>
+                    </table>
+                    </form>
+                    <div class="tab-divider" />
+            <button id="close" class="close" v-on:click="closeModal()">Close Me</button>
+
+        </div>
     </div>
+    
+    
         
 </div>
 </template>
@@ -259,7 +283,9 @@
             let url = 'http://localhost:3000/getProduct';
 
             axios.get(url).then((response) => {
-                this.Product = response.data
+                const productData = response.data
+
+                this.Product = productData;
                 
             }).catch(err => {
                 console.log(err)
@@ -370,12 +396,20 @@
                   })
             },
 
-            handleAddLineItem() {
-                //this method is called when button is pushed to add a productID to an order
+            addLineItem() {
+                
             },
 
-            openAddLineItem() {
-                //This is used to handle the popup so that productID's are available to add to the order
+            openModal() {
+                document.getElementById("modal").style.display="block";
+                document.getElementById("main-content").style.display="none";
+                
+                
+            },
+
+            closeModal() {
+                document.getElementById("modal").style.display="none";
+                document.getElementById("main-content").style.display="block";
             }
         }
         
