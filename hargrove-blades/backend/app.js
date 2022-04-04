@@ -574,6 +574,28 @@ app.get('/getOrder/:orderID&:custID', async (req, res) => {
         res.status(500).json(err)
     }
 });
+
+//add Line Item to Order
+app.post('/addLineItem/:orderID&:productID', async (req, res) => {
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .input('OrderID_p', req.params.orderID)
+            .input('ProductID_p', req.params.productID)
+
+            .execute('SP_OrderLine_Create')
+        const lineItem = result.recordset;
+
+        res.send(lineItem)
+    } catch (err){
+        console.log(err)
+    }
+});
+
 //Get LineItems for Order
 app.get('/getLineItems/:lineID', async (req, res) => {
 

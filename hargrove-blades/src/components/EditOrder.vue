@@ -128,7 +128,7 @@
                     </form>
                     <div class="tab-divider"/>
                     <div class="tab-divider"/>
-                    <button style="transform:translate(30%,0)" v-on:click="openModal()"> Add Product To Order </button>
+                    <button type="button" style="transform:translate(30%,0)" v-on:click="openModal()"> Add Product To Order </button>
 
         </div>
 
@@ -149,7 +149,7 @@
                             <td>{{product.SteelName}}</td>
                             <td>{{product.OverallLength}}</td>
                             
-                            <td><button v-on:click="addLineItem()">Add to Order</button></td>
+                            <td><button type="button" v-on:click="addLineItem(product.ProductID, )">Add to Order</button></td>
 
                         </tr>
                     </table>
@@ -396,8 +396,18 @@
                   })
             },
 
-            addLineItem() {
-                
+            addLineItem(pid) {
+                let oid = document.getElementById("orderID").value
+                let url = 'http://localhost:3000/addLineItem/' + oid + '&' + pid
+
+                console.log(oid + " " + pid)
+
+                axios.post(url).then((response) => {
+                    console.log(response)
+                    window.location.reload();
+                }).catch(err => {
+                    console.log(err)
+                })
             },
 
             openModal() {
