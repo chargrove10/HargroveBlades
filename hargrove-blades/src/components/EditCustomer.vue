@@ -18,7 +18,7 @@
     </div>
       
 
-    <div class="tab-div2" style="min-height:0">
+    <div id="tab-div2" class="tab-div2" style="min-height:0">
         <div style="background-color: lightgrey" v-for="customers in Customer" :key="customers.CustomerID">
 
                 <div style="width:40%; float: left; transform:translate(10%,0)">
@@ -52,12 +52,12 @@
                 </div>
 
                 <router-link :to="{ name: 'AddAddress', params: {customerID: customers.CustomerID}}"><button style="transform:translate(60%,0)">Add Address</button></router-link>
-                <button style="transform:translate(130%,0)" v-on:click="handleEdit()" >Save</button>
+                <button style="transform:translate(150%,0)" v-on:click="handleEdit()" >Save</button>
 
         </div>
     </div>
 
-    <div style="background-color:white;">
+    <div id="address-div" style="background-color:white;">
         <form>
                     <table style="transform:translate(-8.5%,0); width:87.5%">
                         
@@ -82,12 +82,38 @@
                             <td>{{address.Country}}</td>
                             
                             
-                            <td><button type="button">Edit</button></td>
+                            <td><button type="button" v-on:click="showModal(address.AddressID)">Edit</button></td>
 
                         </tr>
                     </table>
         </form>
 
+    </div>
+
+    <div  id="modal" class="modal" style="width:30%; margin-left:26%">
+        
+        <div id="modal_content" class="modal_content" style="height:auto"  v-for="cusaddress in CusAddress" :value="cusaddress.AddressID" :key="cusaddress.AddressID">
+            <input type="hidden" id="addID" v-model="cusaddress.AddressID"/>
+            <label>Default Address</label><br />
+            <input type="checkbox" id="defaultAdd" v-model="cusaddress.DefaultAddress"/><br />
+            <label>Address Line 1</label><br />
+            <input type="text" id = "A1" v-model="cusaddress.AddressLine1"/><br />
+            <label>Address Line 2</label><br />
+            <input type="text" id = "A2" v-model="cusaddress.AddressLine2"/><br />
+            <label>City</label><br />
+            <input type="text" id = "city" v-model="cusaddress.City"/><br />
+            <label for="State-select">State:</label><br/>
+                <select name="st" id="st" @change="stateDetail($event)" >
+                    <option hidden disabled selected v-for="cusaddress in CusAddress" :value="cusaddress.AddressID" :key="cusaddress.AddressID">{{cusaddress.StateInitials}}</option>
+                    <option v-for="state in State" :value="state.StateID" :key="state.StateID" > {{state.StateInitials}} </option>
+                </select><br />
+            <label>Country</label><br />
+            <input type="text" id="country" v-model="cusaddress.Country" /><br />
+            <button class="close" type="button" style="transform: translate(23%,75%)" v-on:click="closeModal()">Close</button>
+            
+            <button class="close" type="button" style="transform: translate(138%,-80%)" v-on:click="editAddress()">Save</button>
+        </div>
+        
     </div>
     
 
@@ -119,7 +145,17 @@ import axios from 'axios'
                 CusStatus: [],
                 cusStatus: {},
                 Address: [],
-                address: {}
+                address: {},
+                CusAddress: [],
+                cusaddress: {
+                    AddressID: '',
+                    DefaultAddress: '',
+                    AddressLine1: '',
+                    AddressLine2: '',
+                    City: '',
+                    StateID: '',
+                    Country: ''
+                }
             
             }
         },
@@ -216,6 +252,39 @@ import axios from 'axios'
             statusChange(event) {
                 this.customers.CustomerStatusID = event.target.value
                 console.log(this.customers.CustomerStatusID)
+            },
+
+            showModal(id) {
+                document.getElementById("modal").style.display="block";
+                document.getElementById("address-div").style.display="none";
+                document.getElementById("tab-div2").style.display="none";
+                console.log(id)
+                let url = 'http://localhost:3000/Address/' + id
+                axios.get(url).then((res) => {
+                    const data = res.data
+                    this.CusAddress = data
+                    console.log(res)
+
+                });
+                
+            },
+
+            closeModal() {
+                document.getElementById("modal").style.display="none";
+                document.getElementById("address-div").style.display="block";
+                document.getElementById("tab-div2").style.display="block";
+            },
+
+            editAddress() {
+                this.cusaddress.AddressID = document.getElementById("addID").value
+                this.cusaddress.DefaultAddress = document.getElementById("defaultAdd").checked
+                this.cusaddress.AddressLine1 = document.getElementById("A1").value
+                this.cusaddress.AddressLine2 = document.getElementById("A2").value
+                this.cusaddress.City = document.getElementById("city").value
+                this.cusaddress.StateID = document.getElementById("st").value
+                this.cusaddress.Country = document.getElementById("country").value
+
+                console.log(this.cusaddress)
             }
         }
     }

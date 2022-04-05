@@ -135,7 +135,7 @@
     </div>
     
     <div id="modal" class="modal">
-        <div id="modal_content">
+        <div id="modal_content" class="modal_content">
             
             <form>
                     <table style="transform:translate(-17%,0); width:96.5%">
@@ -381,7 +381,7 @@
                 this.productOrder.BilledAmount = document.getElementById("billed").value
                 this.productOrder.Balance = document.getElementById("balance").value
                 this.productOrder.TrackingNumber = document.getElementById("tracking").value
-                this.productOrder.CustomerPickUp = document.getElementById("pickup").value
+                this.productOrder.CustomerPickUp = document.getElementById("pickup").checked
                 this.productOrder.OrderID = document.getElementById("orderID").value                           
     
                 console.log(this.productOrder)

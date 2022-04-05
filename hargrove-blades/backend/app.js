@@ -279,6 +279,25 @@ app.get('/getAddress/:id', async (req,res) => {
         console.log(err)
     }
 });
+//Get address information based on AddressID
+app.get('/Address/:id', async (req,res) => {
+    let id = req.params.id;
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            //might need to make it so customerstatus is active here or on the main screen
+            .query("Select ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
+            " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.AddressID = " +id)
+
+        const address = result.recordset
+        res.send(address)
+    } catch(err){
+        console.log(err)
+    }
+});
 //Get OrderStatus Information for Order Creation
 app.get('/getOrderStatus', async (req,res) => {
 

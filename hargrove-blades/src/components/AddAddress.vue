@@ -55,6 +55,7 @@
                 </div>
 
                 <button style="transform:translate(90%,0)" v-on:click="handleAdd()" >Save</button>
+                <button style="transform:translate(100%,0)" v-on:click="back()" >Cancel</button>
                 
 
         </div>
@@ -107,6 +108,10 @@ import axios from 'axios'
         },
         methods: {
 
+            back() {
+                this.$router.push({name: 'EditCustomer', params: {customerID: this.address.CustomerID}})
+            },
+
             handleAdd() {
 
                 this.address.AddressLine1 = document.getElementById("address").value
@@ -125,7 +130,7 @@ import axios from 'axios'
 
                  axios.post(url, this.address).then((response) => {
                      console.log(response)
-                     this.$router.push('/customerList')
+                     this.$router.push({name: 'EditCustomer', params: {customerID: this.address.CustomerID}})
                  }).catch(err => {
                      console.log(err)
                  })
