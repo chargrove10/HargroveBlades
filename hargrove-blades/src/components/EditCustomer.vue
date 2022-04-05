@@ -59,6 +59,7 @@
                         <input type="text" id="country" name="country" v-model="customers.Country"/><br/>
                         <label for="status">Customer Status</label><br/>
                         <select @change="statusChange($event)">
+                            <option hidden disabled selected v-for="cusStatus in CusStatus" :value="cusStatus.CustomerStatusID" :key="cusStatus.CustomerStatusID"> {{cusStatus.CustomerStatusName}} </option>
                             <option v-for="status in Status" :value="status.CustomerStatusID" :key="status.CustomerStatusID">{{status.CustomerStatusName}}</option>
                         </select>
                         <input type="hidden" id="addID" v-model="customers.AddressID"/>
@@ -72,6 +73,41 @@
 
         </div>
     </div>
+
+    <div style="background-color:white;">
+        <form>
+                    <table style="transform:translate(-8.5%,0); width:87.5%">
+                        
+                        <tr>
+                            <th>Default Address</th>
+                            <th>Address Line 1</th>
+                            <th>Address Line 2</th>
+                            <th>City</th>
+                            <th>Zipcode</th>
+                            <th>State Initials</th>
+                            <th>Country</th>
+                            
+                            
+                        </tr>
+                        <tr id="oTable" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">
+                            <td>{{address.DefaultAddress}}</td>
+                            <td>{{address.AddressLine1}}</td>
+                            <td>{{address.AddressLine2}}</td>
+                            <td>{{address.City}}</td>
+                            <td>{{address.ZipCode}}</td>
+                            <td>{{address.StateInitials}}</td>
+                            <td>{{address.Country}}</td>
+                            
+                            
+                            <td><button type="button">Edit</button></td>
+
+                        </tr>
+                    </table>
+        </form>
+
+    </div>
+    
+
 </div>
 </template>
 
@@ -104,7 +140,11 @@ import axios from 'axios'
                 State: [],
                 state: {},
                 Status: [],
-                status: {}
+                status: {},
+                CusStatus: [],
+                cusStatus: {},
+                Address: [],
+                address: {}
             
             }
         },
@@ -140,6 +180,25 @@ import axios from 'axios'
                  //had to loop through Customer to assign to customers{}
                  this.Customer = data
 
+             }).catch(err => {
+                 console.log(err)
+             });
+
+             let statusURL2 = 'http://localhost:3000/customerStatus/' + cid
+
+             console.log(cid)
+
+             axios.get(statusURL2).then((res) => {
+                 const status = res.data
+                 this.CusStatus = status
+             }).catch(err => {
+                 console.log(err)
+             })
+
+             let addressURL = 'http://localhost:3000/getAddress/' + cid
+             axios.get(addressURL).then((res) => {
+                 const add = res.data
+                 this.Address = add
              }).catch(err => {
                  console.log(err)
              })

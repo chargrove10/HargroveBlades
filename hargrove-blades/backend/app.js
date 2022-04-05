@@ -183,6 +183,26 @@ app.get('/customerList', async (req, res) => {
     }
 });
 
+//get Customer Status
+app.get('/customerStatus/:customerID', async (req, res) => {
+    let id = req.params.customerID
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT CustomerStatus.CustomerStatusID, CustomerStatus.CustomerStatusName "+
+            "FROM Customer JOIN CustomerStatus ON Customer.CustomerStatusID = CustomerStatus.CustomerStatusID " + 
+            "WHERE Customer.CustomerID = " + id);
+        const customers = result.recordset;
+
+        res.send(customers)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
 app.get('/customerList/:name&:phone', async (req, res) => {
 
     let name = req.params.name;
@@ -195,7 +215,7 @@ app.get('/customerList/:name&:phone', async (req, res) => {
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
             .query("SELECT CUSTOMER.CustomerID, CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, ADDRESS.City, STATE.StateName, ADDRESS.DefaultAddress "+ 
-            "FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID=ADDRESS.CUSTOMERID " +
+            "FROM CUSTOMER FULL JOIN ADDRESS ON CUSTOMER.CUSTOMERID=ADDRESS.CUSTOMERID " +
             "JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID " + 
             "JOIN STATE ON ADDRESS.STATEID=STATE.STATEID WHERE CUSTOMER.CustomerLastName = "+name+" OR CUSTOMER.CustomerPhone = "+phone);
         const customers = result.recordset;
@@ -255,7 +275,7 @@ app.get('/getAddress/:id', async (req,res) => {
         let result = await pool.request()
 
             //might need to make it so customerstatus is active here or on the main screen
-            .query("Select ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode" +
+            .query("Select ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
             " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.CustomerID = " +id)
 
         const address = result.recordset
