@@ -161,6 +161,34 @@ app.post('/addAddress', async (req,res) => {
     }
 
 });
+//Edit Address
+app.put('/editAddress/', async (req,res) => {
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+            //gather inputs
+            .input('AddressID_p', req.body.AddressID)
+            .input('DefaultAddress_p', req.body.DefaultAddress)
+            .input('AddressLine1_p', req.body.AddressLine1)
+            .input('AddressLine2_p', req.body.AddressLine2)
+            .input('City_p', req.body.City)
+            .input('StateID_p', req.body.StateID)
+            .input('Country_p', req.body.Country)
+            .input('CustomerID_p', req.body.CustomerID)
+            //execute stored procedure updateAddress
+            .execute('updateAddress')
+        
+        console.log(result.recordset)
+    } catch (err){
+        res.send(err)
+        console.log(err)
+    }
+
+});
 
 
 //this should run a stored procedure using async functions
@@ -289,7 +317,7 @@ app.get('/Address/:id', async (req,res) => {
         let result = await pool.request()
 
             //might need to make it so customerstatus is active here or on the main screen
-            .query("Select ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
+            .query("Select ADDRESS.CustomerID, ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
             " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.AddressID = " +id)
 
         const address = result.recordset
