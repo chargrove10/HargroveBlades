@@ -94,6 +94,7 @@
         
         <div id="modal_content" class="modal_content" style="height:auto"  v-for="cusaddress in CusAddress" :value="cusaddress.AddressID" :key="cusaddress.AddressID">
             <input type="hidden" id="addID" v-model="cusaddress.AddressID"/>
+            <input type="hidden" id="cusID" v-model="cusaddress.CustomerID"/>
             <label>Default Address</label><br />
             <input type="checkbox" id="defaultAdd" v-model="cusaddress.DefaultAddress"/><br />
             <label>Address Line 1</label><br />
@@ -154,7 +155,8 @@ import axios from 'axios'
                     AddressLine2: '',
                     City: '',
                     StateID: '',
-                    Country: ''
+                    Country: '',
+                    CustomerID: ''
                 }
             
             }
@@ -283,8 +285,22 @@ import axios from 'axios'
                 this.cusaddress.City = document.getElementById("city").value
                 this.cusaddress.StateID = document.getElementById("st").value
                 this.cusaddress.Country = document.getElementById("country").value
+                this.cusaddress.CustomerID = document.getElementById("cusID").value
 
                 console.log(this.cusaddress)
+                let url = 'http://localhost:3000/editAddress/'
+                axios.put(url, this.cusaddress).then((res) => {
+                    console.log(res)
+    
+                }).catch(err => {
+                    console.log(err)
+                
+                })
+
+                document.getElementById("modal").style.display="none";
+                document.getElementById("address-div").style.display="block";
+                document.getElementById("tab-div2").style.display="block";
+                this.$router.go(0);
             }
         }
     }

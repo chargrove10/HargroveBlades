@@ -171,14 +171,14 @@ app.put('/editAddress/', async (req,res) => {
         let result = await pool.request()
            
             //gather inputs
-            .input('AddressID_p', req.body.AddressID)
-            .input('DefaultAddress_p', req.body.DefaultAddress)
-            .input('AddressLine1_p', req.body.AddressLine1)
-            .input('AddressLine2_p', req.body.AddressLine2)
-            .input('City_p', req.body.City)
-            .input('StateID_p', req.body.StateID)
-            .input('Country_p', req.body.Country)
-            .input('CustomerID_p', req.body.CustomerID)
+            .input('AddressID_p', sql.Int, req.body.AddressID)
+            .input('DefaultAddress_p', sql.Bit, req.body.DefaultAddress)
+            .input('AddressLine1_p', sql.VarChar, req.body.AddressLine1)
+            .input('AddressLine2_p', sql.VarChar,  req.body.AddressLine2)
+            .input('City_p', sql.VarChar, req.body.City)
+            .input('StateID_p', sql.Int, req.body.StateID)
+            .input('Country_p', sql.VarChar, req.body.Country)
+            .input('CustomerID_p', sql.Int, req.body.CustomerID)
             //execute stored procedure updateAddress
             .execute('updateAddress')
         

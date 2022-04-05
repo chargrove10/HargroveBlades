@@ -256,7 +256,7 @@ header {
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
     
-    color:rgb(255, 7, 7)
+    color:rgb(0, 0, 0)
 }
 
 .close {
