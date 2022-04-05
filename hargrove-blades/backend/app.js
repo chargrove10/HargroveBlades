@@ -171,10 +171,7 @@ app.get('/customerList', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT CUSTOMER.CustomerID, CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, ADDRESS.City, STATE.StateName, ADDRESS.DefaultAddress "+ 
-            "FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID=ADDRESS.CUSTOMERID " +  
-            "JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID " + 
-            "JOIN STATE ON ADDRESS.STATEID=STATE.STATEID WHERE ADDRESS.DefaultAddress = 'true'");
+            .query("Select * From Customer C JOIN CustomerStatus CS ON C.CustomerStatusID = CS.CustomerStatusID");
         const customers = result.recordset;
 
         res.send(customers)
@@ -214,10 +211,8 @@ app.get('/customerList/:name&:phone', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT CUSTOMER.CustomerID, CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, ADDRESS.City, STATE.StateName, ADDRESS.DefaultAddress "+ 
-            "FROM CUSTOMER FULL JOIN ADDRESS ON CUSTOMER.CUSTOMERID=ADDRESS.CUSTOMERID " +
-            "JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID " + 
-            "JOIN STATE ON ADDRESS.STATEID=STATE.STATEID WHERE CUSTOMER.CustomerLastName = "+name+" OR CUSTOMER.CustomerPhone = "+phone);
+            .query("Select * From Customer C JOIN CustomerStatus CS ON C.CustomerStatusID = CS.CustomerStatusID" + 
+            " WHERE C.CustomerLastName = " + name + " OR CustomerPhone = " + phone);
         const customers = result.recordset;
 
         res.send(customers)
@@ -339,10 +334,10 @@ app.post('/createOrder', async (req,res) => {
 
 });
 
-app.get('/editCustomer/:id&:flag', async (req, res) => {
+app.get('/editCustomer/:id', async (req, res) => {
 
     let id = req.params.id
-    let flag = req.params.flag
+    
 
     try {
         //making 'pool' awaiting the connection
@@ -350,11 +345,9 @@ app.get('/editCustomer/:id&:flag', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT TOP 1 CUSTOMER.CustomerID, CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, CUSTOMER.CustomerEmail," + 
-            " ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.DefaultAddress, ADDRESS.City, STATE.StateInitials, ADDRESS.StateID, ADDRESS.ZipCode," +
-            " ADDRESS.Country FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID = ADDRESS.CUSTOMERID" + 
-            " JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID" + 
-            " JOIN STATE ON ADDRESS.STATEID = STATE.STATEID WHERE CUSTOMER.CUSTOMERID = " + id + "AND ADDRESS.DefaultAddress = " + flag);
+            .query("Select C.CustomerID, C.CustomerFirstName, C.CustomerLastName, C.CustomerPhone, C.CustomerEmail, C.CustomerNote " +  
+            "From Customer C JOIN CustomerStatus CS ON C.CustomerStatusID = CS.CustomerStatusID " + 
+            "WHERE C.CustomerID = " + id);
         //let customers = result.recordset;
 
         res.send(result.recordset)
@@ -377,19 +370,11 @@ app.put('/editCustomer/', async (req, res) => {
             .input('CustomerPhone_p',  req.body.CustomerPhone)
             .input('CustomerEmail_p',  req.body.CustomerEmail)
             .input('CustomerNote_p',  req.body.CustomerNote)
-            .input('AddressLine1_p', sql.VarChar,  req.body.AddressLine1)
-            .input('AddressLine2_p', sql.VarChar,  req.body.AddressLine2)
-            .input('DefaultAddress_p', sql.Bit,  req.body.DefaultAddress)
-            .input('City_p', sql.VarChar,  req.body.City)
-            //need to pass over StateID from the dropdown
-            .input('StateID_p', sql.Int, req.body.StateID)
-            .input('ZipCode_p', sql.VarChar,  req.body.ZipCode)
-            .input('Country_p', sql.VarChar,  req.body.Country)
-            .input('AddressID_p', sql.Int, req.body.AddressID)
             .input('CustomerID_p', sql.Int, req.body.CustomerID)
+            .input('CustomerStatusID_p', sql.Int, req.body.CustomerStatusID)
            
             //executes the stored procedure "GetCustomers"
-            .execute("UpdateCustomer");
+            .execute("UpdateCustomerInfo");
         const customers = result.recordset;
 
         res.send(customers)
