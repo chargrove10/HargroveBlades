@@ -24,7 +24,8 @@
                     <form>
                         <label for="statusName">Status Name:</label><br/>
                         <input type="text" id="statuseName" name="statusName" v-model="orStatus.OrderStatusName"/><br/>
-                        
+                        <label >Active Status:</label>
+                        <input type="checkbox" id="active" name="active" v-model="orStatus.OrderStatusActive"/> 
                     </form>
                 </div>
 
@@ -58,6 +59,7 @@ import axios from 'axios'
                 orStatus: {
                     OrderStatusName: '',
                     OrderStatusDesc: '',
+                    OrderStatusActive: ''
                 }
             }
         },
@@ -77,6 +79,7 @@ import axios from 'axios'
                     this.orStatus = {
                         OrderStatusName: '',
                         OrderStatusDesc: '',
+                        OrderStatusActive: ''
                     }
                 }).catch(err =>{
                     console.log(err)

@@ -24,6 +24,8 @@
                     <form>
                         <label for="statusName">Status Name:</label><br/>
                         <input type="text" id="statuseName" name="statusName" v-model="prStatus.ProductStatusName"/><br/>
+                        <label >Active Status:</label>
+                        <input type="checkbox" id="active" name="active" v-model="prStatus.ProductStatusActive"/> 
                         
                     </form>
                 </div>
@@ -58,6 +60,7 @@ import axios from 'axios'
                 prStatus: {
                     ProductStatusName: '',
                     ProductStatusDesc: '',
+                    ProductStatusActive: ''
                 }
             }
         },
@@ -77,6 +80,7 @@ import axios from 'axios'
                     this.prStatus = {
                         ProductStatusName: '',
                         ProductStatusDesc: '',
+                        ProductStatusActive: ''
                     }
                 }).catch(err =>{
                     console.log(err)
