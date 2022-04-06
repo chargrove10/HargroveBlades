@@ -121,7 +121,7 @@
                             <td style="text-align:right">{{lineItem.OverallLength}}</td>
                             <td style="text-align:right">{{lineItem.Price}}</td>
                             
-                            <td><button>Edit</button></td>
+                            <td><button type="button" v-on:click="editLineItem(lineItem.OrderID, lineItem.LineNumber)">Edit</button></td>
 
                         </tr>
                     </table>
@@ -135,7 +135,7 @@
     </div>
     
     <div id="modal" class="modal">
-        <div id="modal_content">
+        <div id="modal_content" class="modal_content">
             
             <form>
                     <table style="transform:translate(-17%,0); width:96.5%">
@@ -156,6 +156,43 @@
                     </form>
                     <div class="tab-divider" />
             <button id="close" class="close" v-on:click="closeModal()">Close Me</button>
+
+        </div>
+    </div>
+
+    <div id="editModal" class="modal" >
+        <div id="edit_modal_content" class="modal_content" v-for="editItems in EditItems" :value="editItems.OrderID" :key="editItems.OrderID">
+            <div style="width:50%; float:left; margin-left:10%">
+            <label> Order ID </label>
+            <input id="oid" type="text" readonly v-model="editItems.OrderID" /><br />
+            <label> Serial Number </label>
+            <input id="serialNumber" readonly type="text" v-model="editItems.SerialNo" /><br />
+            <label> Blade Length </label>
+            <input id="bladeLength" readonly type="text" v-model="editItems.BladeLength" /><br />
+            <label> Blade Finish </label>
+            <input id="bladeFinish" readonly type="text" v-model="editItems.BladeFinish" /><br />
+            <label> Handle Material </label>
+            <input id="handleMaterial" readonly type="text" v-model="editItems.HandleMaterial" /><br />
+            <input id="lineNumber" readonly type="hidden" v-model="editItems.LineNumber" /><br />
+            </div>
+            <div style="margin-left:40%">
+            <label> Knife Style </label>
+            <input id="styleName" readonly type="text" v-model="editItems.StyleName" /><br />
+            <label> Steel Name </label>
+            <input id="steelName" readonly type="text" v-model="editItems.SteelName" /><br />
+            <label> Overall Length </label>
+            <input id="overallLength" readonly type="text" v-model="editItems.OverallLength" /><br />
+            <label> Price </label>
+            <input id="price" type="text" readonly v-model="editItems.Price" /><br />
+            <label> Status </label>
+            <select name="statusID" id="linestatusID" @change="statusChange($event)" >
+                    <option hidden disabled selected v-for="editItems in EditItems" :value="editItems.OrderLineStatusID" :key="editItems.OrderLineStatusID">{{editItems.OrderLineStatusName}}</option>
+                    <option v-for="lineStatus in LineStatus" :value="lineStatus.OrderLineStatusID" :key="lineStatus.OrderLineStatusID">{{lineStatus.OrderLineStatusName}}</option>
+            </select><br/>
+            
+            </div>
+            <button class="close" style="transform:translate(26%,-46%)" v-on:click="saveLineItem()">Save</button>
+            <button id="close" class="close" style="transform:translate(74%,-582%)" v-on:click="closeEditModal()">Close Me</button>
 
         </div>
     </div>
@@ -250,7 +287,28 @@
                     HandleMaterial: '',
                     OverallLength: '',
                     Price: ''
+                },
+                EditItems: [],
+                editItems: {                    
+                    LineNumber: '',
+                    SerialNo: '',
+                    BladeLength: '',
+                    StyleName: '',
+                    SteelName: '',
+                    BladeFinish: '',
+                    HandleMaterial: '',
+                    OverallLength: '',
+                    Price: '',
+                    OrderLineStatusID: '',
+                    OrderLineStatusName: '',
+                    OrderID: ''
+                },
+                LineStatus: [],
+                lineStatus: {
+                    OrderLineStatusID: '',
+                    OrderLineStatusName: ''
                 }
+
             }
         },
 
@@ -260,12 +318,24 @@
             let bid = this.$route.params.billingID;
             let sid = this.$route.params.shippingID;
 
+            let linestatuses = 'http://localhost:3000/orderLineStatus'
+
+            axios.get(linestatuses).then((res) => {
+                const statusData = res.data
+                this.LineStatus = statusData
+            }).catch(err => {
+                console.log(err)
+            })
+
             let lineItemURL = 'http://localhost:3000/getLineItems/' +id
 
             axios.get(lineItemURL).then((response) => {
                 const lineItemData = response.data
                 this.LineItem = lineItemData
+            }).catch(err => {
+                console.log(err)
             })
+
 
             let url2 = 'http://localhost:3000/getOrder/' + id + "&" + cid
 
@@ -354,6 +424,11 @@
                 
             },
 
+            lineStatusChange(event) {
+                this.editItems.OrderLineStatusID = event.target.value
+                console.log(this.editItems.OrderLineStatusID)
+            },
+
             test() {
                 
             },
@@ -381,7 +456,7 @@
                 this.productOrder.BilledAmount = document.getElementById("billed").value
                 this.productOrder.Balance = document.getElementById("balance").value
                 this.productOrder.TrackingNumber = document.getElementById("tracking").value
-                this.productOrder.CustomerPickUp = document.getElementById("pickup").value
+                this.productOrder.CustomerPickUp = document.getElementById("pickup").checked
                 this.productOrder.OrderID = document.getElementById("orderID").value                           
     
                 console.log(this.productOrder)
@@ -420,7 +495,44 @@
             closeModal() {
                 document.getElementById("modal").style.display="none";
                 document.getElementById("main-content").style.display="block";
+            },
+
+            editLineItem(orderID, lineNumber) {
+            
+            document.getElementById("editModal").style.display="inline-block";
+            document.getElementById("main-content").style.display="none";
+            
+            let editlineItemURL = 'http://localhost:3000/editLineItems/' +orderID + '&' + lineNumber 
+
+            axios.get(editlineItemURL).then((response) => {
+                const editlineItemData = response.data
+                this.EditItems = editlineItemData
+            }).catch(err => {
+                console.log(err)
+            });
+            },
+
+            closeEditModal()  {
+                document.getElementById("editModal").style.display="none";
+                document.getElementById("main-content").style.display="block";
+            },
+
+            saveLineItem() {
+                this.editItems.OrderLineStatusID = document.getElementById("linestatusID").value
+                this.editItems.LineNumber = document.getElementById("lineNumber").value
+                this.editItems.OrderID = document.getElementById("oid").value
+
+                
+
+                let url = 'http://localhost:3000/updateLineItem/'
+                axios.put(url, this.editItems).then((res) => {
+                    console.log(res)
+                    this.$router.go(0)
+                }).catch(err => {
+                    console.log(err)
+                })
             }
+            
         }
         
     
