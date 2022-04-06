@@ -24,6 +24,8 @@
                     <form>
                         <label for="statusName">Status Name:</label><br/>
                         <input type="text" id="statuseName" name="statusName" v-model="prStatus.ProductStatusName"/><br/>
+                        <label >Active Status:</label>
+                        <input type="checkbox" id="active" name="active" v-model="prStatus.ProductStatusActive"/>    
                         
                     </form>
                 </div>
@@ -39,8 +41,6 @@
             <div>
                 <div class="tab-divider"/>
                 <button style="transform:translate(90%,0)" v-on:click="editProcutStatus()">Save</button>
-                <div class="tab-divider"/>
-                <button style="transform:translate(90%,0)" v-on:click="testingOutput()">Testing </button>    
             </div> 
 
         </div>
@@ -61,7 +61,8 @@ import axios from 'axios'
                 prStatus: {
                     ProductStatusID: '',
                     ProductStatusName: '',
-                    ProductStatusDesc: ''
+                    ProductStatusDesc: '',
+                    ProductStatusActive: ''
                 }
             }
         },
@@ -75,6 +76,7 @@ import axios from 'axios'
                 this.prStatus.ProductStatusID = document.getElementById("pStatID").value
                 this.prStatus.ProductStatusName = document.getElementById("statuseName").value
                 this.prStatus.ProductStatusDesc = document.getElementById("statusDesc").value
+                this.prStatus.ProductStatusActive =  document.getElementById("active").checked
 
                 let url = 'http://localhost:3000/ProductStatusEdit/'
 
@@ -85,19 +87,14 @@ import axios from 'axios'
                     this.prStatus = {
                         ProductStatusID: '',
                         ProductStatusName: '',
-                        ProductStatusDesc: ''
+                        ProductStatusDesc: '',
+                        ProductStatusActive: ''
                     }
                 }).catch(err =>{
                     console.log(err)
                 });
 
             },
-            testingOutput(){
-                this.prStatus.ProductStatusID = document.getElementById("pStatID").value
-                this.prStatus.ProductStatusName = document.getElementById("statuseName").value
-                this.prStatus.ProductStatusDesc = document.getElementById("statusDesc").value
-                console.log(this.prStatus)
-            }
         },
 
         created(){

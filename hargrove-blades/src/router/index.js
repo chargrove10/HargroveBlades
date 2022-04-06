@@ -31,6 +31,7 @@ import EditOrderStatus from '../components/EditOrderStatus.vue'
 import EditProductStatus from '../components/EditProductStatus.vue'
 import EditOrderLineStatus from '../components/EditOrderLineStatus.vue'
 import EditOrder from '../components/EditOrder.vue'
+import EditProduct from '../components/EditProduct.vue'
 
 const routes = [
     {
@@ -194,6 +195,11 @@ const routes = [
         path: "/editorderLinestatus/:orderLineStatID",
         name: "EditOrderLineStatus",
         component: EditOrderLineStatus
+    },
+    {
+        path: "/editProduct/:productID&:productStatusId&:styleId&:steelId",
+        name: "EditProduct",
+        component: EditProduct
     },
 
 ]

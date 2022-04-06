@@ -24,7 +24,8 @@
                     <form>
                         <label for="statusName">Status Name:</label><br/>
                         <input type="text" id="statuseName" name="statusName" v-model="orLStatus.OrderLineStatusName"/><br/>
-                        
+                        <label >Active Status:</label>
+                        <input type="checkbox" id="active" name="active" v-model="orLStatus.OrderLineStatusActive"/>
                     </form>
                 </div>
 
@@ -60,6 +61,7 @@ import axios from 'axios'
                     OrderLineStatusID: '',
                     OrderLineStatusName: '',
                     OrderLineStatusDesc: '',
+                    OrderLineStatusActive: ''
                 }
             }
         },
@@ -72,6 +74,8 @@ import axios from 'axios'
                 this.orLStatus.OrderLineStatusID = document.getElementById("oLStatID").value
                 this.orLStatus.OrderLineStatusName = document.getElementById("statuseName").value
                 this.orLStatus.OrderLineStatusDesc = document.getElementById("statusDesc").value
+                this.orLStatus.OrderLineStatusActive = document.getElementById("active").checked
+
                 let url = 'http://localhost:3000/OrderLineStatusEdit/'
 
                 let vm = this
@@ -82,6 +86,7 @@ import axios from 'axios'
                         OrderLineStatusID: '',
                         OrderLineStatusName: '',
                         OrderLineStatusDesc: '',
+                        OrderLineStatusActive: ''
                     }
                 }).catch(err =>{
                     console.log(err)

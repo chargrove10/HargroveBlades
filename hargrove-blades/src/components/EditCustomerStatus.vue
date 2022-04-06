@@ -24,7 +24,9 @@
                     <form>
                         <label for="statusName">Status Name:</label><br/>
                         <input type="text" id="statuseName" name="statusName" v-model="cStatus.CustomerStatusName"/><br/>
-                        
+                        <label >Active Status:</label>
+                        <input type="checkbox" id="active" name="active" v-model="cStatus.CustomerStatusActive"/>                                        
+                        <br/>
                     </form>
                 </div>
 
@@ -38,9 +40,7 @@
 
             <div>
                 <div class="tab-divider"/>
-                <button style="transform:translate(90%,0)" v-on:click="editCustomerStatus()">Save</button>
-                <div class="tab-divider"/>
-                <button style="transform:translate(90%,0)" v-on:click="testingOutput()">Testing </button>    
+                <button style="transform:translate(90%,0)" v-on:click="editCustomerStatus()">Save</button>    
             </div> 
 
         </div>
@@ -61,6 +61,7 @@ import axios from 'axios'
                     CustomerStatusID: '',
                     CustomerStatusName: '',
                     CustomerStatusDesc: '',
+                    CustomerStatusActive: ''
                 }
             }
         },
@@ -74,6 +75,7 @@ import axios from 'axios'
                 this.cStatus.CustomerStatusID = document.getElementById("cStatID").value
                 this.cStatus.CustomerStatusName = document.getElementById("statuseName").value
                 this.cStatus.CustomerStatusDesc = document.getElementById("statusDesc").value
+                this.cStatus.CustomerStatusActive = document.getElementById("active").checked
 
                 let url = 'http://localhost:3000/CustomerStatusEdit/'
 
@@ -85,18 +87,13 @@ import axios from 'axios'
                         CustomerStatusID: '',
                         CustomerStatusName: '',
                         CustomerStatusDesc: '',
+                        CustomerStatusActive: ''
                     }
                 }).catch(err =>{
                     console.log(err)
                 });
 
             },
-            testingOutput(){
-                this.cStatus.CustomerStatusID = document.getElementById("cStatID").value
-                this.cStatus.CustomerStatusName = document.getElementById("statuseName").value
-                this.cStatus.CustomerStatusDesc = document.getElementById("statusDesc").value
-                console.log(this.cStatus)
-            }
         },
 
         created(){

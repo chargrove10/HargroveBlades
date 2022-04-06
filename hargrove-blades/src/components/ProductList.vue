@@ -83,6 +83,10 @@
                                 <th>Blade Length</th>
                                 <th>Overall Length</th>
                                 <th>Embellishments</th>
+                                <th>StyleID</th>
+                                <th>ProductID</th>
+                                <th>SteelID</th>
+
                             </tr>
                             <tr id="pTable" v-for="products in Products" :key="products.ProductID">
                                 <td>{{products.SerialNo}}</td>
@@ -93,7 +97,10 @@
                                 <td>{{products.BladeLength}}</td>
                                 <td>{{products.OverallLength}}</td>
                                 <td>{{products.Embellishments}}</td>
-                                <td><router-link :to="{ name: 'Reports'}">Edit</router-link></td>
+                                <td>{{products.StyleID}}</td>
+                                <td>{{products.ProductID}}</td>
+                                <td>{{products.SteelID}}</td>
+                                <td><router-link :to="{ name: 'EditProduct', params: {productID: products.ProductID, productStatusId: products.ProductStatusID, styleId: products.StyleID, steelId: products.SteelID}}">Edit</router-link></td>
                                 <!-- Place holder !-->
                             </tr>
                         </table>
