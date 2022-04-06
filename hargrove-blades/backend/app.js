@@ -673,6 +673,70 @@ app.get('/getLineItems/:lineID', async (req, res) => {
     }
 });
 
+//get LineItem Information for Edit
+app.get('/editLineItems/:orderID&:lineNum', async (req, res) => {
+
+    let orderID = req.params.orderID
+    let lineNum = req.params.lineNum
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+            .query("select OLI.OrderID, OLI.LineNumber, P.SerialNo, P.BladeLength, P.HandleMaterial, P.BladeFinish, P.OverallLength ,style.StyleName, steel.SteelName, P.Price, " +
+            "OLS.OrderLineStatusID, OLS.OrderLineStatusName from OrderLineItem OLI "+
+            "join Product P on OLI.ProductID = P.ProductID "+
+            "join KnifeStyle style on P.StyleID = style.StyleID "+
+            "join KnifeSteel steel on P.SteelID = steel.SteelID "+ 
+            "join OrderLineStatus OLS on OLI.OrderLineStatusID = OLS.OrderLineStatusID " +
+            "WHERE OLI.OrderID = "+orderID + " AND OLI.LineNumber = " +lineNum)
+        const lineItems = result.recordset;
+
+        res.send(lineItems)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
+//get OrderLineStatus information
+app.get('/orderLineStatus', async (req,res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+            .query("Select OrderLineStatusID, OrderLineStatusName FROM OrderLineStatus")
+        const lineStatus = result.recordset;
+
+        res.send(lineStatus)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
+//update OrderLineItem with Status
+app.put('/updateLineItem/', async (req,res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+        .input('LineNumber_p', req.body.LineNumber)
+        .input('OrderLineStatusID_p', req.body.OrderLineStatusID)
+        .input('OrderID_p', req.body.OrderID)
+
+        .execute('updateLineItem')
+
+        res.send(result)
+    } catch (err){
+        res.status(500).json(err)
+    }
+})
+
 //get billing address information for edit order
 app.get('/getBillingAddress/:billingID', async (req,res) => {
     let id = req.params.billingID;

@@ -235,7 +235,7 @@ import axios from 'axios'
 
                 axios.put(url, this.customers).then((res) => {
                     console.log(res)
-                    this.$router.push('/customerList')
+                    this.$router.go(0)
                 }).catch(err => {
                     console.log(err)
                 })
