@@ -380,14 +380,16 @@ app.post('/createOrder', async (req,res) => {
             .input('BillingAddressID_p',  req.body.BillingAddressID)
             .input('ShippingAddressID_p',  req.body.ShippingAddressID)
             .input('OrderNote_p',  req.body.OrderNote)
-            .input('OrderTotal_p',  req.body.OrderTotal)
+            // .input('OrderTotal_p',  req.body.OrderTotal)
             .input('MethodOfPayment_p',  req.body.MethodOfPayment)
             .input('BilledAmount_p', req.body.BilledAmount)
             .input('Balance_p', req.body.Balance)
             .input('TrackingNumber_p', req.body.TrackingNumber)
             .input('CustomerPickup_p', req.body.CustomerPickup)
-            .input('PickUpDateTime', req.body.PickUpDateTime)
+            .input('PickUpDateTime_p', req.body.PickUpDateTime)
             .input('ProductID_p', req.body.ProductID)
+            .input('ProductList_p', null)
+            .input('BulkCreate_p', sql.Bit, 0)
            
             //executes the stored procedure "AddAddress"
             .execute("dbo.SP_ProductOrder_Create");
@@ -794,7 +796,7 @@ app.get('/orderLineStatus', async (req,res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
            
-            .query("Select OrderLineStatusID, OrderLineStatusName FROM OrderLineStatus")
+            .query("Select OrderLineStatusID, OrderLineStatusName, OrderLineStatusDesc, OrderLineStatusActive FROM OrderLineStatus")
         const lineStatus = result.recordset;
 
         res.send(lineStatus)

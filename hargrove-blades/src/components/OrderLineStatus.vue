@@ -93,7 +93,12 @@ export default {
             return {
                 OrderLineStatus: [],
                 isShow: false,
-                orderLineStatus: {}
+                orderLineStatus: {
+                    OrderLineStatusID: '',
+                    OrderLineStatusName: '',
+                    OrderLineStatusDesc: '',
+                    OrderLineStatusActive: ''
+                }
                 //pass over to product detail to see if we are posting or editing
                 
             }
@@ -126,7 +131,7 @@ export default {
 
             axios.get('http://localhost:3000/orderLinestatus').then((res) => {
                 this.OrderLineStatus=res.data;
-                
+                console.log(this.OrderLineStatus)
             }).catch(err => {
                 console.log(err)
             });
