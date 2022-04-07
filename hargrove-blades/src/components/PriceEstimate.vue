@@ -72,7 +72,7 @@
                 <div class="tab-divider"></div>
 
                 <form>
-                    <table style="width:30%">
+                    <table style="width:95%; margin-left:2.5%">
                         <tr>
                             <th>Knife Style</th>
                             <th>Steel Name</th>
@@ -87,7 +87,7 @@
                         </tr>
                     </table>
                 </form>
-
+                <div class="tab-divider"></div>
             </div>
 
     </div>

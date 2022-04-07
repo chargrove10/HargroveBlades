@@ -2,7 +2,7 @@
 <div class="form-div">
 
     <div style="text-align:center;margin-bottom:20px">
-        <header>Input Customer Information</header>
+        <header>Edit Customer Information</header>
     </div>
 
    <div class="tab-div1">
@@ -57,9 +57,9 @@
         </div>
     </div>
 
-    <div id="address-div" style="background-color:white;">
+    <div id="address-div" style="background-color:white;"  class="tab-div2">
         <form>
-                    <table style="transform:translate(-8.5%,0); width:87.5%">
+                    <table style="transform:translate(1%,0); width:97%">
                         
                         <tr>
                             <th>Default Address</th>
@@ -69,7 +69,7 @@
                             <th>Zipcode</th>
                             <th>State Initials</th>
                             <th>Country</th>
-                            
+                            <th></th>
                             
                         </tr>
                         <tr id="oTable" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">

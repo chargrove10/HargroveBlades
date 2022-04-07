@@ -48,8 +48,8 @@
                             <tr>
                                 <th>Customer Status Name</th>
                                 <th>Description</th>
-                                
-                                
+                                <th>Active</th>
+                                <th></th>
                             </tr>
                            
                             <tr id = "cTable" v-for="customerStatus in CustomerStatus" :key="customerStatus.CustomerStatusID">
