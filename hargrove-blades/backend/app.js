@@ -11,6 +11,7 @@ const PORT = 3000;
 //app.use(bodyParser)
 app.use(cors())
 app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 
 //router.use(cors())
 //router.use(bodyParser)
@@ -364,6 +365,8 @@ app.get('/getProductStatus', async (req,res) => {
 //Order Creation
 app.post('/createOrder', async (req,res) => {
 
+    //This is not functioning as intended
+
     try {
         //making 'pool' awaiting the connection
         let pool = await sql.connect(config)
@@ -374,17 +377,17 @@ app.post('/createOrder', async (req,res) => {
             .input('CustomerID_p', req.body.CustomerID)
             .input('OrderStatusID_p',  req.body.OrderStatusID)
             .input('OrderDate_p',  req.body.OrderDate)
-            .input('BillingAddressID',  req.body.BillingAddressID)
-            .input('ShippingAddressID',  req.body.ShippingAddressID)
+            .input('BillingAddressID_p',  req.body.BillingAddressID)
+            .input('ShippingAddressID_p',  req.body.ShippingAddressID)
             .input('OrderNote_p',  req.body.OrderNote)
             .input('OrderTotal_p',  req.body.OrderTotal)
             .input('MethodOfPayment_p',  req.body.MethodOfPayment)
             .input('BilledAmount_p', req.body.BilledAmount)
             .input('Balance_p', req.body.Balance)
-            .input('TrackingNumber', req.body.TrackingNumber)
+            .input('TrackingNumber_p', req.body.TrackingNumber)
             .input('CustomerPickup_p', req.body.CustomerPickup)
             .input('PickUpDateTime', req.body.PickUpDateTime)
-            .input('ProductID', req.body.ProductID)
+            .input('ProductID_p', req.body.ProductID)
            
             //executes the stored procedure "AddAddress"
             .execute("dbo.SP_ProductOrder_Create");
@@ -529,30 +532,40 @@ app.put('/editProduct/', async (req, res) => {
 });
 
 //product filtering
-//Order List Filtering
+
 app.get('/productList/:serial&:knife&:steel', async (req, res) => {
 
-    let serial = req.params.serial;
-    let knife = req.params.knife;
-    let steel = req.params.steel
+    let steelName = req.params.steel
+    let serialNo = req.params.serial
+    let knifeStyle = req.params.knife
+
+    if (knifeStyle === '""')
+        knifeStyle = ''
+
+    if (serialNo === '""')
+        serialNo = ''
+
+    if (steelName === '""')
+        steelName = ''
+
+    console.log(steelName + ' ' + serialNo + ' ' + knifeStyle)
 
     try {
         //making 'pool' awaiting the connection
         let pool = await sql.connect(config)
         //making result awaiting the request to the connection
         let result = await pool.request()
-            //executes the stored procedure "GetCustomers"
-            .query("SELECT P.SerialNo, PS.ProductStatusName, style.StyleName, steel.SteelName, " + 
-            "P.HandleMaterial, P.BladeLength, P.OverallLength, P.Embellishments " +
-            "FROM Product P JOIN KnifeStyle style ON P.StyleID = style.StyleId " + 
-            "JOIN KnifeSteel steel ON P.SteelID = steel.SteelID " + 
-            "JOIN ProductStatus PS ON P.ProductStatusId = PS.ProductStatusID " +
-            "WHERE p.SerialNo = " +serial+ " OR style.StyleName = " + knife + " OR steel.SteelName = " + steel);
-        const customers = result.recordset;
+            
+            .input('SerialNo_p', serialNo)
+            .input('KnifeStyleName_p', knifeStyle)
+            .input('SteelName_p', steelName)
 
-        res.send(customers)
+            .execute('productFilter')
+        const order = result.recordset;
+        console.log(order)
+        res.send(order)
     } catch (err){
-        res.status(500).json(err)
+        console.log(err)
     }
 });
 
@@ -688,7 +701,7 @@ app.get('/getOrder/:orderID&:custID', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .input('CustomerID_P', req.params.custID)
+            .input('CustomerID_p', req.params.custID)
             .input('OrderID_p', req.params.orderID)
 
             .execute('GetOrder')
@@ -696,7 +709,7 @@ app.get('/getOrder/:orderID&:custID', async (req, res) => {
 
         res.send(order)
     } catch (err){
-        res.status(500).json(err)
+        console.log(err)
     }
 });
 

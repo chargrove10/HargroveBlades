@@ -465,7 +465,7 @@
 
                   axios.put(url, this.productOrder).then((response) => {
                       console.log(response)
-                      this.$router.push('/orderList')
+                      this.$router.go(0)
                   }).catch(err => {
                       console.log(err)
                   })

@@ -132,7 +132,21 @@ export default {
             return {
                 Products: [],
                 isShow: false,
-                products: {}
+                products: {
+                    StyleID: '',
+                    StyleName: '',
+                    SteelName: '',
+                    ProductStatusName: '',
+                    CompleteDate: '',
+                    Price: '',
+                    SerialNo: '',
+                    OverallLength: '',
+                    BladeFinish: '',
+                    BladeLength: '',
+                    Embellishments: '',
+                    HandleMaterial: '',
+                    ProductNote: ''
+                }
                 //pass over to product detail to see if we are posting or editing
                 
             }
@@ -161,16 +175,26 @@ export default {
 
             async applyFilter() {
                                
-                let serial = document.getElementById('serial').value;
-                let knife = document.getElementById('knife').value;
-                let steel = document.getElementById('steel').value
+                let serial = document.getElementById("serial").value;
+                let knife = document.getElementById("knife").value;
+                let steel = document.getElementById("steel").value
 
-                if ((serial =="" || serial ==null) & (knife =="" || knife==null) & (steel =="" || steel==null)) {
+                if (serial == "")
+                    serial = '""'
+                
+                if (knife == "")
+                    knife = '""'
+
+                if (steel == "")
+                    steel = '""'
+
+                if ((serial =="" || serial ==null) && (knife =="" || knife==null) && (steel =="" || steel==null)) {
                     this.refreshPage();
                 }
                 
                 //this is the link to filter by the fields selected
-                let url = 'http://localhost:3000/productList/' + "'"+serial+"'" + '&' + "'" +knife+"'" + '&' + "'" +steel+"'";
+                // let url = 'http://localhost:3000/productList/' + serial + '&' + knife + '&' + steel;
+                let url = 'http://localhost:3000/productList/' + serial + '&' + knife + '&' + steel;
                 
 
                 axios.get(url)
