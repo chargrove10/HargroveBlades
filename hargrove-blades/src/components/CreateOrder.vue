@@ -211,11 +211,9 @@
                 this.productOrder.OrderDate = document.getElementById("orderDate").value
                 this.productOrder.PickUpDateTime = document.getElementById("time").value
 
-                let url = 'http://localhost:3000/createOrder';
+                let url = 'http://localhost:3000/createOrder/';
 
-                var vm = this;
-
-                 axios.post(url, vm.productOrder).then(() => {
+                 axios.post(url, this.productOrder).then(() => {
                      this.$router.push('/orderList')
                       this.productOrder = {
                           //assigning all values as empty

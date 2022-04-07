@@ -363,7 +363,7 @@ app.get('/getProductStatus', async (req,res) => {
 });
 
 //Order Creation
-app.post('/createOrder', async (req,res) => {
+app.post('/createOrder/', async (req,res) => {
 
     //This is not functioning as intended
 
@@ -374,26 +374,26 @@ app.post('/createOrder', async (req,res) => {
         let result = await pool.request()
            
             //gather inputs
-            .input('CustomerID_p', req.body.CustomerID)
-            .input('OrderStatusID_p',  req.body.OrderStatusID)
-            .input('OrderDate_p',  req.body.OrderDate)
-            .input('BillingAddressID_p',  req.body.BillingAddressID)
-            .input('ShippingAddressID_p',  req.body.ShippingAddressID)
-            .input('OrderNote_p',  req.body.OrderNote)
+            .input('CustomerID_p', sql.Int, req.body.CustomerID)
+            .input('OrderStatusID_p', sql.Int, req.body.OrderStatusID)
+            .input('OrderDate_p', sql.Date, req.body.OrderDate)
+            .input('BillingAddressID_p', sql.Int, req.body.BillingAddressID)
+            .input('ShippingAddressID_p', sql.Int, req.body.ShippingAddressID)
+            .input('OrderNote_p', sql.VarChar, req.body.OrderNote)
             // .input('OrderTotal_p',  req.body.OrderTotal)
-            .input('MethodOfPayment_p',  req.body.MethodOfPayment)
-            .input('BilledAmount_p', req.body.BilledAmount)
-            .input('Balance_p', req.body.Balance)
-            .input('TrackingNumber_p', req.body.TrackingNumber)
-            .input('CustomerPickup_p', req.body.CustomerPickup)
-            .input('PickUpDateTime_p', req.body.PickUpDateTime)
-            .input('ProductID_p', req.body.ProductID)
-            .input('ProductList_p', null)
+            .input('MethodOfPayment_p', sql.VarChar, req.body.MethodOfPayment)
+            .input('BilledAmount_p',sql.Float, req.body.BilledAmount)
+            .input('Balance_p', sql.Float, req.body.Balance)
+            .input('TrackingNumber_p', sql.VarChar, req.body.TrackingNumber)
+            .input('CustomerPickup_p', sql.Bit, req.body.CustomerPickup)
+            .input('PickUpDateTime_p', sql.DateTime, req.body.PickUpDateTime)
+            .input('ProductID_p', sql.Int, req.body.ProductID)
+            .input('ProductList_p',  null)
             .input('BulkCreate_p', sql.Bit, 0)
            
             //executes the stored procedure "AddAddress"
-            .execute("dbo.SP_ProductOrder_Create");
-        const order = result.recordset;
+            .execute("SP_ProductOrder_Create");
+        const order = result.recordsets;
 
         res.send(order)
         console.log(order)
