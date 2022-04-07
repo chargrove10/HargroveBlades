@@ -73,7 +73,7 @@
            
                 <div>
                     <form>
-                        <table style="width:60%">
+                        <table style="width:95%">
                             <tr>
                                 <th>Serial Number</th>
                                 <th>Product Status</th>
@@ -83,9 +83,7 @@
                                 <th>Blade Length</th>
                                 <th>Overall Length</th>
                                 <th>Embellishments</th>
-                                <th>StyleID</th>
-                                <th>ProductID</th>
-                                <th>SteelID</th>
+                                <th> </th>
 
                             </tr>
                             <tr id="pTable" v-for="products in Products" :key="products.ProductID">
@@ -97,9 +95,9 @@
                                 <td>{{products.BladeLength}}</td>
                                 <td>{{products.OverallLength}}</td>
                                 <td>{{products.Embellishments}}</td>
-                                <td>{{products.StyleID}}</td>
-                                <td>{{products.ProductID}}</td>
-                                <td>{{products.SteelID}}</td>
+                                <td hidden>{{products.StyleID}}</td>
+                                <td hidden>{{products.ProductID}}</td>
+                                <td hidden>{{products.SteelID}}</td>
                                 <td><router-link :to="{ name: 'EditProduct', params: {productID: products.ProductID, productStatusId: products.ProductStatusID, styleId: products.StyleID, steelId: products.SteelID}}">Edit</router-link></td>
                                 <!-- Place holder !-->
                             </tr>

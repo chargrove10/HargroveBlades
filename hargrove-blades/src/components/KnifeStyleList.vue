@@ -47,20 +47,18 @@
 
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
                 </div>
 
                 <div class="tab-divider"></div>
            
                 <div>
                     <form>
-                        <table style="width:40%">
+                        <table style="width:94%; margin-left:3%;">
                             <tr>
                                 <th>Style Name</th>
                                 <th>Description</th>
                                 <th>Active</th>
+                                <th></th>
                             </tr>
                              <tr id="sTable" v-for="knife in Knives" v-bind:key="knife.StyleID">
                                 <td>{{knife.StyleName}}</td>

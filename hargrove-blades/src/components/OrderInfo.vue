@@ -40,9 +40,9 @@
             <div class="tabcontent" style="display:block">
                 
                 <div style="background-color:lightgray; text-align:center"><header>Order Information</header></div>
-                
+                <div class="tab-divider"></div>
                 <form>
-                    <table style="width:60%">
+                    <table style="width:95%; margin-left:2.5%">
                         <tr>
                             <th>SerialNo</th>
                             <th>Style Name</th>
@@ -69,7 +69,7 @@
                         </tr>
                     </table>
                 </form>
-
+                <div class="tab-divider"></div>
             </div>
 
   </div>
