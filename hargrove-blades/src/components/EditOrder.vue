@@ -97,7 +97,7 @@
         <div> 
 
                     <form>
-                    <table style="transform:translate(-17%,0); width:96.5%">
+                    <table style="transform:translate(.9%,0); width:97%">
                         <tr>
                             <th style="text-align:right">Line Number</th>
                             <th style="text-align:left">Serial Number</th>
@@ -108,6 +108,7 @@
                             <th style="text-align:left">Type of Steel</th>
                             <th style="text-align:right">Overall Length</th>
                             <th style="text-align:right">Price</th>
+                            <th></th>
                             
                         </tr>
                         <tr id="oTable" v-for="lineItem in LineItem" :key="lineItem.OrderID">

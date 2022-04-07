@@ -48,7 +48,8 @@
                             <tr>
                                 <th>Product Status Name</th>
                                 <th>Description</th>
-                                
+                                <th>Active</th>
+                                <th></th>
                                 
                             </tr>
                            

@@ -62,15 +62,11 @@
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
                 </div>
 
                 
-                <div class="tab-divider"></div>
-                
                 <form>
-                    <table style="width:40%">
+                    <table style="width:95%">
                         <tr>
                             <th>First Name</th>
                             <th>Last Name</th>
@@ -78,6 +74,9 @@
                             <th>Order Date</th>
                             <th>Order Total</th>
                             <th>Balance</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         <tr id="oTable" v-for="orders in Orders" :key="orders.OrderID">
                             <td>{{orders.CustomerFirstName}}</td>

@@ -47,20 +47,18 @@
 
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
                     
                 </div>
                 
                 <div class="tab-divider"></div>
                 
                 <form>
-                    <table style="width:40%">
+                    <table style="width:95%">
                         <tr>
                             <th>Steel Name</th>
                             <th>Description</th>
                             <th>Active</th>
+                            <th></th>
                         </tr>
                         <tr id="dTable" v-for="steel in Steels" :key="steel.SteelID">
                             <td>{{steel.SteelName}}</td>

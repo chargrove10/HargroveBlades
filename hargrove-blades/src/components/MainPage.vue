@@ -61,13 +61,9 @@
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
                 </div>
                 
                 
-
-                <div class="tab-divider"></div>
            
                 <div class="table-div">
                     <form>
@@ -78,8 +74,8 @@
                                 <th>Phone Number</th>
                                 <th>Email Address</th>
                                 <th>Notes</th>
-                                
-                                
+                                <th></th>
+                                <th></th>
                                 
                             </tr>
                            

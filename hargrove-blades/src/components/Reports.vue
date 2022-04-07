@@ -34,15 +34,15 @@
             </div>
 
         </div>
-
+        
         <div class="tab-div2">
-
+            
             <div id="knifeAvail" class="tabcontent" style="display:block">
                 
                 <div style="background-color:lightgray; text-align:center"><header>On Going Orders</header></div>
-                
+                <div class="tab-divider"></div>
                 <form>
-                    <table style="width:40%">
+                    <table style="width:95%">
                         <tr>
                             <th>Order Number</th>
                             <th>Customer Name</th>
@@ -67,7 +67,7 @@
                         </tr>
                     </table>
                 </form>
-
+                <div class="tab-divider"></div>
 
             </div>
 
