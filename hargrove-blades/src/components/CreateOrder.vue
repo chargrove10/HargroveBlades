@@ -36,23 +36,25 @@
                           <input type="text" id="lname" v-model="customer.CustomerLastName"><br/>
                           <label> Serial Number</label><br/> <!-- Populate dropdown with get for Products -->
                           <select @change="productChange($event)">
-                            <option disabled selected>Please Select</option>
-                            <option id="product"  v-for="product in Product" :value="product.ProductID" :key="product.ProductID">{{product.SerialNo}}</option>
+                            <option hidden disabled selected>Please Select</option>
+                            <option id="product"  v-for="product in Product" :value="product.ProductID" :key="product.ProductID">{{product.SerialNo.concat(', ' + product.StyleName + ', ' + product.SteelName + ', ' + product.Price)}}</option>
                           </select><br/>
                           <label> Billing Address </label><br/>
                           <select @change="billingChange($event)" >
-                            <option disabled selected>Please Select</option>
+                            <option hidden disabled selected v-for="defaultaddress in DefaultAddress" :value="defaultaddress.AddressID" :key="defaultaddress.AddressID">{{defaultaddress.AddressLine1.concat(', '+ defaultaddress.City + ', ' + defaultaddress.StateInitials + ', ' + defaultaddress.ZipCode)}}</option>
                             <option id="billing" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
                           <label> Shipping Address </label><br/>
                           <select @change="shippingChange($event)" >
-                            <option disabled selected>Please Select</option>
+                            <option hidden disabled selected v-for="defaultaddress in DefaultAddress" :value="defaultaddress.AddressID" :key="defaultaddress.AddressID">{{defaultaddress.AddressLine1.concat(', '+ defaultaddress.City + ', ' + defaultaddress.StateInitials + ', ' + defaultaddress.ZipCode)}}</option>
                             <option id="shipping" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
                           <label> Order Notes </label><br/>
                           <textarea id="Note" v-model="productOrder.OrderNote" rows="4" cols="24"></textarea><br />
                           <label> Order Total </label><br/>
-                          <input type="text" id="total" v-model="productOrder.OrderTotal"><br/>
+                          <div v-for="price in Price" :key="price.Price">
+                          <input type="text" id="total" :value="price.Price"><br/>
+                          </div>
                           <input type="hidden"/>
                     </form>
                 </div>
@@ -116,10 +118,22 @@
                     StateInitials: ''
                     //Test to add more stuff to this later
                 },
+                DefaultAddress: [],
+                defaultaddress: {
+                    AddressID: '',
+                    AddressLine1: '',
+                    AddressLine2: '',
+                    StateInitials: ''
+                    //Test to add more stuff to this later
+                },
                 Product: [],
                 product:{
                     ProductID: '',
-                    SerialNo: ''
+                    SerialNo: '',
+                    SteelName: '',
+                    StyleName: '',
+                    Price: '',
+                    HandleMaterial: ''
                 },
                 ProductOrder: [],
                 productOrder: {
@@ -127,7 +141,7 @@
                     //assign with save button when pushed using getElementById
                     CustomerID: '',
                     OrderStatusID: '',
-                    OrderDate: '',
+                    OrderDate: new Date().toISOString().substr(0,10),
                     BillingAddressID: '',
                     ShippingAddressID: '',
                     OrderNote: '',
@@ -137,7 +151,7 @@
                     Balance: '',
                     TrackingNumber: '',
                     CustomerPickup: '',
-                    PickUpDateTime: '',
+                    PickUpDateTime: new Date().toISOString().substr(0,16),
                     ProductID: ''
                 },
                 OrderStatus: [],
@@ -145,11 +159,17 @@
                     OrderStatusID: '',
                     OrderStatusName: '',
                     OrderStatusDesc: ''
+                },
+                Price: [],
+                price: {
+                    Price: ''
                 }
             }
         },
 
         created() {
+            
+
             let cid = this.$route.params.customerID;
 
             let url2 = 'http://localhost:3000/getCustomer/' + cid 
@@ -185,6 +205,15 @@
 
             axios.get(url4).then((response) => {
                 this.OrderStatus = response.data
+                
+            }).catch(err => {
+                console.log(err)
+            });
+
+            let url5 = 'http://localhost:3000/getDefaultAddress/' + cid;
+
+            axios.get(url5).then((response) => {
+                this.DefaultAddress = response.data
                 
             }).catch(err => {
                 console.log(err)
@@ -242,6 +271,13 @@
             productChange(event) {
                 this.productOrder.ProductID = event.target.value
                 console.log(this.productOrder.ProductID)
+                //getting Product Price to fill Input Value based on change of ProductID
+                let url = 'http://localhost:3000/getProductPrice/' + this.productOrder.ProductID
+                axios.get(url).then((res) => {
+                   this.Price = res.data
+                }).catch(err => {
+                    console.log(err)
+                })
             },
 
             billingChange(event) {
