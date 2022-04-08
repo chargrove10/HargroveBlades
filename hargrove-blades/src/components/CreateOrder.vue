@@ -295,6 +295,11 @@
             priceChange(event){
                 this.productOrder.BilledAmount = event.target.value
                 this.productOrder.OrderTotal = document.getElementById("total").value
+
+                if (this.productOrder.BilledAmount > this.productOrder.OrderTotal) {
+                    this.productOrder.BilledAmount = this.productOrder.OrderTotal
+                }
+
                 this.productOrder.Balance = this.productOrder.OrderTotal - this.productOrder.BilledAmount
                 console.log(this.productOrder.BilledAmount)
                 console.log(this.productOrder.OrderTotal)
