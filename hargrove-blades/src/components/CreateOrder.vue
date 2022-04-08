@@ -35,13 +35,13 @@
                           <label> Customer Last Name</label><br/>
                           <input type="text" id="lname" v-model="customer.CustomerLastName"><br/>
                           <label> Serial Number</label><br/> <!-- Populate dropdown with get for Products -->
-                          <select @change="productChange($event)">
-                            <option hidden disabled selected>Please Select</option>
-                            <option id="product"  v-for="product in Product" :value="product.ProductID" :key="product.ProductID">{{product.SerialNo.concat(', ' + product.StyleName + ', ' + product.SteelName + ', ' + product.Price)}}</option>
+                          <select id="product" @change="productChange($event)">
+                            <option hidden disabled selected  v-for="product in Product" :value="product.ProductID" :key="product.ProductID">{{product.SerialNo.concat(', ' + product.StyleName + ', ' + product.SteelName + ', ' + product.Price)}}</option>
+                            <option   v-for="product in Product" :value="product.ProductID" :key="product.ProductID">{{product.SerialNo.concat(', ' + product.StyleName + ', ' + product.SteelName + ', ' + product.Price)}}</option>
                           </select><br/>
                           <label> Billing Address </label><br/>
                           <select @change="billingChange($event)" >
-                            <option hidden disabled selected v-for="defaultaddress in DefaultAddress" :value="defaultaddress.AddressID" :key="defaultaddress.AddressID">{{defaultaddress.AddressLine1.concat(', '+ defaultaddress.City + ', ' + defaultaddress.StateInitials + ', ' + defaultaddress.ZipCode)}}</option>
+                            <option hidden selected v-for="defaultaddress in DefaultAddress" :value="defaultaddress.AddressID" :key="defaultaddress.AddressID">{{defaultaddress.AddressLine1.concat(', '+ defaultaddress.City + ', ' + defaultaddress.StateInitials + ', ' + defaultaddress.ZipCode)}}</option>
                             <option id="billing" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
                           <label> Shipping Address </label><br/>
@@ -50,12 +50,12 @@
                             <option id="shipping" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
                           <label> Order Notes </label><br/>
-                          <textarea id="Note" v-model="productOrder.OrderNote" rows="4" cols="24"></textarea><br />
+                          <textarea id="Note" placeholder="Ntes" v-model="productOrder.OrderNote" rows="4" cols="24"></textarea><br />
                           <label> Order Total </label><br/>
-                          <div v-for="price in Price" :key="price.Price">
+                          <div style="display:block" v-for="price in Price" :key="price.Price">
                           <input type="text" id="total" :value="price.Price"><br/>
                           </div>
-                          <input type="hidden"/>
+                          
                     </form>
                 </div>
 
@@ -100,6 +100,7 @@
 
 <script>
     import axios from 'axios'
+    
     export default {
 
         data() {
@@ -162,14 +163,14 @@
                 },
                 Price: [],
                 price: {
-                    Price: ''
+                    Price: "0"
                 }
             }
         },
+        
 
         created() {
-            
-
+    
             let cid = this.$route.params.customerID;
 
             let url2 = 'http://localhost:3000/getCustomer/' + cid 
@@ -178,6 +179,7 @@
                  const data = response.data
                  //had to loop through Customer to assign to customers{}
                  this.Customer = data
+                 
 
              }).catch(err => {
                  console.log(err)
@@ -187,6 +189,7 @@
 
             axios.get(url).then((response) => {
                 this.Product = response.data
+                
                 
             }).catch(err => {
                 console.log(err)
@@ -215,6 +218,14 @@
             axios.get(url5).then((response) => {
                 this.DefaultAddress = response.data
                 
+            }).catch(err => {
+                console.log(err)
+            });
+
+            let url6 = 'http://localhost:3000/getProductPrice'
+
+            axios.get(url6).then((res) => {
+                this.Price = res.data
             }).catch(err => {
                 console.log(err)
             });
@@ -278,6 +289,7 @@
                 }).catch(err => {
                     console.log(err)
                 })
+                
             },
 
             billingChange(event) {

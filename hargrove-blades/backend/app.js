@@ -306,6 +306,24 @@ app.get('/getProductPrice/:id', async (req,res) => {
         console.log(err)
     }
 });
+
+app.get('/getProductPrice', async (req,res) => {
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            .output('Price', null)
+            .execute('GetProductPrice')
+
+        const product = result.recordset
+        res.send(product)
+    } catch(err){
+        console.log(err)
+    }
+});
+
 //Get Address information for Order Creation
 app.get('/getAddress/:id', async (req,res) => {
     let id = req.params.id;
