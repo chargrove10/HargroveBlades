@@ -24,9 +24,9 @@
                     <form>
                           <input type="hidden" id="cusID" v-model="customer.CustomerID"/>
                           <label> Order Status</label><br/>
-                          <select @change="statusChange($event)">
+                          <select id="status" @change="statusChange($event)">
                             <option disabled selected>Please Select</option>
-                            <option id="status" v-for="orderStatus in OrderStatus" :value="orderStatus.OrderStatusID" :key="orderStatus.OrderStatusID">{{orderStatus.OrderStatusName}}</option>
+                            <option  v-for="orderStatus in OrderStatus" :value="orderStatus.OrderStatusID" :key="orderStatus.OrderStatusID">{{orderStatus.OrderStatusName}}</option>
                           </select><br/>
                           <label>Order Date</label><br/>
                           <input type="date" id="orderDate" v-model="productOrder.OrderDate"><br/>
@@ -34,20 +34,20 @@
                           <input type="text" id="fname" v-model="customer.CustomerFirstName"><br/>
                           <label> Customer Last Name</label><br/>
                           <input type="text" id="lname" v-model="customer.CustomerLastName"><br/>
-                          <label> Serial Number</label><br/> <!-- Populate dropdown with get for Products -->
+                          <label> Product</label><br/> <!-- Populate dropdown with get for Products -->
                           <select id="product" @change="productChange($event)">
-                            <option hidden disabled selected  v-for="product in Product" :value="product.ProductID" :key="product.ProductID">{{product.SerialNo.concat(', ' + product.StyleName + ', ' + product.SteelName + ', ' + product.Price)}}</option>
+                            <option hidden disabled selected >Please Select</option>
                             <option   v-for="product in Product" :value="product.ProductID" :key="product.ProductID">{{product.SerialNo.concat(', ' + product.StyleName + ', ' + product.SteelName + ', ' + product.Price)}}</option>
                           </select><br/>
                           <label> Billing Address </label><br/>
-                          <select @change="billingChange($event)" >
+                          <select id="billing" @change="billingChange($event)" >
                             <option hidden selected v-for="defaultaddress in DefaultAddress" :value="defaultaddress.AddressID" :key="defaultaddress.AddressID">{{defaultaddress.AddressLine1.concat(', '+ defaultaddress.City + ', ' + defaultaddress.StateInitials + ', ' + defaultaddress.ZipCode)}}</option>
-                            <option id="billing" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
+                            <option  v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
                           <label> Shipping Address </label><br/>
-                          <select @change="shippingChange($event)" >
+                          <select id="shipping" @change="shippingChange($event)" >
                             <option hidden disabled selected v-for="defaultaddress in DefaultAddress" :value="defaultaddress.AddressID" :key="defaultaddress.AddressID">{{defaultaddress.AddressLine1.concat(', '+ defaultaddress.City + ', ' + defaultaddress.StateInitials + ', ' + defaultaddress.ZipCode)}}</option>
-                            <option id="shipping" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
+                            <option  v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
                           <label> Order Notes </label><br/>
                           <textarea id="Note" placeholder="Ntes" v-model="productOrder.OrderNote" rows="4" cols="24"></textarea><br />
@@ -77,6 +77,9 @@
                         
                     </form>
                 </div>
+                <div class="tab-divider"></div>
+                <div class="tab-divider"></div>
+                <div class="tab-divider"></div>
                 <div class="tab-divider"></div>
                 <div class="tab-divider"></div>
                 <div class="tab-divider"></div>
@@ -249,32 +252,36 @@
                 this.productOrder.CustomerPickup = document.getElementById("pickup").checked
                 this.productOrder.PickUpDateTime = document.getElementById("time").value
                 this.productOrder.OrderDate = document.getElementById("orderDate").value
-                this.productOrder.PickUpDateTime = document.getElementById("time").value
+                this.productOrder.OrderStatusID = document.getElementById("status").value
+                this.productOrder.BillingAddressID = document.getElementById("billing").value
+                this.productOrder.ShippingAddressID = document.getElementById("shipping").value
+                this.productOrder.ProductID = document.getElementById("product").value
 
-                let url = 'http://localhost:3000/createOrder/';
+                console.log(this.productOrder)
+                // let url = 'http://localhost:3000/createOrder/';
 
-                 axios.post(url, this.productOrder).then(() => {
-                     this.$router.push('/orderList')
-                      this.productOrder = {
-                          //assigning all values as empty
-                            CustomerID: '',
-                            OrderStatusID: '',
-                            OrderDate: '',
-                            BillingAddressID: '',
-                            ShippingAddressID: '',
-                            OrderNote: '',
-                            OrderTotal: '',
-                            MethodOfPayment: '',
-                            BilledAmount: '',
-                            Balance: '',
-                            TrackingNumber: '',
-                            CustomerPickup: '',
-                            PickUpDateTime: '',
-                            ProductID: ''
-                      }
-                 }).catch(err => {
-                     console.log(err)
-                 });
+                //  axios.post(url, this.productOrder).then(() => {
+                //      this.$router.push('/orderList')
+                //       this.productOrder = {
+                //           //assigning all values as empty
+                //             CustomerID: '',
+                //             OrderStatusID: '',
+                //             OrderDate: '',
+                //             BillingAddressID: '',
+                //             ShippingAddressID: '',
+                //             OrderNote: '',
+                //             OrderTotal: '',
+                //             MethodOfPayment: '',
+                //             BilledAmount: '',
+                //             Balance: '',
+                //             TrackingNumber: '',
+                //             CustomerPickup: '',
+                //             PickUpDateTime: '',
+                //             ProductID: ''
+                //       }
+                //  }).catch(err => {
+                //      console.log(err)
+                //  });
 
                 console.log(this.productOrder)
             },
@@ -300,7 +307,7 @@
                     this.productOrder.BilledAmount = this.productOrder.OrderTotal
                 }
 
-                this.productOrder.Balance = this.productOrder.OrderTotal - this.productOrder.BilledAmount
+                this.productOrder.Balance = (this.productOrder.OrderTotal - this.productOrder.BilledAmount).toFixed(2)
                 console.log(this.productOrder.BilledAmount)
                 console.log(this.productOrder.OrderTotal)
             },
