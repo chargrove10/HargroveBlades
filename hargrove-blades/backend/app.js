@@ -1506,4 +1506,52 @@ app.put('/OrderLineStatusEdit/', async (req,res) => {
     }catch(err) {
         console.log(err)
     }
-})
+})// update Last Notified Status //VanPhan
+app.put('/LastNotifiedStatusEdit/', async (req,res) => {
+    try {
+        let pool = await sql.connect(config)
+        let result = await pool.request()
+        .input('OrderID', sql.Int, req.body.OrderID)
+        .query('UPDATE ProductOrder SET LastOrderStatusNotified = (SELECT OrderStatusID FROM ProductOrder WHERE OrderID = ' + req.body.OrderID  +') WHERE OrderID = '+ req.body.OrderID )
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+
+    }catch(err) {
+        console.log(err)
+    }
+});
+
+
+
+app.get('/monthlyTotal', async (req, res) => {  //VanPhan
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the view orderNotify
+            .query("SELECT NoOfOrder, Year, Month, MonthYear,  MonthlyTotal FROM MonthlyTotal ORDER BY  'Year', 'Month' ASC");
+        const monthlyTotal = result.recordset;
+
+        res.send(monthlyTotal)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
+app.get('/orderNotify', async (req, res) => {  //VanPhan
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the view orderNotify
+            .query("SELECT * FROM OrderNotify");
+        const orderNotify = result.recordset;
+
+        res.send(orderNotify)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});

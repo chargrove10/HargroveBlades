@@ -30,7 +30,14 @@
                 <router-link to="/priceEstimate" custom v-slot="{navigate, href}">
                 <a :href="href" @click="navigate">Price Estimate</a>
                 </router-link>
-                
+                <div class="tab-divider" />
+                <router-link to="/monthlyTotal" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Monthly Report</a>
+                </router-link>
+                <div class="tab-divider" />
+                <router-link to="/orderNotification" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Order Notify</a>
+                </router-link>
             </div>
 
         </div>

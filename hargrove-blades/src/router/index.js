@@ -32,6 +32,8 @@ import EditProductStatus from '../components/EditProductStatus.vue'
 import EditOrderLineStatus from '../components/EditOrderLineStatus.vue'
 import EditOrder from '../components/EditOrder.vue'
 import EditProduct from '../components/EditProduct.vue'
+import MonthlyTotal from '../components/MonthlyTotal.vue'
+import OrderNotify from '../components/OrderNotify.vue'
 
 const routes = [
     {
@@ -201,7 +203,16 @@ const routes = [
         name: "EditProduct",
         component: EditProduct
     },
-
+    {
+        path: "/monthlyTotal",
+        name: "MonthlyTotal",
+        component: MonthlyTotal
+    },
+    {
+        path: "/orderNotification",
+        name: "OrderNotify",
+        component: OrderNotify
+    }
 ]
 
 const router = createRouter({
