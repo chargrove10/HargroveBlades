@@ -25,7 +25,7 @@
                           <input type="hidden" id="cusID" v-model="customer.CustomerID"/>
                           <label> Order Status</label><br/>
                           <select id="status" @change="statusChange($event)">
-                            <option disabled selected>Please Select</option>
+                            <option hidden disabled selected>Please Select</option>
                             <option  v-for="orderStatus in OrderStatus" :value="orderStatus.OrderStatusID" :key="orderStatus.OrderStatusID">{{orderStatus.OrderStatusName}}</option>
                           </select><br/>
                           <label>Order Date</label><br/>
@@ -37,15 +37,18 @@
                           <label> Product</label><br/> <!-- Populate dropdown with get for Products -->
                           <select id="product" @change="productChange($event)">
                             <option hidden disabled selected >Please Select</option>
+                            <optgroup label="Serial Number Knife Style Steel Type Price" />
                             <option   v-for="product in Product" :value="product.ProductID" :key="product.ProductID">{{product.SerialNo.concat(', ' + product.StyleName + ', ' + product.SteelName + ', ' + product.Price)}}</option>
                           </select><br/>
                           <label> Billing Address </label><br/>
                           <select id="billing" @change="billingChange($event)" >
+                            <optgroup label="Address, City, State, Zipcode" />
                             <option hidden selected v-for="defaultaddress in DefaultAddress" :value="defaultaddress.AddressID" :key="defaultaddress.AddressID">{{defaultaddress.AddressLine1.concat(', '+ defaultaddress.City + ', ' + defaultaddress.StateInitials + ', ' + defaultaddress.ZipCode)}}</option>
                             <option  v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
                           <label> Shipping Address </label><br/>
                           <select id="shipping" @change="shippingChange($event)" >
+                            <optgroup label="Address, City, State, Zipcode" />
                             <option hidden disabled selected v-for="defaultaddress in DefaultAddress" :value="defaultaddress.AddressID" :key="defaultaddress.AddressID">{{defaultaddress.AddressLine1.concat(', '+ defaultaddress.City + ', ' + defaultaddress.StateInitials + ', ' + defaultaddress.ZipCode)}}</option>
                             <option  v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
