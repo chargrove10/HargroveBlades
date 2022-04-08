@@ -64,7 +64,7 @@
                         <label> Balance </label><br/>
                         <input type="text" id="balance" v-model="productOrder.Balance"><br/>
                         <label> Billed Amount </label><br/>
-                        <input type="text" id="billed" v-model="productOrder.BilledAmount"><br/>
+                        <input type="text" id="billed" @change="priceChange($event)" v-model="productOrder.BilledAmount"><br/>
                         <label> Method Of Payment </label><br/>
                         <input type="text" id="method" v-model="productOrder.MethodOfPayment"><br/>
                         <label> Tracking Number </label><br/>
@@ -289,7 +289,15 @@
                 }).catch(err => {
                     console.log(err)
                 })
-                
+
+            },
+
+            priceChange(event){
+                this.productOrder.BilledAmount = event.target.value
+                this.productOrder.OrderTotal = document.getElementById("total").value
+                this.productOrder.Balance = this.productOrder.OrderTotal - this.productOrder.BilledAmount
+                console.log(this.productOrder.BilledAmount)
+                console.log(this.productOrder.OrderTotal)
             },
 
             billingChange(event) {
