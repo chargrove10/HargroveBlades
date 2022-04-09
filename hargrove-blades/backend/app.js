@@ -739,8 +739,9 @@ app.get('/orderList/:number&:date', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT C.CustomerID, C.CustomerFirstName, C.CustomerLastName, PO.OrderID, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance, PO.BillingAddressID, PO.ShippingAddressID "+
-            "FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID WHERE OrderNumber = " + number + "OR OrderDate = " + date);
+            .input('number_p', number)
+            .input('date_p', sql.Date, date)
+            .execute('orderFilter')
         const customers = result.recordset;
 
         res.send(customers)
