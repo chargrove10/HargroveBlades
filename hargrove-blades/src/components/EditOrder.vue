@@ -18,7 +18,7 @@
         </div>
     
     <div id="main-content" class="tab-div2">
-        <div style="background-color: lightgrey; height:auto" v-for="productOrder in ProductOrder" :value="productOrder.OrderId" :key="productOrder.OrderID">
+        <div style="background-color: lightgrey; height:auto" v-for="productOrder in ProductOrder"  :key="productOrder.OrderID">
 
                 <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
@@ -50,7 +50,7 @@
                           <label> Order Notes </label><br/>
                           <textarea id="Note" v-model="productOrder.OrderNote" rows="4" cols="24"></textarea><br />
                           <label> Order Total </label><br/>
-                          <input type="text" id="total" v-model="productOrder.OrderTotal"><br/>
+                          <input type="text" id="total" :value="productOrder.OrderTotal.toFixed(2)"><br/>
                           <input type="hidden"/>
                     </form>
                 </div>
@@ -58,9 +58,9 @@
                 <div style="width:40%; margin-left: 60%">
                     <form>
                         <label> Balance </label><br/>
-                        <input type="text" id="balance" v-model="productOrder.Balance"><br/>
+                        <input type="text" id="balance" :value="productOrder.Balance.toFixed(2)"><br/>
                         <label> Billed Amount </label><br/>
-                        <input type="text" id="billed" v-model="productOrder.BilledAmount"><br/>
+                        <input type="text" id="billed" @change="priceChange($event)" :value="productOrder.BilledAmount.toFixed(2)"><br/>
                         <label> Method Of Payment </label><br/>
                         <input type="text" id="method" v-model="productOrder.MethodOfPayment"><br/>
                         <label> Tracking Number </label><br/>
@@ -242,10 +242,10 @@
                     BillingAddressID: '',
                     ShippingAddressID: '',
                     OrderNote: '',
-                    OrderTotal: '',
+                    OrderTotal: 0,
                     MethodOfPayment: '',
-                    BilledAmount: '',
-                    Balance: '',
+                    BilledAmount: 0,
+                    Balance: 0,
                     TrackingNumber: '',
                     CustomerPickUp: '',
                     PickUpDateTime: '',
@@ -343,9 +343,7 @@
              axios.get(url2).then((response) => {
                  const data = response.data
                  //had to loop through Customer to assign to customers{}
-                 this.ProductOrder = data
-                
-
+                 this.ProductOrder = data                
 
              }).catch(err => {
                  console.log(err)
@@ -532,6 +530,48 @@
                 }).catch(err => {
                     console.log(err)
                 })
+            },
+
+            priceChange(event){
+                let billedAmt = parseFloat(event.target.value);
+                document.getElementById("billed").value = billedAmt.toFixed(2)
+                //let balanceDue = parseFloat(document.getElementById("balance").value)
+                //let balanceDue = parseInt(document.getElementById("balance").value)
+
+                console.log("Entry Billed Amount " + billedAmt)
+                
+
+                var orderTotal = parseFloat(document.getElementById("total").value)
+                //parseInt(orderTotal)
+
+                //console.log("Entry Order Total " + billedAmt)
+
+                // if (orderTotal < billedAmt) {
+                //     this.productOrder.BilledAmount = orderTotal
+                //     console.log("It is Greater than Order Total")
+                // }
+                // else {console.log("Is Less than than Order Total")}
+
+                // console.log("New billed Amount " +billedAmt)
+                // this.productOrder.Balance = (orderTotal - billedAmt).toFixed(2)
+                 if (billedAmt > orderTotal ) {
+                     document.getElementById("billed").value = document.getElementById("total").value
+                     billedAmt = orderTotal
+                 }
+
+                 document.getElementById("balance").value = orderTotal - billedAmt
+                 this.productOrder.BilledAmount = billedAmt
+                 this.productOrder.Balance = document.getElementById("balance").value
+                 this.productOrder.OrderTotal = orderTotal
+
+                 console.log("Billed: " + this.productOrder.BilledAmount)
+                 console.log("Balance: " + this.productOrder.Balance)
+                 console.log("Total: " + this.productOrder.OrderTotal)
+                // document.getElementById("balance").value = (parseInt(orderTotal) - parseInt(billedAmt)).toFixed(2)
+                //console.log("Billed " + this.productOrder.BilledAmount)
+                //console.log(this.productOrder.OrderTotal)
+                //console.log("Balance " + this.productOrder.Balance)
+                
             }
             
         }
