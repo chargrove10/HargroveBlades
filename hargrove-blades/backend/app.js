@@ -11,6 +11,7 @@ const PORT = 3000;
 //app.use(bodyParser)
 app.use(cors())
 app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 
 //router.use(cors())
 //router.use(bodyParser)
@@ -161,6 +162,34 @@ app.post('/addAddress', async (req,res) => {
     }
 
 });
+//Edit Address
+app.put('/editAddress/', async (req,res) => {
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+            //gather inputs
+            .input('AddressID_p', sql.Int, req.body.AddressID)
+            .input('DefaultAddress_p', sql.Bit, req.body.DefaultAddress)
+            .input('AddressLine1_p', sql.VarChar, req.body.AddressLine1)
+            .input('AddressLine2_p', sql.VarChar,  req.body.AddressLine2)
+            .input('City_p', sql.VarChar, req.body.City)
+            .input('StateID_p', sql.Int, req.body.StateID)
+            .input('Country_p', sql.VarChar, req.body.Country)
+            .input('CustomerID_p', sql.Int, req.body.CustomerID)
+            //execute stored procedure updateAddress
+            .execute('updateAddress')
+        
+        console.log(result.recordset)
+    } catch (err){
+        res.send(err)
+        console.log(err)
+    }
+
+});
 
 
 //this should run a stored procedure using async functions
@@ -171,10 +200,27 @@ app.get('/customerList', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT CUSTOMER.CustomerID, CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, ADDRESS.City, STATE.StateName, ADDRESS.DefaultAddress "+ 
-            "FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID=ADDRESS.CUSTOMERID " +  
-            "JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID " + 
-            "JOIN STATE ON ADDRESS.STATEID=STATE.STATEID WHERE ADDRESS.DefaultAddress = 'true'");
+            .query("Select * From Customer C JOIN CustomerStatus CS ON C.CustomerStatusID = CS.CustomerStatusID");
+        const customers = result.recordset;
+
+        res.send(customers)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
+//get Customer Status
+app.get('/customerStatus/:customerID', async (req, res) => {
+    let id = req.params.customerID
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the stored procedure "GetCustomers"
+            .query("SELECT CustomerStatus.CustomerStatusID, CustomerStatus.CustomerStatusName "+
+            "FROM Customer JOIN CustomerStatus ON Customer.CustomerStatusID = CustomerStatus.CustomerStatusID " + 
+            "WHERE Customer.CustomerID = " + id);
         const customers = result.recordset;
 
         res.send(customers)
@@ -194,10 +240,8 @@ app.get('/customerList/:name&:phone', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT CUSTOMER.CustomerID, CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, ADDRESS.City, STATE.StateName, ADDRESS.DefaultAddress "+ 
-            "FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID=ADDRESS.CUSTOMERID " +
-            "JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID " + 
-            "JOIN STATE ON ADDRESS.STATEID=STATE.STATEID WHERE CUSTOMER.CustomerLastName = "+name+" OR CUSTOMER.CustomerPhone = "+phone);
+            .query("Select * From Customer C JOIN CustomerStatus CS ON C.CustomerStatusID = CS.CustomerStatusID" + 
+            " WHERE C.CustomerLastName = " + name + " OR CustomerPhone = " + phone);
         const customers = result.recordset;
 
         res.send(customers)
@@ -233,7 +277,8 @@ app.get('/getProduct', async (req,res) => {
         let result = await pool.request()
 
             // .query("Select ProductID, SerialNo FROM Product WHERE ProductStatusID = 2")
-            .query("SELECT Product.ProductID, Product.SerialNo, Product.OverallLength, KnifeSteel.SteelName, KnifeStyle.StyleName FROM Product " +
+            .query("SELECT Product.ProductID, Product.SerialNo, Product.OverallLength, KnifeSteel.SteelName, KnifeStyle.StyleName, " +
+            "Product.Price, Product.HandleMaterial FROM Product " +
             "JOIN KnifeStyle ON Product.StyleID = KnifeStyle.StyleID " + 
             "JOIN KnifeSteel ON Product.SteelID = KnifeSteel.SteelID " + 
             "WHERE Product.ProductStatusID = 2")
@@ -245,6 +290,40 @@ app.get('/getProduct', async (req,res) => {
         console.log(err)
     }
 });
+//Gets price for product to fill in input value
+app.get('/getProductPrice/:id', async (req,res) => {
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            .query("SELECT Price FROM Product WHERE ProductID = " + req.params.id)
+
+        const product = result.recordset
+        res.send(product)
+    } catch(err){
+        console.log(err)
+    }
+});
+
+app.get('/getProductPrice', async (req,res) => {
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            .output('Price', null)
+            .execute('GetProductPrice')
+
+        const product = result.recordset
+        res.send(product)
+    } catch(err){
+        console.log(err)
+    }
+});
+
 //Get Address information for Order Creation
 app.get('/getAddress/:id', async (req,res) => {
     let id = req.params.id;
@@ -255,8 +334,46 @@ app.get('/getAddress/:id', async (req,res) => {
         let result = await pool.request()
 
             //might need to make it so customerstatus is active here or on the main screen
-            .query("Select ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode" +
+            .query("Select ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
             " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.CustomerID = " +id)
+
+        const address = result.recordset
+        res.send(address)
+    } catch(err){
+        console.log(err)
+    }
+});
+//Get Default Address information for Order Creation
+app.get('/getDefaultAddress/:id', async (req,res) => {
+    let id = req.params.id;
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            //might need to make it so customerstatus is active here or on the main screen
+            .query("Select ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
+            " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.CustomerID = " +id+ " AND ADDRESS.DefaultAddress = 'true'")
+
+        const address = result.recordset
+        res.send(address)
+    } catch(err){
+        console.log(err)
+    }
+});
+//Get address information based on AddressID
+app.get('/Address/:id', async (req,res) => {
+    let id = req.params.id;
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            //might need to make it so customerstatus is active here or on the main screen
+            .query("Select ADDRESS.CustomerID, ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
+            " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.AddressID = " +id)
 
         const address = result.recordset
         res.send(address)
@@ -281,8 +398,28 @@ app.get('/getOrderStatus', async (req,res) => {
         console.log(err)
     }
 });
+
+app.get('/getProductStatus', async (req,res) => {
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            //might need to make it so customerstatus is active here or on the main screen
+            .query("SELECT * FROM ProductStatus")
+
+        const status = result.recordset
+        res.send(status)
+    } catch(err){
+        console.log(err)
+    }
+});
+
 //Order Creation
-app.post('/createOrder', async (req,res) => {
+app.post('/createOrder/', async (req,res) => {
+
+    //This is not functioning as intended
 
     try {
         //making 'pool' awaiting the connection
@@ -291,24 +428,26 @@ app.post('/createOrder', async (req,res) => {
         let result = await pool.request()
            
             //gather inputs
-            .input('CustomerID_p', req.body.CustomerID)
-            .input('OrderStatusID_p',  req.body.OrderStatusID)
-            .input('OrderDate_p',  req.body.OrderDate)
-            .input('BillingAddressID',  req.body.BillingAddressID)
-            .input('ShippingAddressID',  req.body.ShippingAddressID)
-            .input('OrderNote_p',  req.body.OrderNote)
-            .input('OrderTotal_p',  req.body.OrderTotal)
-            .input('MethodOfPayment_p',  req.body.MethodOfPayment)
-            .input('BilledAmount_p', req.body.BilledAmount)
-            .input('Balance_p', req.body.Balance)
-            .input('TrackingNumber', req.body.TrackingNumber)
-            .input('CustomerPickup_p', req.body.CustomerPickup)
-            .input('PickUpDateTime', req.body.PickUpDateTime)
-            .input('ProductID', req.body.ProductID)
+            .input('CustomerID_p', sql.Int, req.body.CustomerID)
+            .input('OrderStatusID_p', sql.Int, req.body.OrderStatusID)
+            .input('OrderDate_p', sql.Date, req.body.OrderDate)
+            .input('BillingAddressID_p', sql.Int, req.body.BillingAddressID)
+            .input('ShippingAddressID_p', sql.Int, req.body.ShippingAddressID)
+            .input('OrderNote_p', sql.VarChar, req.body.OrderNote)
+            // .input('OrderTotal_p',  req.body.OrderTotal)
+            .input('MethodOfPayment_p', sql.VarChar, req.body.MethodOfPayment)
+            .input('BilledAmount_p',sql.Float, req.body.BilledAmount)
+            .input('Balance_p', sql.Float, req.body.Balance)
+            .input('TrackingNumber_p', sql.VarChar, req.body.TrackingNumber)
+            .input('CustomerPickup_p', sql.Bit, req.body.CustomerPickup)
+            .input('PickUpDateTime_p', sql.DateTime, req.body.PickUpDateTime)
+            .input('ProductID_p', sql.Int, req.body.ProductID)
+            .input('ProductList_p',  null)
+            .input('BulkCreate_p', sql.Bit, 0)
            
             //executes the stored procedure "AddAddress"
-            .execute("dbo.SP_ProductOrder_Create");
-        const order = result.recordset;
+            .execute("SP_ProductOrder_Create");
+        const order = result.recordsets;
 
         res.send(order)
         console.log(order)
@@ -319,10 +458,10 @@ app.post('/createOrder', async (req,res) => {
 
 });
 
-app.get('/editCustomer/:id&:flag', async (req, res) => {
+app.get('/editCustomer/:id', async (req, res) => {
 
     let id = req.params.id
-    let flag = req.params.flag
+    
 
     try {
         //making 'pool' awaiting the connection
@@ -330,11 +469,9 @@ app.get('/editCustomer/:id&:flag', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT TOP 1 CUSTOMER.CustomerID, CUSTOMER.CustomerFirstName, CUSTOMER.CustomerLastName, CUSTOMER.CustomerPhone, CUSTOMER.CustomerEmail," + 
-            " ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.DefaultAddress, ADDRESS.City, STATE.StateInitials, ADDRESS.StateID, ADDRESS.ZipCode," +
-            " ADDRESS.Country FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.CUSTOMERID = ADDRESS.CUSTOMERID" + 
-            " JOIN CUSTOMERSTATUS ON CUSTOMER.CUSTOMERSTATUSID = CUSTOMERSTATUS.CUSTOMERSTATUSID" + 
-            " JOIN STATE ON ADDRESS.STATEID = STATE.STATEID WHERE CUSTOMER.CUSTOMERID = " + id + "AND ADDRESS.DefaultAddress = " + flag);
+            .query("Select C.CustomerID, C.CustomerFirstName, C.CustomerLastName, C.CustomerPhone, C.CustomerEmail, C.CustomerNote " +  
+            "From Customer C JOIN CustomerStatus CS ON C.CustomerStatusID = CS.CustomerStatusID " + 
+            "WHERE C.CustomerID = " + id);
         //let customers = result.recordset;
 
         res.send(result.recordset)
@@ -357,19 +494,11 @@ app.put('/editCustomer/', async (req, res) => {
             .input('CustomerPhone_p',  req.body.CustomerPhone)
             .input('CustomerEmail_p',  req.body.CustomerEmail)
             .input('CustomerNote_p',  req.body.CustomerNote)
-            .input('AddressLine1_p', sql.VarChar,  req.body.AddressLine1)
-            .input('AddressLine2_p', sql.VarChar,  req.body.AddressLine2)
-            .input('DefaultAddress_p', sql.Bit,  req.body.DefaultAddress)
-            .input('City_p', sql.VarChar,  req.body.City)
-            //need to pass over StateID from the dropdown
-            .input('StateID_p', sql.Int, req.body.StateID)
-            .input('ZipCode_p', sql.VarChar,  req.body.ZipCode)
-            .input('Country_p', sql.VarChar,  req.body.Country)
-            .input('AddressID_p', sql.Int, req.body.AddressID)
             .input('CustomerID_p', sql.Int, req.body.CustomerID)
+            .input('CustomerStatusID_p', sql.Int, req.body.CustomerStatusID)
            
             //executes the stored procedure "GetCustomers"
-            .execute("UpdateCustomer");
+            .execute("UpdateCustomerInfo");
         const customers = result.recordset;
 
         res.send(customers)
@@ -390,7 +519,7 @@ app.get('/productList', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetProducts"
-            .query("SELECT P.SerialNo, PS.ProductStatusName, style.StyleName, steel.SteelName, " + 
+            .query("SELECT P.ProductID, P.SerialNo, PS.ProductStatusID, PS.ProductStatusName, style.StyleID, style.StyleName, steel.SteelID, steel.SteelName, " + 
             "P.HandleMaterial, P.BladeLength, P.OverallLength, P.Embellishments " +
             "FROM Product P JOIN KnifeStyle style ON P.StyleID = style.StyleId " + 
             "JOIN KnifeSteel steel ON P.SteelID = steel.SteelID " + 
@@ -403,31 +532,96 @@ app.get('/productList', async (req, res) => {
     }
 });
 
+//gets product by ID
+app.get('/editProduct/:id', async (req, res) =>{
+    let id = req.params.id
+    
+    try{
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+        .query("SELECT P.ProductID, P.SerialNo, PS.ProductStatusID, PS.ProductStatusName, style.StyleID, style.StyleName, steel.SteelID, steel.SteelName, " + 
+        "P.HandleMaterial, P.BladeLength, P.OverallLength, P.Embellishments, P.CompleteDate, P.Price, P.BladeFinish, P.ProductNote " +
+        "FROM Product P JOIN KnifeStyle style ON P.StyleID = style.StyleId " + 
+        "JOIN KnifeSteel steel ON P.SteelID = steel.SteelID " + 
+        "JOIN ProductStatus PS ON P.ProductStatusId = PS.ProductStatusID WHERE P.ProductID =" +id);
+
+        res.send(result.recordset)
+    }catch (err){
+        console.log(err)
+    }
+});
+
+//edits product
+app.put('/editProduct/', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+            //gather inputs
+            .input('ProductID_p', sql.Int, req.body.ProductID)
+            .input('StyleID_p', sql.Int,  req.body.StyleID)
+            .input('SteelID_p', sql.Int,  req.body.SteelID)
+            .input('ProductStatusID_p', sql.Int, req.body.ProductStatusID)
+            .input('CompleteDate_p', sql.Date,  req.body.CompleteDate)
+            .input('Price_p',sql.Float, req.body.Price)
+            .input('SerialNo_p', req.body.SerialNo)
+            .input('OverallLength_p',sql.Float, req.body.OverallLength)
+            .input('BladeFinish_p', req.body.BladeFinish)
+            .input('BladeLength_p',sql.Float, req.body.BladeLength)
+            .input('Embellishments_p', req.body.Embellishments)
+            .input('HandleMaterial_p', req.body.HandleMaterial)
+            .input('ProductNote_p', req.body.ProductNote)
+           
+            //executes the stored procedure "GetCustomers"
+            .execute("SP_Product_Update");
+        const product = result.recordset;
+
+        res.send(product)
+        console.log(product)
+    } catch (err){
+        res.send(err)
+        console.log(err)
+    }
+});
+
 //product filtering
-//Order List Filtering
+
 app.get('/productList/:serial&:knife&:steel', async (req, res) => {
 
-    let serial = req.params.serial;
-    let knife = req.params.knife;
-    let steel = req.params.steel
+    let steelName = req.params.steel
+    let serialNo = req.params.serial
+    let knifeStyle = req.params.knife
+
+    if (knifeStyle === '""')
+        knifeStyle = ''
+
+    if (serialNo === '""')
+        serialNo = ''
+
+    if (steelName === '""')
+        steelName = ''
+
+    console.log(steelName + ' ' + serialNo + ' ' + knifeStyle)
 
     try {
         //making 'pool' awaiting the connection
         let pool = await sql.connect(config)
         //making result awaiting the request to the connection
         let result = await pool.request()
-            //executes the stored procedure "GetCustomers"
-            .query("SELECT P.SerialNo, PS.ProductStatusName, style.StyleName, steel.SteelName, " + 
-            "P.HandleMaterial, P.BladeLength, P.OverallLength, P.Embellishments " +
-            "FROM Product P JOIN KnifeStyle style ON P.StyleID = style.StyleId " + 
-            "JOIN KnifeSteel steel ON P.SteelID = steel.SteelID " + 
-            "JOIN ProductStatus PS ON P.ProductStatusId = PS.ProductStatusID " +
-            "WHERE p.SerialNo = " +serial+ " OR style.StyleName = " + knife + " OR steel.SteelName = " + steel);
-        const customers = result.recordset;
+            
+            .input('SerialNo_p', serialNo)
+            .input('KnifeStyleName_p', knifeStyle)
+            .input('SteelName_p', steelName)
 
-        res.send(customers)
+            .execute('productFilter')
+        const order = result.recordset;
+        console.log(order)
+        res.send(order)
     } catch (err){
-        res.status(500).json(err)
+        console.log(err)
     }
 });
 
@@ -563,7 +757,7 @@ app.get('/getOrder/:orderID&:custID', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .input('CustomerID_P', req.params.custID)
+            .input('CustomerID_p', req.params.custID)
             .input('OrderID_p', req.params.orderID)
 
             .execute('GetOrder')
@@ -571,7 +765,7 @@ app.get('/getOrder/:orderID&:custID', async (req, res) => {
 
         res.send(order)
     } catch (err){
-        res.status(500).json(err)
+        console.log(err)
     }
 });
 
@@ -620,6 +814,70 @@ app.get('/getLineItems/:lineID', async (req, res) => {
         res.status(500).json(err)
     }
 });
+
+//get LineItem Information for Edit
+app.get('/editLineItems/:orderID&:lineNum', async (req, res) => {
+
+    let orderID = req.params.orderID
+    let lineNum = req.params.lineNum
+
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+            .query("select OLI.OrderID, OLI.LineNumber, P.SerialNo, P.BladeLength, P.HandleMaterial, P.BladeFinish, P.OverallLength ,style.StyleName, steel.SteelName, P.Price, " +
+            "OLS.OrderLineStatusID, OLS.OrderLineStatusName from OrderLineItem OLI "+
+            "join Product P on OLI.ProductID = P.ProductID "+
+            "join KnifeStyle style on P.StyleID = style.StyleID "+
+            "join KnifeSteel steel on P.SteelID = steel.SteelID "+ 
+            "join OrderLineStatus OLS on OLI.OrderLineStatusID = OLS.OrderLineStatusID " +
+            "WHERE OLI.OrderID = "+orderID + " AND OLI.LineNumber = " +lineNum)
+        const lineItems = result.recordset;
+
+        res.send(lineItems)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
+//get OrderLineStatus information
+app.get('/orderLineStatus', async (req,res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+            .query("Select OrderLineStatusID, OrderLineStatusName, OrderLineStatusDesc, OrderLineStatusActive FROM OrderLineStatus")
+        const lineStatus = result.recordset;
+
+        res.send(lineStatus)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
+//update OrderLineItem with Status
+app.put('/updateLineItem/', async (req,res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+        .input('LineNumber_p', req.body.LineNumber)
+        .input('OrderLineStatusID_p', req.body.OrderLineStatusID)
+        .input('OrderID_p', req.body.OrderID)
+
+        .execute('updateLineItem')
+
+        res.send(result)
+    } catch (err){
+        res.status(500).json(err)
+    }
+})
 
 //get billing address information for edit order
 app.get('/getBillingAddress/:billingID', async (req,res) => {
@@ -976,7 +1234,7 @@ app.get('/status', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomerStatus"
-            .query("SELECT CustomerStatusID, CustomerStatusName, CustomerStatusDesc FROM CustomerStatus");
+            .query("SELECT CustomerStatusID, CustomerStatusName, CustomerStatusDesc, CustomerStatusActive FROM CustomerStatus");
         const customerStat = result.recordset;
 
         res.send(customerStat)
@@ -994,7 +1252,8 @@ app.post('/addCustomerStatus', async (req,res) =>{
             //Inserts into the table CustomerStatus
             .input('CustomerStatusName', req.body.CustomerStatusName)
             .input('CustomerStatusDesc', req.body.CustomerStatusDesc)
-            .query('INSERT INTO CustomerStatus (CustomerStatusName, CustomerStatusDesc) Values(@CustomerStatusName, @CustomerStatusDesc) SELECT SCOPE_IDENTITY() AS CustomerStatusID');
+            .input('CustomerStatusActive', req.body.CustomerStatusActive)
+            .query('INSERT INTO CustomerStatus (CustomerStatusName, CustomerStatusDesc, CustomerStatusActive) Values(@CustomerStatusName, @CustomerStatusDesc, @CustomerStatusActive) SELECT SCOPE_IDENTITY() AS CustomerStatusID');
 
         const cStatus = result.recordset;
 
@@ -1015,7 +1274,7 @@ app.get('/editCustomerStatus/:id', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT CustomerStatusID, CustomerStatusName, CustomerStatusDesc FROM CustomerStatus WHERE CustomerStatusID = " +id);
+            .query("SELECT CustomerStatusID, CustomerStatusName, CustomerStatusDesc, CustomerStatusActive FROM CustomerStatus WHERE CustomerStatusID = " +id);
         //let customers = result.recordset;
 
         res.send(result.recordset)
@@ -1030,6 +1289,7 @@ app.put('/CustomerStatusEdit/', async (req,res) => {
     console.log(req.body.CustomerStatusID)
     console.log(req.body.CustomerStatusName)
     console.log(req.body.CustomerStatusDesc)
+    console.log(req.body.CustomerStatusActive)
 
     try {
         let pool = await sql.connect(config)
@@ -1039,6 +1299,7 @@ app.put('/CustomerStatusEdit/', async (req,res) => {
         .input('CustomerStatusID_p', sql.Int, req.body.CustomerStatusID)
         .input('CustomerStatusName_p', sql.VarChar, req.body.CustomerStatusName)
         .input('CustomerStatuslDesc_p', sql.VarChar, req.body.CustomerStatusDesc)
+        .input('CustomerStatusActive_p', sql.Bit, req.body.CustomerStatusActive)
         .execute('UpdateCustomerStatus')
 
         res.send(result.recordset)
@@ -1057,7 +1318,7 @@ app.get('/orderStatus', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetOrderStatus"
-            .query("SELECT OrderStatusID, OrderStatusName, OrderStatusDesc FROM OrderStatus");
+            .query("SELECT OrderStatusID, OrderStatusName, OrderStatusDesc, OrderStatusActive FROM OrderStatus");
         const orderStat = result.recordset;
 
         res.send(orderStat)
@@ -1075,7 +1336,8 @@ app.post('/addOrderStatus', async (req,res) =>{
             //Inserts into the table OrderStatus
             .input('OrderStatusName', req.body.OrderStatusName)
             .input('OrderStatusDesc', req.body.OrderStatusDesc)
-            .query('INSERT INTO OrderStatus (OrderStatusName, OrderStatusDesc) Values(@OrderStatusName, @OrderStatusDesc) SELECT SCOPE_IDENTITY() AS OrderStatusID');
+            .input('OrderStatusActive', req.body.OrderStatusActive)
+            .query('INSERT INTO OrderStatus (OrderStatusName, OrderStatusDesc, OrderStatusActive) Values(@OrderStatusName, @OrderStatusDesc, @OrderStatusActive) SELECT SCOPE_IDENTITY() AS OrderStatusID');
 
         const cStatus = result.recordset;
 
@@ -1096,7 +1358,7 @@ app.get('/editOrderStatus/:id', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT OrderStatusID, OrderStatusName, OrderStatusDesc FROM OrderStatus WHERE OrderStatusID = " +id);
+            .query("SELECT OrderStatusID, OrderStatusName, OrderStatusDesc, OrderStatusActive FROM OrderStatus WHERE OrderStatusID = " +id);
         //let customers = result.recordset;
 
         res.send(result.recordset)
@@ -1111,6 +1373,7 @@ app.put('/OrderStatusEdit/', async (req,res) => {
     console.log(req.body.OrderStatusID)
     console.log(req.body.OrderStatusName)
     console.log(req.body.OrderStatusDesc)
+    console.log(req.body.OrderStatusActive)
 
     try {
         let pool = await sql.connect(config)
@@ -1120,6 +1383,7 @@ app.put('/OrderStatusEdit/', async (req,res) => {
         .input('OrderStatusID_p', sql.Int, req.body.OrderStatusID)
         .input('OrderStatusName_p', sql.VarChar, req.body.OrderStatusName)
         .input('OrderStatuslDesc_p', sql.VarChar, req.body.OrderStatusDesc)
+        .input('OrderStatusActive_p', sql.Bit, req.body.OrderStatusActive)
         .execute('UpdateOrderStatus')
 
         res.send(result.recordset)
@@ -1138,7 +1402,7 @@ app.get('/productStatus', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetProductStatus"
-            .query("SELECT ProductStatusID, ProductStatusName, ProductStatusDesc FROM ProductStatus");
+            .query("SELECT ProductStatusID, ProductStatusName, ProductStatusDesc, ProductStatusActive FROM ProductStatus");
         const productStat = result.recordset;
 
         res.send(productStat)
@@ -1156,7 +1420,8 @@ app.post('/addProductStatus', async (req,res) =>{
             //Inserts into the table OrderStatus
             .input('ProductStatusName', req.body.ProductStatusName)
             .input('ProductStatusDesc', req.body.ProductStatusDesc)
-            .query('INSERT INTO ProductStatus (ProductStatusName, ProductStatusDesc) Values(@ProductStatusName, @ProductStatusDesc) SELECT SCOPE_IDENTITY() AS ProductStatusID');
+            .input('ProductStatusActive', req.body.ProductStatusActive)
+            .query('INSERT INTO ProductStatus (ProductStatusName, ProductStatusDesc, ProductStatusActive) Values(@ProductStatusName, @ProductStatusDesc, @ProductStatusActive) SELECT SCOPE_IDENTITY() AS ProductStatusID');
 
         const cStatus = result.recordset;
 
@@ -1177,7 +1442,7 @@ app.get('/editProductStatus/:id', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT ProductStatusID, ProductStatusName, ProductStatusDesc FROM ProductStatus WHERE ProductStatusID = " +id);
+            .query("SELECT ProductStatusID, ProductStatusName, ProductStatusDesc, ProductStatusActive FROM ProductStatus WHERE ProductStatusID = " +id);
         //let customers = result.recordset;
 
         res.send(result.recordset)
@@ -1192,6 +1457,7 @@ app.put('/ProductStatusEdit/', async (req,res) => {
     console.log(req.body.ProductStatusID)
     console.log(req.body.ProductStatusName)
     console.log(req.body.ProductStatusDesc)
+    console.log(req.body.ProductStatusActive)
 
     try {
         let pool = await sql.connect(config)
@@ -1201,6 +1467,7 @@ app.put('/ProductStatusEdit/', async (req,res) => {
         .input('ProductStatusID_p', sql.Int, req.body.ProductStatusID)
         .input('ProductStatusName_p', sql.VarChar, req.body.ProductStatusName)
         .input('ProductStatusDesc_p', sql.VarChar, req.body.ProductStatusDesc)
+        .input('ProductStatusActive_p', sql.Bit, req.body.ProductStatusActive)
         .execute('UpdateProductStatus')
 
         res.send(result.recordset)
@@ -1219,7 +1486,7 @@ app.get('/orderLineStatus', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetOrderLineStatus"
-            .query("SELECT OrderLineStatusID, OrderLineStatusName, OrderLineStatusDesc FROM OrderLineStatus");
+            .query("SELECT OrderLineStatusID, OrderLineStatusName, OrderLineStatusDesc, OrderLineStatusActive FROM OrderLineStatus");
         const orderLineStat = result.recordset;
 
         res.send(orderLineStat)
@@ -1237,7 +1504,8 @@ app.post('/addOrderLineStatus', async (req,res) =>{
             //Inserts into the table OrderStatus
             .input('OrderLineStatusName', req.body.OrderLineStatusName)
             .input('OrderLineStatusDesc', req.body.OrderLineStatusDesc)
-            .query('INSERT INTO OrderLineStatus (OrderLineStatusName, OrderLineStatusDesc) Values(@OrderLineStatusName, @OrderLineStatusDesc) SELECT SCOPE_IDENTITY() AS OrderLineStatusID');
+            .input('OrderLineStatusActive', req.body.OrderLineStatusActive)
+            .query('INSERT INTO OrderLineStatus (OrderLineStatusName, OrderLineStatusDesc, OrderLineStatusActive) Values(@OrderLineStatusName, @OrderLineStatusDesc, @OrderLineStatusActive) SELECT SCOPE_IDENTITY() AS OrderLineStatusID');
 
         const cStatus = result.recordset;
 
@@ -1258,7 +1526,7 @@ app.get('/editOrderLineStatus/:id', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT OrderLineStatusID, OrderLineStatusName, OrderLineStatusDesc FROM OrderLineStatus WHERE OrderLineStatusID = " +id);
+            .query("SELECT OrderLineStatusID, OrderLineStatusName, OrderLineStatusDesc, OrderLineStatusActive FROM OrderLineStatus WHERE OrderLineStatusID = " +id);
         //let customers = result.recordset;
 
         res.send(result.recordset)
@@ -1273,6 +1541,7 @@ app.put('/OrderLineStatusEdit/', async (req,res) => {
     console.log(req.body.OrderLineStatusID)
     console.log(req.body.OrderLineStatusName)
     console.log(req.body.OrderLineStatusDesc)
+    console.log(req.body.OrderLineStatusActive)
 
     try {
         let pool = await sql.connect(config)
@@ -1282,6 +1551,7 @@ app.put('/OrderLineStatusEdit/', async (req,res) => {
         .input('OrderLineStatusID_p', sql.Int, req.body.OrderLineStatusID)
         .input('OrderLineStatusName_p', sql.VarChar, req.body.OrderLineStatusName)
         .input('OrderLineStatusDesc_p', sql.VarChar, req.body.OrderLineStatusDesc)
+        .input('OrderLineStatusActive_p', sql.Bit, req.body.OrderLineStatusActive)
         .execute('UpdateOrderLineStatus')
 
         res.send(result.recordset)

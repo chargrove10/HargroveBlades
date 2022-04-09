@@ -20,11 +20,13 @@
     <div class="tab-div2" style="min-height:auto">
         <div style="background-color: lightgrey">
 
-                <div style="width:40%; float: left; transform:translate(10%,0) ">
+                <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
                         <label for="statusName">Status Name:</label><br/>
                         <input type="text" id="statuseName" name="statusName" v-model="cStatus.CustomerStatusName"/><br/>
-                        
+                        <label >Active Status:</label>
+                        <input type="checkbox" id="active" name="active" v-model="cStatus.CustomerStatusActive"/>                                        
+                        <br/>
                     </form>
                 </div>
 
@@ -58,6 +60,7 @@ import axios from 'axios'
                 cStatus: {
                     CustomerStatusName: '',
                     CustomerStatusDesc: '',
+                    CustomerStatusActive: ''
                 }
             }
         },
@@ -77,6 +80,7 @@ import axios from 'axios'
                     this.cStatus = {
                         CustomerStatusName: '',
                         CustomerStatusDesc: '',
+                        CustomerStatusActive: ''
                     }
                 }).catch(err =>{
                     console.log(err)

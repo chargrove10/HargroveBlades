@@ -32,9 +32,9 @@
                         <label for="lname">Last name:</label><br/>
                         <input type="text" id="lname" name="lname" v-model="customer.CustomerLastName"/><br/>
                         <label for="phone">Phone Number:</label><br/>
-                        <input type="text" id="phone" name="phone" v-model="customer.CustomerPhone"/><br/>
+                        <input type="text" id="phone" name="phone" placeholder="111-111-1111" v-model="customer.CustomerPhone"/><br/>
                         <label for="email">Email:</label><br/>
-                        <input type="text" id="email" name="email" v-model="customer.CustomerEmail"/><br/>                
+                        <input type="text" id="email" name="email" placeholder="something@mail.com" v-model="customer.CustomerEmail"/><br/>                
                         <label for="notes">Notes:</label><br/>
                         <textarea id="Note" v-model="customer.CustomerNote" rows="4" cols="24"></textarea><br /> 
                         

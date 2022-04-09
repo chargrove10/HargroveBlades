@@ -61,13 +61,9 @@
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
                 </div>
                 
                 
-
-                <div class="tab-divider"></div>
            
                 <div class="table-div">
                     <form>
@@ -76,10 +72,10 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Phone Number</th>
-                                <th>City</th>
-                                <th>State</th>
-                                <th>Default</th>
-                                
+                                <th>Email Address</th>
+                                <th>Notes</th>
+                                <th></th>
+                                <th></th>
                                 
                             </tr>
                            
@@ -87,13 +83,11 @@
                                 <td>{{customer.CustomerFirstName}}</td>
                                 <td>{{customer.CustomerLastName}}</td>
                                 <td>{{customer.CustomerPhone}}</td>
-                                <td>{{customer.City}}</td>
-                                <td>{{customer.StateName}}</td>
-                                <td>{{customer.DefaultAddress}}</td>
-                                <td>{{customer.CustomerID}}</td>
+                                <td>{{customer.CustomerEmail}}</td>
+                                <td>{{customer.CustomerNote}}</td>
                                 
                                 
-                                <td><router-link :to="{ name: 'EditCustomer', params: {customerID: customer.CustomerID, flag: customer.DefaultAddress}}">Edit</router-link></td>
+                                <td><router-link :to="{ name: 'EditCustomer', params: {customerID: customer.CustomerID}}">Edit</router-link></td>
                                 <td><router-link :to="{ name: 'CreateOrder', params: {customerID: customer.CustomerID}}"><button>Create Order</button></router-link></td>
                                 
                                 

@@ -73,7 +73,7 @@
            
                 <div>
                     <form>
-                        <table style="width:60%">
+                        <table style="width:95%">
                             <tr>
                                 <th>Serial Number</th>
                                 <th>Product Status</th>
@@ -83,6 +83,8 @@
                                 <th>Blade Length</th>
                                 <th>Overall Length</th>
                                 <th>Embellishments</th>
+                                <th> </th>
+
                             </tr>
                             <tr id="pTable" v-for="products in Products" :key="products.ProductID">
                                 <td>{{products.SerialNo}}</td>
@@ -93,7 +95,10 @@
                                 <td>{{products.BladeLength}}</td>
                                 <td>{{products.OverallLength}}</td>
                                 <td>{{products.Embellishments}}</td>
-                                <td><router-link :to="{ name: 'Reports'}">Edit</router-link></td>
+                                <td hidden>{{products.StyleID}}</td>
+                                <td hidden>{{products.ProductID}}</td>
+                                <td hidden>{{products.SteelID}}</td>
+                                <td><router-link :to="{ name: 'EditProduct', params: {productID: products.ProductID, productStatusId: products.ProductStatusID, styleId: products.StyleID, steelId: products.SteelID}}">Edit</router-link></td>
                                 <!-- Place holder !-->
                             </tr>
                         </table>
@@ -125,7 +130,21 @@ export default {
             return {
                 Products: [],
                 isShow: false,
-                products: {}
+                products: {
+                    StyleID: '',
+                    StyleName: '',
+                    SteelName: '',
+                    ProductStatusName: '',
+                    CompleteDate: '',
+                    Price: '',
+                    SerialNo: '',
+                    OverallLength: '',
+                    BladeFinish: '',
+                    BladeLength: '',
+                    Embellishments: '',
+                    HandleMaterial: '',
+                    ProductNote: ''
+                }
                 //pass over to product detail to see if we are posting or editing
                 
             }
@@ -154,16 +173,26 @@ export default {
 
             async applyFilter() {
                                
-                let serial = document.getElementById('serial').value;
-                let knife = document.getElementById('knife').value;
-                let steel = document.getElementById('steel').value
+                let serial = document.getElementById("serial").value;
+                let knife = document.getElementById("knife").value;
+                let steel = document.getElementById("steel").value
 
-                if ((serial =="" || serial ==null) & (knife =="" || knife==null) & (steel =="" || steel==null)) {
+                if (serial == "")
+                    serial = '""'
+                
+                if (knife == "")
+                    knife = '""'
+
+                if (steel == "")
+                    steel = '""'
+
+                if ((serial =="" || serial ==null) && (knife =="" || knife==null) && (steel =="" || steel==null)) {
                     this.refreshPage();
                 }
                 
                 //this is the link to filter by the fields selected
-                let url = 'http://localhost:3000/productList/' + "'"+serial+"'" + '&' + "'" +knife+"'" + '&' + "'" +steel+"'";
+                // let url = 'http://localhost:3000/productList/' + serial + '&' + knife + '&' + steel;
+                let url = 'http://localhost:3000/productList/' + serial + '&' + knife + '&' + steel;
                 
 
                 axios.get(url)

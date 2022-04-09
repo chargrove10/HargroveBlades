@@ -2,7 +2,7 @@
 <div class="form-div">
 
     <div style="text-align:center;margin-bottom:20px">
-        <header>Input Customer Information</header>
+        <header>Edit Customer Information</header>
     </div>
 
    <div class="tab-div1">
@@ -18,7 +18,7 @@
     </div>
       
 
-    <div class="tab-div2" style="min-height:0">
+    <div id="tab-div2" class="tab-div2" style="min-height:0">
         <div style="background-color: lightgrey" v-for="customers in Customer" :key="customers.CustomerID">
 
                 <div style="width:40%; float: left; transform:translate(10%,0)">
@@ -29,49 +29,95 @@
                         <input type="text" id="lname" v-model="customers.CustomerLastName"/><br/>
                         <label for="phone">Phone Number:</label><br/>
                         <input type="text" id="phone"  v-model="customers.CustomerPhone"/><br/>
-                        <label for="email">Email:</label><br/>
-                        <input type="text" id="email" name="email" v-model="customers.CustomerEmail"/><br/>                
-                        <label for="notes">Notes:</label><br/>
-                        <textarea id="note" v-model="customers.CustomerNote" rows="4" cols="24"></textarea><br /> 
+                         
                         
                     </form>
                 </div>
 
                 <div style="width:40%; margin-left: 60%">
                     <form>
-                        <label for="address">Street Address:</label><br/>
-                        <input type="text" id="address" name="address" v-model="customers.AddressLine1"/><br/>
-                        <label for="address2">Street Address 2:</label><br/>
-                        <input type="text" id="address2" name="address2" v-model="customers.AddressLine2"/>
-                        <label >Default Address:</label>
-                        <input type="checkbox" id="default" name="default" v-model="customers.DefaultAddress"/>                                        
-                        <br/>
-                        <label for="City">City:</label><br/>
-                        <input type="text" id="city" name="city" v-model="customers.City"/><br/>
-                        <label for="State-select">State:</label><br/>
-                        <select name="st" id="st" @change="stateDetail($event)" >
-                            <option selected disabled>{{customers.StateInitials}}</option>
-                            <option v-for="state in State" :value="state.StateID" :key="state.StateID"  > {{state.StateInitials}} </option>
-                        </select><br />
-                        <label for="Zip">Zip Code:</label><br/>
-                        <input type="text" id="zip" name="zip" v-model="customers.ZipCode"/><br/>
-                        <label for="country">Country:</label><br/>
-                        <input type="text" id="country" name="country" v-model="customers.Country"/><br/>
+                        
+                        <label for="email">Email:</label><br/>
+                        <input type="text" id="email" name="email" v-model="customers.CustomerEmail"/><br/>                
+                        <label for="notes">Notes:</label><br/>
+                        <textarea id="note" v-model="customers.CustomerNote" rows="4" cols="24"></textarea><br />
                         <label for="status">Customer Status</label><br/>
-                        <select @change="statusChange($event)">
+                        <select id="status" @change="statusChange($event)">
+                            <option hidden disabled selected v-for="cusStatus in CusStatus" :value="cusStatus.CustomerStatusID" :key="cusStatus.CustomerStatusID"> {{cusStatus.CustomerStatusName}} </option>
                             <option v-for="status in Status" :value="status.CustomerStatusID" :key="status.CustomerStatusID">{{status.CustomerStatusName}}</option>
                         </select>
-                        <input type="hidden" id="addID" v-model="customers.AddressID"/>
                         <input type="hidden" id="cusID" v-model="customers.CustomerID"/>
                         
                     </form>
                 </div>
 
                 <router-link :to="{ name: 'AddAddress', params: {customerID: customers.CustomerID}}"><button style="transform:translate(60%,0)">Add Address</button></router-link>
-                <button style="transform:translate(130%,0)" v-on:click="handleEdit()" >Save</button>
+                <button style="transform:translate(150%,0)" v-on:click="handleEdit()" >Save</button>
 
         </div>
     </div>
+
+    <div id="address-div" style="background-color:white;"  class="tab-div2">
+        <form>
+                    <table style="transform:translate(1%,0); width:97%">
+                        
+                        <tr>
+                            <th>Default Address</th>
+                            <th>Address Line 1</th>
+                            <th>Address Line 2</th>
+                            <th>City</th>
+                            <th>Zipcode</th>
+                            <th>State Initials</th>
+                            <th>Country</th>
+                            <th></th>
+                            
+                        </tr>
+                        <tr id="oTable" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">
+                            <td>{{address.DefaultAddress}}</td>
+                            <td>{{address.AddressLine1}}</td>
+                            <td>{{address.AddressLine2}}</td>
+                            <td>{{address.City}}</td>
+                            <td>{{address.ZipCode}}</td>
+                            <td>{{address.StateInitials}}</td>
+                            <td>{{address.Country}}</td>
+                            
+                            
+                            <td><button type="button" v-on:click="showModal(address.AddressID)">Edit</button></td>
+
+                        </tr>
+                    </table>
+        </form>
+
+    </div>
+
+    <div  id="modal" class="modal" style="width:30%; margin-left:26%">
+        
+        <div id="modal_content" class="modal_content" style="height:auto"  v-for="cusaddress in CusAddress" :value="cusaddress.AddressID" :key="cusaddress.AddressID">
+            <input type="hidden" id="addID" v-model="cusaddress.AddressID"/>
+            <input type="hidden" id="cusID" v-model="cusaddress.CustomerID"/>
+            <label>Default Address</label><br />
+            <input type="checkbox" id="defaultAdd" v-model="cusaddress.DefaultAddress"/><br />
+            <label>Address Line 1</label><br />
+            <input type="text" id = "A1" v-model="cusaddress.AddressLine1"/><br />
+            <label>Address Line 2</label><br />
+            <input type="text" id = "A2" v-model="cusaddress.AddressLine2"/><br />
+            <label>City</label><br />
+            <input type="text" id = "city" v-model="cusaddress.City"/><br />
+            <label for="State-select">State:</label><br/>
+                <select name="st" id="st" @change="stateDetail($event)" >
+                    <option hidden disabled selected v-for="cusaddress in CusAddress" :value="cusaddress.AddressID" :key="cusaddress.AddressID">{{cusaddress.StateInitials}}</option>
+                    <option v-for="state in State" :value="state.StateID" :key="state.StateID" > {{state.StateInitials}} </option>
+                </select><br />
+            <label>Country</label><br />
+            <input type="text" id="country" v-model="cusaddress.Country" /><br />
+            <button class="close" type="button" style="transform: translate(23%,75%)" v-on:click="closeModal()">Close</button>
+            
+            <button class="close" type="button" style="transform: translate(138%,-80%)" v-on:click="editAddress()">Save</button>
+        </div>
+        
+    </div>
+    
+
 </div>
 </template>
 
@@ -90,21 +136,28 @@ import axios from 'axios'
                     CustomerPhone: '',
                     CustomerEmail: '',
                     CustomerNote: '',
-                    AddressLine1: '',
-                    AddressLine2: '',
-                    DefaultAddress: '',
-                    City: '',
-                    StateID: '',
-                    ZipCode: '',
-                    Country: '',
-                    AddressID: '',
                     CustomerID: '',
                     CustomerStatusID: ''
                 },
                 State: [],
                 state: {},
                 Status: [],
-                status: {}
+                status: {},
+                CusStatus: [],
+                cusStatus: {},
+                Address: [],
+                address: {},
+                CusAddress: [],
+                cusaddress: {
+                    AddressID: '',
+                    DefaultAddress: '',
+                    AddressLine1: '',
+                    AddressLine2: '',
+                    City: '',
+                    StateID: '',
+                    Country: '',
+                    CustomerID: ''
+                }
             
             }
         },
@@ -130,16 +183,33 @@ import axios from 'axios'
             })
 
             let cid = this.$route.params.customerID;
-            
-            let address = this.$route.params.flag
 
-            let url2 = 'http://localhost:3000/editCustomer/' + cid + '&' + "'"+address+"'"
+            let url2 = 'http://localhost:3000/editCustomer/' + cid
 
              axios.get(url2).then((response) => {
                  const data = response.data
                  //had to loop through Customer to assign to customers{}
                  this.Customer = data
 
+             }).catch(err => {
+                 console.log(err)
+             });
+
+             let statusURL2 = 'http://localhost:3000/customerStatus/' + cid
+
+             console.log(cid)
+
+             axios.get(statusURL2).then((res) => {
+                 const status = res.data
+                 this.CusStatus = status
+             }).catch(err => {
+                 console.log(err)
+             })
+
+             let addressURL = 'http://localhost:3000/getAddress/' + cid
+             axios.get(addressURL).then((res) => {
+                 const add = res.data
+                 this.Address = add
              }).catch(err => {
                  console.log(err)
              })
@@ -153,30 +223,22 @@ import axios from 'axios'
 
             handleEdit() {
 
+                this.customers.CustomerID = document.getElementById("cusID").value
                 this.customers.CustomerFirstName = document.getElementById("fname").value
                 this.customers.CustomerLastName = document.getElementById("lname").value
                 this.customers.CustomerPhone = document.getElementById("phone").value
                 this.customers.CustomerEmail = document.getElementById("email").value
                 this.customers.CustomerNote = document.getElementById("note").value
-                this.customers.AddressLine1 = document.getElementById("address").value
-                this.customers.AddressLine2 = document.getElementById("address2").value
-                this.customers.DefaultAddress = document.getElementById("default").checked
-                this.customers.City = document.getElementById("city").value
-                this.customers.ZipCode = document.getElementById("zip").value
-                this.customers.Country = document.getElementById("country").value
-                this.customers.AddressID = document.getElementById("addID").value
-                this.customers.CustomerID = document.getElementById("cusID").value   
-                
-                console.log(this.customers)
+                this.customers.CustomerStatusID = document.getElementById("status").value
 
                 let url = 'http://localhost:3000/editCustomer/';
 
-                 axios.put(url, this.customers).then((response) => {
-                     console.log(response)
-                     this.$router.push('/customerList')
-                 }).catch(err => {
-                     console.log(err)
-                 })
+                axios.put(url, this.customers).then((res) => {
+                    console.log(res)
+                    this.$router.go(0)
+                }).catch(err => {
+                    console.log(err)
+                })
 
                 
             },
@@ -192,6 +254,53 @@ import axios from 'axios'
             statusChange(event) {
                 this.customers.CustomerStatusID = event.target.value
                 console.log(this.customers.CustomerStatusID)
+            },
+
+            showModal(id) {
+                document.getElementById("modal").style.display="block";
+                document.getElementById("address-div").style.display="none";
+                document.getElementById("tab-div2").style.display="none";
+                console.log(id)
+                let url = 'http://localhost:3000/Address/' + id
+                axios.get(url).then((res) => {
+                    const data = res.data
+                    this.CusAddress = data
+                    console.log(res)
+
+                });
+                
+            },
+
+            closeModal() {
+                document.getElementById("modal").style.display="none";
+                document.getElementById("address-div").style.display="block";
+                document.getElementById("tab-div2").style.display="block";
+            },
+
+            editAddress() {
+                this.cusaddress.AddressID = document.getElementById("addID").value
+                this.cusaddress.DefaultAddress = document.getElementById("defaultAdd").checked
+                this.cusaddress.AddressLine1 = document.getElementById("A1").value
+                this.cusaddress.AddressLine2 = document.getElementById("A2").value
+                this.cusaddress.City = document.getElementById("city").value
+                this.cusaddress.StateID = document.getElementById("st").value
+                this.cusaddress.Country = document.getElementById("country").value
+                this.cusaddress.CustomerID = document.getElementById("cusID").value
+
+                console.log(this.cusaddress)
+                let url = 'http://localhost:3000/editAddress/'
+                axios.put(url, this.cusaddress).then((res) => {
+                    console.log(res)
+    
+                }).catch(err => {
+                    console.log(err)
+                
+                })
+
+                document.getElementById("modal").style.display="none";
+                document.getElementById("address-div").style.display="block";
+                document.getElementById("tab-div2").style.display="block";
+                this.$router.go(0);
             }
         }
     }

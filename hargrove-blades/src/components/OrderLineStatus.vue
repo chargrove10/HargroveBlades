@@ -48,13 +48,15 @@
                             <tr>
                                 <th>Order Line Status Name</th>
                                 <th>Description</th>
-                                
+                                <th>Active</th>
+                                <th></th>
                                 
                             </tr>
                            
                             <tr id = "cTable" v-for="orderLineStatus in OrderLineStatus" :key="orderLineStatus.OrderLineStatusID">
                                 <td>{{orderLineStatus.OrderLineStatusName}}</td>
                                 <td>{{orderLineStatus.OrderLineStatusDesc}}</td>
+                                <td>{{orderLineStatus.OrderLineStatusActive}}</td>
                                 <td><router-link :to="{ name: 'EditOrderLineStatus', params: {orderLineStatID: orderLineStatus.OrderLineStatusID}}">Edit</router-link></td>
                                 
                             </tr>
@@ -91,7 +93,12 @@ export default {
             return {
                 OrderLineStatus: [],
                 isShow: false,
-                orderLineStatus: {}
+                orderLineStatus: {
+                    OrderLineStatusID: '',
+                    OrderLineStatusName: '',
+                    OrderLineStatusDesc: '',
+                    OrderLineStatusActive: ''
+                }
                 //pass over to product detail to see if we are posting or editing
                 
             }
@@ -124,7 +131,7 @@ export default {
 
             axios.get('http://localhost:3000/orderLinestatus').then((res) => {
                 this.OrderLineStatus=res.data;
-                
+                console.log(this.OrderLineStatus)
             }).catch(err => {
                 console.log(err)
             });
