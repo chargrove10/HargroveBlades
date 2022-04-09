@@ -277,7 +277,8 @@ app.get('/getProduct', async (req,res) => {
         let result = await pool.request()
 
             // .query("Select ProductID, SerialNo FROM Product WHERE ProductStatusID = 2")
-            .query("SELECT Product.ProductID, Product.SerialNo, Product.OverallLength, KnifeSteel.SteelName, KnifeStyle.StyleName FROM Product " +
+            .query("SELECT Product.ProductID, Product.SerialNo, Product.OverallLength, KnifeSteel.SteelName, KnifeStyle.StyleName, " +
+            "Product.Price, Product.HandleMaterial FROM Product " +
             "JOIN KnifeStyle ON Product.StyleID = KnifeStyle.StyleID " + 
             "JOIN KnifeSteel ON Product.SteelID = KnifeSteel.SteelID " + 
             "WHERE Product.ProductStatusID = 2")
@@ -289,6 +290,40 @@ app.get('/getProduct', async (req,res) => {
         console.log(err)
     }
 });
+//Gets price for product to fill in input value
+app.get('/getProductPrice/:id', async (req,res) => {
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            .query("SELECT Price FROM Product WHERE ProductID = " + req.params.id)
+
+        const product = result.recordset
+        res.send(product)
+    } catch(err){
+        console.log(err)
+    }
+});
+
+app.get('/getProductPrice', async (req,res) => {
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            .output('Price', null)
+            .execute('GetProductPrice')
+
+        const product = result.recordset
+        res.send(product)
+    } catch(err){
+        console.log(err)
+    }
+});
+
 //Get Address information for Order Creation
 app.get('/getAddress/:id', async (req,res) => {
     let id = req.params.id;
@@ -301,6 +336,25 @@ app.get('/getAddress/:id', async (req,res) => {
             //might need to make it so customerstatus is active here or on the main screen
             .query("Select ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
             " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.CustomerID = " +id)
+
+        const address = result.recordset
+        res.send(address)
+    } catch(err){
+        console.log(err)
+    }
+});
+//Get Default Address information for Order Creation
+app.get('/getDefaultAddress/:id', async (req,res) => {
+    let id = req.params.id;
+
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+
+            //might need to make it so customerstatus is active here or on the main screen
+            .query("Select ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
+            " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.CustomerID = " +id+ " AND ADDRESS.DefaultAddress = 'true'")
 
         const address = result.recordset
         res.send(address)
