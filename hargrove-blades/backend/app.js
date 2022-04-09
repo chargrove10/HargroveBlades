@@ -200,7 +200,7 @@ app.get('/customerList', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("Select * From Customer C JOIN CustomerStatus CS ON C.CustomerStatusID = CS.CustomerStatusID");
+            .query("Select * From Customer C JOIN CustomerStatus CS ON C.CustomerStatusID = CS.CustomerStatusID ORDER BY C.CustomerLastName ASC");
         const customers = result.recordset;
 
         res.send(customers)
@@ -240,10 +240,11 @@ app.get('/customerList/:name&:phone', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("Select * From Customer C JOIN CustomerStatus CS ON C.CustomerStatusID = CS.CustomerStatusID" + 
-            " WHERE C.CustomerLastName = " + name + " OR CustomerPhone = " + phone);
+            .input ('name_p', name)
+            .input ('phone_p', phone)
+            .execute ('customerFilter')
         const customers = result.recordset;
-
+        console.log(customers)
         res.send(customers)
     } catch (err){
         res.status(500).json(err)
@@ -717,7 +718,7 @@ app.get('/orderList', async (req, res) => {
             //executes the stored procedure "GetOrders"
             //only shows on screen when a null value is not shown
             .query("SELECT C.CustomerID, C.CustomerFirstName, C.CustomerLastName, PO.OrderID, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance, PO.ShippingAddressID , PO.BillingAddressID" + 
-            " FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID");
+            " FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID ORDER BY PO.OrderDate DESC");
         const orders = result.recordset;
 
         res.send(orders)

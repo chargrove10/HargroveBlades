@@ -57,9 +57,9 @@
 
                 <div style="width:40%; margin-left: 60%">
                     <form>
-                        <label> Balance </label><br/>
+                        <label> Balance Due </label><br/>
                         <input type="text" id="balance" :value="productOrder.Balance.toFixed(2)"><br/>
-                        <label> Billed Amount </label><br/>
+                        <label> Total Billed Amount </label><br/>
                         <input type="text" id="billed" @change="priceChange($event)" :value="productOrder.BilledAmount.toFixed(2)"><br/>
                         <label> Method Of Payment </label><br/>
                         <input type="text" id="method" v-model="productOrder.MethodOfPayment"><br/>
@@ -534,43 +534,45 @@
 
             priceChange(event){
                 let billedAmt = parseFloat(event.target.value);
-                document.getElementById("billed").value = billedAmt.toFixed(2)
-                //let balanceDue = parseFloat(document.getElementById("balance").value)
-                //let balanceDue = parseInt(document.getElementById("balance").value)
-
-                console.log("Entry Billed Amount " + billedAmt)
-                
+                document.getElementById("billed").value = billedAmt.toFixed(2)            
 
                 var orderTotal = parseFloat(document.getElementById("total").value)
-                //parseInt(orderTotal)
-
-                //console.log("Entry Order Total " + billedAmt)
-
-                // if (orderTotal < billedAmt) {
-                //     this.productOrder.BilledAmount = orderTotal
-                //     console.log("It is Greater than Order Total")
-                // }
-                // else {console.log("Is Less than than Order Total")}
-
-                // console.log("New billed Amount " +billedAmt)
-                // this.productOrder.Balance = (orderTotal - billedAmt).toFixed(2)
+                var balance = parseFloat(document.getElementById("balance").value)
+                
                  if (billedAmt > orderTotal ) {
                      document.getElementById("billed").value = document.getElementById("total").value
                      billedAmt = orderTotal
                  }
 
-                 document.getElementById("balance").value = orderTotal - billedAmt
+                 document.getElementById("balance").value = (orderTotal - billedAmt).toFixed(2)
+                 balance = document.getElementById("balance").value
+
                  this.productOrder.BilledAmount = billedAmt
                  this.productOrder.Balance = document.getElementById("balance").value
                  this.productOrder.OrderTotal = orderTotal
 
+                 if (balance == 0.00) {
+                     //checks to see if balance due is 0, changes to paid
+                     console.log("Paid")
+                     this.productOrder.OrderStatusID = 5
+                     document.getElementById("statusID").value = 5
+                     //checks to see if pickup is not checked and if tracking number is in the system to set order status to shipped
+                     if (!document.getElementById("pickup").checked && document.getElementById("tracking").value !== '') {
+                     this.productOrder.OrderStatusID = 6
+                     document.getElementById("statusID").value = 6
+                    }
+
+                 }
+                 else {
+                     //changes order status to in progress once an amount is billed
+                     this.productOrder.OrderStatusID = 3
+                     document.getElementById("statusID").value = 3
+                 }
+
+
                  console.log("Billed: " + this.productOrder.BilledAmount)
                  console.log("Balance: " + this.productOrder.Balance)
                  console.log("Total: " + this.productOrder.OrderTotal)
-                // document.getElementById("balance").value = (parseInt(orderTotal) - parseInt(billedAmt)).toFixed(2)
-                //console.log("Billed " + this.productOrder.BilledAmount)
-                //console.log(this.productOrder.OrderTotal)
-                //console.log("Balance " + this.productOrder.Balance)
                 
             }
             

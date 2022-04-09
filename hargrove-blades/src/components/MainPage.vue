@@ -169,14 +169,23 @@ export default {
                                
                 let Cname = document.getElementById('nameValue').value;
                 let Cphone = document.getElementById('phoneValue').value;
-                
 
-                if ((Cname =="" || Cname ==null) & (Cphone =="" || Cphone==null)) {
+                if (Cname == "") {
+                    Cname = '""'
+                    console.log(Cname)
+                }
+                if (Cphone == "") {
+                    Cphone = '""'
+                    console.log(Cphone)
+                }
+
+                if ((Cname =="" || Cname == null) && (Cphone=="" || Cphone == null)) {
                     this.refreshPage();
                 }
-                
+                //console.log("Name: " + Cname + " Phone: " + Cphone)
                 //this is the link to filter by the fields selected
-                let url = 'http://localhost:3000/customerList/' + "'"+Cname+"'" + '&' + "'" +Cphone+"'";
+                else {
+                let url = 'http://localhost:3000/customerList/' + Cname + '&' + Cphone;
                 
 
                 axios.get(url)
@@ -185,6 +194,7 @@ export default {
                     this.Customers=response.data
                     console.log(response.data)
                 });
+                }
   
             },
 
