@@ -803,12 +803,12 @@ app.get('/getLineItems/:lineID', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
            
-            .query("select OLI.OrderID, OLI.LineNumber, P.SerialNo, P.BladeLength, P.HandleMaterial, P.BladeFinish, P.OverallLength ,style.StyleName, steel.SteelName, P.Price " +
+            .query("select OLI.OrderID, OLI.LineNumber, OLI.OrderLineStatusID, P.SerialNo, P.BladeLength, P.HandleMaterial, P.BladeFinish, P.OverallLength ,style.StyleName, steel.SteelName, P.Price " +
             "from OrderLineItem OLI "+
             "join Product P on OLI.ProductID = P.ProductID "+
             "join KnifeStyle style on P.StyleID = style.StyleID "+
             "join KnifeSteel steel on P.SteelID = steel.SteelID "+
-            "WHERE OLI.OrderID = "+lineID)
+            "WHERE OLI.OrderID = "+lineID+ " AND OLI.OrderLineStatusID != 3")
         const lineItems = result.recordset;
 
         res.send(lineItems)
