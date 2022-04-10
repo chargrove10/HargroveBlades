@@ -161,39 +161,41 @@ export default {
                 this.$router.push('/orderList')
             },
 
-            //customer() {
-            //    this.$router.push('/customerList')
-            //},
+            
 
             async applyFilter() {
                                
                 let Cname = document.getElementById('nameValue').value;
                 let Cphone = document.getElementById('phoneValue').value;
 
-                if (Cname == "") {
-                    Cname = '""'
-                    console.log(Cname)
-                }
-                if (Cphone == "") {
-                    Cphone = '""'
-                    console.log(Cphone)
-                }
-
-                if ((Cname =="" || Cname == null) && (Cphone=="" || Cphone == null)) {
-                    this.refreshPage();
-                }
-                //console.log("Name: " + Cname + " Phone: " + Cphone)
-                //this is the link to filter by the fields selected
-                else {
-                let url = 'http://localhost:3000/customerList/' + Cname + '&' + Cphone;
                 
 
-                axios.get(url)
-                    .then(response => {
+                if ((Cname ==="" || Cname === null) && (Cphone==="" || Cphone === null)) {
+                    this.$router.go(0);
+                }
+                
+
+
+                else {
+
+                    if (Cname == "") {
+                    Cname = '""'
+                    console.log(Cname)
+                    }
+                     if (Cphone == "") {
+                    Cphone = '""'
+                    console.log(Cphone)
+                     }
+
+                    let url = 'http://localhost:3000/customerList/' + Cname + '&' + Cphone;
+                
+
+                    axios.get(url)
+                        .then(response => {
                     
-                    this.Customers=response.data
-                    console.log(response.data)
-                });
+                        this.Customers=response.data
+                        console.log(response.data)
+                    });
                 }
   
             },
