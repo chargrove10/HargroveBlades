@@ -1,7 +1,7 @@
 <template>
 <div class="form-div">
 
-    <div style="text-align:center;margin-bottom:20px">
+    <div style="text-align:center;margin-bottom:20px; color:white">
         <header>Edit Customer Information</header>
     </div>
 
@@ -59,7 +59,7 @@
 
     <div id="address-div" style="background-color:white;"  class="tab-div2">
         <form>
-                    <table style="transform:translate(1%,0); width:97%">
+                    <table style="transform:translate(1%,0); width:97%; font-style:oblique; font-family:'Global Sans Serif';">
                         
                         <tr>
                             <th>Default Address</th>

@@ -1,7 +1,7 @@
 <template>
 <div class="form-div">
 
-    <div style="text-align:center;margin-bottom:20px">
+    <div style="text-align:center;margin-bottom:20px; color:white">
         <header>Edit Order</header>
     </div>
       
