@@ -90,7 +90,7 @@
                 <div class="tab-divider"></div>
                 <div class="tab-divider"></div>
                 <div class="tab-divider"></div>
-                <button style="transform:translate(90%,0)" v-on:click="handleSave()">Save</button>
+                <button style="transform:translate(105%,0)" v-on:click="handleSave()">Save</button>
 
         </div>
 
@@ -129,7 +129,7 @@
                     </form>
                     <div class="tab-divider"/>
                     <div class="tab-divider"/>
-                    <button type="button" style="transform:translate(30%,0)" v-on:click="openModal()"> Add Product To Order </button>
+                    <button type="button" style="transform:translate(35%,0)" v-on:click="openModal()"> Add Product To Order </button>
 
         </div>
 
@@ -162,7 +162,7 @@
                     </table>
                     </form>
                     <div class="tab-divider" />
-            <button id="close" class="close" style="transform:translate(30%, -1515%);" v-on:click="closeModal()">X</button>
+            <button id="close" class="close" style="transform:translate(30%, -1380%);" v-on:click="closeModal()">X</button>
 
         </div>
     </div>
@@ -170,48 +170,50 @@
     <div id="editModal" class="modal" style="height: 55%">
         <div id="edit_modal_content" class="modal_content"  style="height: 80%" v-for="editItems in EditItems" :value="editItems.OrderID" :key="editItems.OrderID">
             <div class="tab-divider"/>
-            <div style="width:50%; float:left;">
-            <input id="prodID" type="hidden" v-model="editItems.ProductID" />
-            <label> Order ID </label>
-            <input id="oid" type="text" readonly v-model="editItems.OrderID" /><br />
-            <div class="tab-divider" />
-            <label> Serial Number </label>
-            <input id="serialNumber" readonly type="text" v-model="editItems.SerialNo" /><br />
-            <div class="tab-divider" />
-            <label> Blade Length </label>
-            <input id="bladeLength" readonly type="text" v-model="editItems.BladeLength" /><br />
-            <div class="tab-divider" />
-            <label> Blade Finish </label>
-            <input id="bladeFinish" readonly type="text" v-model="editItems.BladeFinish" /><br />
-            <div class="tab-divider" />
-            <label> Handle Material </label>
-            <input id="handleMaterial" readonly type="text" v-model="editItems.HandleMaterial" /><br />
-            <div class="tab-divider" />
-            <input id="lineNumber" readonly type="hidden" v-model="editItems.LineNumber" /><br />
+            <div class="tab-divider"/>
+            <div class="tab-divider"/>
+            <div style="width:50%; float:left; text-align:right; transform:translateX(-8.5%)">
+                <input id="prodID" type="hidden" v-model="editItems.ProductID" />
+                <label> Order ID </label>
+                <input id="oid" type="text" readonly v-model="editItems.OrderID" /><br />
+                <div class="tab-divider" />
+                <label> Serial Number </label>
+                <input id="serialNumber" readonly type="text" v-model="editItems.SerialNo" /><br />
+                <div class="tab-divider" />
+                <label> Blade Length </label>
+                <input id="bladeLength" readonly type="text" v-model="editItems.BladeLength" /><br />
+                <div class="tab-divider" />
+                <label> Blade Finish </label>
+                <input id="bladeFinish" readonly type="text" v-model="editItems.BladeFinish" /><br />
+                <div class="tab-divider" />
+                <label> Handle Material </label>
+                <input id="handleMaterial" readonly type="text" v-model="editItems.HandleMaterial" /><br />
+                <div class="tab-divider" />
+                <input id="lineNumber" readonly type="hidden" v-model="editItems.LineNumber" /><br />
             </div>
-            <div style="margin-left:40%">
-            <label> Knife Style </label>
-            <input id="styleName" readonly type="text" v-model="editItems.StyleName" /><br />
-            <div class="tab-divider" />
-            <label> Steel Name </label>
-            <input id="steelName" readonly type="text" v-model="editItems.SteelName" /><br />
-            <div class="tab-divider" />
-            <label> Overall Length </label>
-            <input id="overallLength" readonly type="text" v-model="editItems.OverallLength" /><br />
-            <div class="tab-divider" />
-            <label> Price </label>
-            <input id="price" type="text" readonly v-model="editItems.Price" /><br />
-            <div class="tab-divider" />
-            <label> Status </label>
-            <select name="statusID" id="linestatusID" @change="statusChange($event)" >
-                    <option hidden disabled selected v-for="editItems in EditItems" :value="editItems.OrderLineStatusID" :key="editItems.OrderLineStatusID">{{editItems.OrderLineStatusName}}</option>
-                    <option v-for="lineStatus in LineStatus" :value="lineStatus.OrderLineStatusID" :key="lineStatus.OrderLineStatusID">{{lineStatus.OrderLineStatusName}}</option>
-            </select><br/>
+            <div style="margin-left:20%; text-align:right; transform:translateX(-6.5%)">
+                <label> Knife Style </label>
+                <input id="styleName" readonly type="text" v-model="editItems.StyleName" /><br />
+                <div class="tab-divider" />
+                <label> Steel Name </label>
+                <input id="steelName" readonly type="text" v-model="editItems.SteelName" /><br />
+                <div class="tab-divider" />
+                <label> Overall Length </label>
+                <input id="overallLength" readonly type="text" v-model="editItems.OverallLength" /><br />
+                <div class="tab-divider" />
+                <label> Price </label>
+                <input id="price" type="text" readonly v-model="editItems.Price" /><br />
+                <div class="tab-divider" />
+                <label> Status </label>
+                <select name="statusID" id="linestatusID" @change="statusChange($event)" >
+                        <option hidden disabled selected v-for="editItems in EditItems" :value="editItems.OrderLineStatusID" :key="editItems.OrderLineStatusID">{{editItems.OrderLineStatusName}}</option>
+                        <option v-for="lineStatus in LineStatus" :value="lineStatus.OrderLineStatusID" :key="lineStatus.OrderLineStatusID">{{lineStatus.OrderLineStatusName}}</option>
+                </select><br/>
             
             </div>
             
             <button style="transform:translate(-300%,150%)" v-on:click="saveLineItem()">Save</button>
-            <button id="close" class="close" style="transform:translate(30%,-900%)" v-on:click="closeEditModal()">X</button>
+            <button id="close" class="close" style="transform:translate(30%,-820%)" v-on:click="closeEditModal()">X</button>
 
         </div>
     </div>

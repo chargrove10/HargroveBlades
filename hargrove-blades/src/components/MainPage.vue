@@ -99,8 +99,8 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                       
-                    <router-link :to="{ name: 'CustomerDetail' }"><button>Add</button></router-link>
+                       <!-- Fixes the button in a position on the screen so when you scroll you will always see it -->
+                    <router-link :to="{ name: 'CustomerDetail' }"><button style="position: fixed; bottom: 0%; left: 7.8%">Add</button></router-link>
                     <div class="divider"></div>
                 </div>
                 

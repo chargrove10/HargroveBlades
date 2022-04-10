@@ -24,11 +24,11 @@
                 <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
                         <label for="fname">First name:</label><br/>
-                        <input type="text" id="fname"  v-model="customers.CustomerFirstName"/><br/>
+                        <input type="text" id="fname" maxlength="30" required @change="fnameCheck($event)" v-model="customers.CustomerFirstName"/><br/>
                         <label for="lname">Last name:</label><br/>
-                        <input type="text" id="lname" v-model="customers.CustomerLastName"/><br/>
+                        <input type="text" id="lname" maxlength="30" required @change="lnameCheck($event)" v-model="customers.CustomerLastName"/><br/>
                         <label for="phone">Phone Number:</label><br/>
-                        <input type="text" id="phone"  v-model="customers.CustomerPhone"/><br/>
+                        <input type="text" id="phone" maxlength="12" required @change="phonecheck($event)" v-model="customers.CustomerPhone"/><br/>
                          
                         
                     </form>
@@ -38,7 +38,7 @@
                     <form>
                         
                         <label for="email">Email:</label><br/>
-                        <input type="text" id="email" name="email" v-model="customers.CustomerEmail"/><br/>                
+                        <input type="text" id="email" name="email" maxlength="50" @change="emailcheck($event)" v-model="customers.CustomerEmail"/><br/>                
                         <label for="notes">Notes:</label><br/>
                         <textarea id="note" v-model="customers.CustomerNote" rows="4" cols="24"></textarea><br />
                         <label for="status">Customer Status</label><br/>
@@ -301,6 +301,31 @@ import axios from 'axios'
                 document.getElementById("address-div").style.display="block";
                 document.getElementById("tab-div2").style.display="block";
                 this.$router.go(0);
+            },
+
+            fnameCheck(event) {
+                let fname = event.target.value
+                if (!/^[a-zA-Z()]+$/.test(fname)) {
+                    alert("Incorrect Value")
+                    document.getElementById("fname").value = ''
+                    }
+            },
+
+            lnameCheck(event) {
+                let lname = event.target.value
+                if (!/^[a-zA-Z()]+$/.test(lname)) {document.getElementById("lname").value = ''}
+            },
+
+            phonecheck(event) {
+                let phone = event.target.value
+                if (!/^\(?\d{3}\)?[- ]?(\d{3})[- ]?(\d{4})$/.test(phone)) {document.getElementById("phone").value = ''} 
+            },
+
+            emailcheck(event) {
+                let email = event.target.value
+                let format = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+                if (!format.test(email)) {document.getElementById("email").value = ''}
+                
             }
         }
     }

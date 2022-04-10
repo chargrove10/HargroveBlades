@@ -31,9 +31,9 @@
                           <label>Order Date</label><br/>
                           <input type="date" id="orderDate" v-model="productOrder.OrderDate"><br/>
                           <label> Customer First Name</label><br/>
-                          <input type="text" id="fname" v-model="customer.CustomerFirstName"><br/>
+                          <input type="text" id="fname" readonly v-model="customer.CustomerFirstName"><br/>
                           <label> Customer Last Name</label><br/>
-                          <input type="text" id="lname" v-model="customer.CustomerLastName"><br/>
+                          <input type="text" id="lname" readonly v-model="customer.CustomerLastName"><br/>
                           <label> Product</label><br/> <!-- Populate dropdown with get for Products -->
                           <select id="product" @change="productChange($event)">
                             <option hidden disabled selected >Please Select</option>
@@ -56,7 +56,7 @@
                           <textarea id="Note" placeholder="Ntes" v-model="productOrder.OrderNote" rows="4" cols="24"></textarea><br />
                           <label> Order Total </label><br/>
                           <div style="display:block" v-for="price in Price" :key="price.Price">
-                          <input type="text" id="total" :value="price.Price.toFixed(2)"><br/>
+                          <input type="text" id="total" readonly :value="price.Price"><br/>
                           </div>
                           
                     </form>
@@ -65,11 +65,17 @@
                 <div style="width:40%; margin-left: 60%">
                     <form>
                         <label> Balance </label><br/>
-                        <input type="text" id="balance" :value="productOrder.Balance.toFixed(2)"><br/>
+                        <input type="text" id="balance" :value="productOrder.Balance"><br/>
                         <label> Deposit </label><br/>
-                        <input type="text" id="billed" @change="priceChange($event)" :value="productOrder.BilledAmount.toFixed(2)"><br/>
+                        <input type="text" id="billed" @change="priceChange($event)" :value="productOrder.BilledAmount"><br/>
                         <label> Method Of Payment </label><br/>
-                        <input type="text" id="method" v-model="productOrder.MethodOfPayment"><br/>
+                        <!-- <input type="text" id="method" v-model="productOrder.MethodOfPayment"><br/> -->
+                        <select id="method" v-model="productOrder.MethodOfPayment">
+                            <option> Card </option>
+                            <option> Check </option>
+                            <option> Cash </option>
+                            <option> Money Order </option>
+                        </select><br />
                         <label> Tracking Number </label><br/>
                         <input type="text" id="tracking" v-model="productOrder.TrackingNumber"><br/>
                         <label> Pickup </label><br/>
@@ -152,10 +158,10 @@
                     BillingAddressID: '',
                     ShippingAddressID: '',
                     OrderNote: '',
-                    OrderTotal: 0.00,
+                    OrderTotal: 0.00.toFixed(2),
                     MethodOfPayment: '',
-                    BilledAmount: 0.00,
-                    Balance: 0.00,
+                    BilledAmount: 0.00.toFixed(2),
+                    Balance: 0.00.toFixed(2),
                     TrackingNumber: '',
                     CustomerPickup: '',
                     PickUpDateTime: new Date().toISOString().substr(0,16),
@@ -261,32 +267,32 @@
                 this.productOrder.ProductID = document.getElementById("product").value
 
                 console.log(this.productOrder)
-                let url = 'http://localhost:3000/createOrder/';
+                // let url = 'http://localhost:3000/createOrder/';
 
-                 axios.post(url, this.productOrder).then(() => {
-                     this.$router.push('/orderList')
-                      this.productOrder = {
-                          //assigning all values as empty
-                            CustomerID: '',
-                            OrderStatusID: '',
-                            OrderDate: '',
-                            BillingAddressID: '',
-                            ShippingAddressID: '',
-                            OrderNote: '',
-                            OrderTotal: '',
-                            MethodOfPayment: '',
-                            BilledAmount: '',
-                            Balance: '',
-                            TrackingNumber: '',
-                            CustomerPickup: '',
-                            PickUpDateTime: '',
-                            ProductID: ''
-                      }
-                 }).catch(err => {
-                     console.log(err)
-                 });
+                //  axios.post(url, this.productOrder).then(() => {
+                //      this.$router.push('/orderList')
+                //       this.productOrder = {
+                //           //assigning all values as empty
+                //             CustomerID: '',
+                //             OrderStatusID: '',
+                //             OrderDate: '',
+                //             BillingAddressID: '',
+                //             ShippingAddressID: '',
+                //             OrderNote: '',
+                //             OrderTotal: '',
+                //             MethodOfPayment: '',
+                //             BilledAmount: '',
+                //             Balance: '',
+                //             TrackingNumber: '',
+                //             CustomerPickup: '',
+                //             PickUpDateTime: '',
+                //             ProductID: ''
+                //       }
+                //  }).catch(err => {
+                //      console.log(err)
+                //  });
 
-                console.log(this.productOrder)
+                // console.log(this.productOrder)
             },
 
             productChange(event) {
