@@ -24,7 +24,7 @@
                     <form>
                         <label for="steelName">Steel Name:</label><br/>
                         <input type="text" id="steelName" name="steelName"  v-model="steel.SteelName"/><br/>
-                        <label for="steelActive">Steel Ative:</label><br/>
+                        <label for="steelActive">Steel Active:</label><br/>
                        <input type="checkbox" id="active" @change="getChecked($event)" name="active" v-model="steel.KnifeSteelActive"/>                                        
                         <br/>  
                         

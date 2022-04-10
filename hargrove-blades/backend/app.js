@@ -282,7 +282,7 @@ app.get('/getProduct', async (req,res) => {
             "Product.Price, Product.HandleMaterial FROM Product " +
             "JOIN KnifeStyle ON Product.StyleID = KnifeStyle.StyleID " + 
             "JOIN KnifeSteel ON Product.SteelID = KnifeSteel.SteelID " + 
-            "WHERE Product.ProductStatusID = 2")
+            "WHERE Product.ProductStatusID = 1 OR Product.ProductStatusID = 2")
             //Might change to fit a better ProductStatus
 
         const product = result.recordset
@@ -829,7 +829,7 @@ app.get('/editLineItems/:orderID&:lineNum', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
            
-            .query("select OLI.OrderID, OLI.LineNumber, P.SerialNo, P.BladeLength, P.HandleMaterial, P.BladeFinish, P.OverallLength ,style.StyleName, steel.SteelName, P.Price, " +
+            .query("select OLI.OrderID, OLI.LineNumber, P.ProductID, P.SerialNo, P.BladeLength, P.HandleMaterial, P.BladeFinish, P.OverallLength ,style.StyleName, steel.SteelName, P.Price, " +
             "OLS.OrderLineStatusID, OLS.OrderLineStatusName from OrderLineItem OLI "+
             "join Product P on OLI.ProductID = P.ProductID "+
             "join KnifeStyle style on P.StyleID = style.StyleID "+
@@ -872,8 +872,9 @@ app.put('/updateLineItem/', async (req,res) => {
         .input('LineNumber_p', req.body.LineNumber)
         .input('OrderLineStatusID_p', req.body.OrderLineStatusID)
         .input('OrderID_p', req.body.OrderID)
+        .input('ProductID_p', req.body.ProductID)
 
-        .execute('updateLineItem')
+        .execute('SP_OrderLine_Update')
 
         res.send(result)
     } catch (err){

@@ -164,6 +164,7 @@
     <div id="editModal" class="modal" >
         <div id="edit_modal_content" class="modal_content" v-for="editItems in EditItems" :value="editItems.OrderID" :key="editItems.OrderID">
             <div style="width:50%; float:left; margin-left:10%">
+            <input id="prodID" type="hidden" v-model="editItems.ProductID" />
             <label> Order ID </label>
             <input id="oid" type="text" readonly v-model="editItems.OrderID" /><br />
             <label> Serial Number </label>
@@ -192,8 +193,8 @@
             </select><br/>
             
             </div>
-            <button class="close" style="transform:translate(26%,-46%)" v-on:click="saveLineItem()">Save</button>
-            <button id="close" class="close" style="transform:translate(74%,-582%)" v-on:click="closeEditModal()">Close Me</button>
+            <button  style="transform:translate(26%,-46%)" v-on:click="saveLineItem()">Save</button>
+            <button id="close"  style="transform:translate(74%,-582%)" v-on:click="closeEditModal()">Close Me</button>
 
         </div>
     </div>
@@ -302,7 +303,8 @@
                     Price: '',
                     OrderLineStatusID: '',
                     OrderLineStatusName: '',
-                    OrderID: ''
+                    OrderID: '',
+                    ProductID: ''
                 },
                 LineStatus: [],
                 lineStatus: {
@@ -520,6 +522,7 @@
                 this.editItems.OrderLineStatusID = document.getElementById("linestatusID").value
                 this.editItems.LineNumber = document.getElementById("lineNumber").value
                 this.editItems.OrderID = document.getElementById("oid").value
+                this.editItems.ProductID = document.getElementById("prodID").value
 
                 
 
