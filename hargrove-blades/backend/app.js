@@ -200,7 +200,7 @@ app.get('/customerList', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("Select * From Customer C JOIN CustomerStatus CS ON C.CustomerStatusID = CS.CustomerStatusID ORDER BY C.CustomerLastName ASC");
+            .query("Select * From Customer C JOIN CustomerStatus CS ON C.CustomerStatusID = CS.CustomerStatusID WHERE CS.CustomerStatusID <> 2 ORDER BY C.CustomerLastName ASC");
         const customers = result.recordset;
 
         res.send(customers)

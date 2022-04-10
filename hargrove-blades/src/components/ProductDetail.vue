@@ -23,7 +23,7 @@
                 <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
                         <label for="serialNo">Serial Number </label><br/>
-                        <input type="text" id="serialNo" name="serialNo" v-model="product.SerialNo"/><br/>
+                        <input type="text" id="serialNo" name="serialNo" maxlength="10" v-model="product.SerialNo"/><br/>
                         <label for="prodStatus">Product Status </label><br/>
                         <select name="ps" id ="ps" @change="prodStatus($event)" v-model="product.ProductStatusName">
                             <option v-for="productDropDown in ProductDropDown" v-bind:value="productDropDown.ProductStatusID" :key="productDropDown.ProductStatusID"> {{productDropDown.ProductStatusName}} </option>
@@ -46,13 +46,13 @@
                 <div style="width:40%; margin-left: 60%">
                     <form>
                         <label for="handleMaterial">Handle Material </label><br/>
-                        <input type="text" id="handleMaterial" name="handleMaterial" v-model="product.HandleMaterial"/><br/> 
+                        <input type="text" id="handleMaterial" name="handleMaterial" maxlength="50" v-model="product.HandleMaterial"/><br/> 
                         <label for="bladeLength">Blade Length </label><br/>
                         <input type="text" id="bladeLength" name="bladeLength" v-model="product.BladeLength"/><br/>
                         <label for="overallLength">Overall Length </label><br/>
                         <input type="text" id="overallLength" name="overallLength" v-model="product.OverallLength"/><br/>
                         <label for="bladeFinish">Blade Finsih </label><br/>
-                        <input type="text" id="bladeFinish" name="bladefinish" v-model="product.BladeFinish"/><br/>
+                        <input type="text" id="bladeFinish" name="bladefinish" maxlength="50" v-model="product.BladeFinish"/><br/>
                         <label for="embellishments">Embellishments </label><br/>
                         <input type="text" id="embellishments" name="embellishments" v-model="product.Embellishments"/><br/>
                         <label for="notes">Product Notes:</label><br/>
@@ -138,11 +138,11 @@ import axios from 'axios'
             },
 
             addProduct(){
+                
+                
                 let url = 'http://localhost:3000/productAdd';
 
-                var vm = this;
-
-                 axios.post(url, vm.product).then(() => {
+                 axios.post(url, this.product).then(() => {
                      this.$router.push('/productList')
                         this.product = {
                             //assigning all values as empty
