@@ -39,33 +39,10 @@
 
             <div class="tabcontent" style="display:block">
                 
-                <div style="background-color:lightgray; text-align:center"><header>Price Estimate</header></div>
+                <div style="background-color:lightgray; text-align:center"><header>Newsletter</header></div>
                 
                 <div class="tab-divider"></div>
-                <div>
-                    <div class="pform1">
-                        <label>Knife Style</label>
-                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
-                      
-                    </div>
-                    <div class="pform2">
-                        <label>Steel Type</label>
-                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
-                     
-                    </div>
-                    <div class="pform3">
-                        <label>Handle Material</label>
-                        <input type="search" placeholder="Search" class="search-field" style="width:40%" />
-                        <button type="submit" style="margin-left:2%">Apply Filter</button>
-                    
-                    </div>
-
-                    <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
-                    
-                </div>
+                
 
                 <div class="tab-divider"></div>
                 

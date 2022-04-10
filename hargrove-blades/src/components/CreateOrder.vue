@@ -56,7 +56,7 @@
                           <textarea id="Note" placeholder="Ntes" v-model="productOrder.OrderNote" rows="4" cols="24"></textarea><br />
                           <label> Order Total </label><br/>
                           <div style="display:block" v-for="price in Price" :key="price.Price">
-                          <input type="text" id="total" :value="price.Price"><br/>
+                          <input type="text" id="total" :value="price.Price.toFixed(2)"><br/>
                           </div>
                           
                     </form>
@@ -65,9 +65,9 @@
                 <div style="width:40%; margin-left: 60%">
                     <form>
                         <label> Balance </label><br/>
-                        <input type="text" id="balance" v-model="productOrder.Balance"><br/>
-                        <label> Billed Amount </label><br/>
-                        <input type="text" id="billed" @change="priceChange($event)" v-model="productOrder.BilledAmount"><br/>
+                        <input type="text" id="balance" :value="productOrder.Balance.toFixed(2)"><br/>
+                        <label> Deposit </label><br/>
+                        <input type="text" id="billed" @change="priceChange($event)" :value="productOrder.BilledAmount.toFixed(2)"><br/>
                         <label> Method Of Payment </label><br/>
                         <input type="text" id="method" v-model="productOrder.MethodOfPayment"><br/>
                         <label> Tracking Number </label><br/>
@@ -152,10 +152,10 @@
                     BillingAddressID: '',
                     ShippingAddressID: '',
                     OrderNote: '',
-                    OrderTotal: '',
+                    OrderTotal: 0.00,
                     MethodOfPayment: '',
-                    BilledAmount: '',
-                    Balance: '',
+                    BilledAmount: 0.00,
+                    Balance: 0.00,
                     TrackingNumber: '',
                     CustomerPickup: '',
                     PickUpDateTime: new Date().toISOString().substr(0,16),
@@ -261,30 +261,30 @@
                 this.productOrder.ProductID = document.getElementById("product").value
 
                 console.log(this.productOrder)
-                // let url = 'http://localhost:3000/createOrder/';
+                let url = 'http://localhost:3000/createOrder/';
 
-                //  axios.post(url, this.productOrder).then(() => {
-                //      this.$router.push('/orderList')
-                //       this.productOrder = {
-                //           //assigning all values as empty
-                //             CustomerID: '',
-                //             OrderStatusID: '',
-                //             OrderDate: '',
-                //             BillingAddressID: '',
-                //             ShippingAddressID: '',
-                //             OrderNote: '',
-                //             OrderTotal: '',
-                //             MethodOfPayment: '',
-                //             BilledAmount: '',
-                //             Balance: '',
-                //             TrackingNumber: '',
-                //             CustomerPickup: '',
-                //             PickUpDateTime: '',
-                //             ProductID: ''
-                //       }
-                //  }).catch(err => {
-                //      console.log(err)
-                //  });
+                 axios.post(url, this.productOrder).then(() => {
+                     this.$router.push('/orderList')
+                      this.productOrder = {
+                          //assigning all values as empty
+                            CustomerID: '',
+                            OrderStatusID: '',
+                            OrderDate: '',
+                            BillingAddressID: '',
+                            ShippingAddressID: '',
+                            OrderNote: '',
+                            OrderTotal: '',
+                            MethodOfPayment: '',
+                            BilledAmount: '',
+                            Balance: '',
+                            TrackingNumber: '',
+                            CustomerPickup: '',
+                            PickUpDateTime: '',
+                            ProductID: ''
+                      }
+                 }).catch(err => {
+                     console.log(err)
+                 });
 
                 console.log(this.productOrder)
             },
@@ -303,14 +303,14 @@
             },
 
             priceChange(event){
-                this.productOrder.BilledAmount = event.target.value
-                this.productOrder.OrderTotal = document.getElementById("total").value
+                this.productOrder.BilledAmount = parseFloat(event.target.value)
+                this.productOrder.OrderTotal = parseFloat(document.getElementById("total").value)
 
                 if (this.productOrder.BilledAmount > this.productOrder.OrderTotal) {
                     this.productOrder.BilledAmount = this.productOrder.OrderTotal
                 }
 
-                this.productOrder.Balance = (this.productOrder.OrderTotal - this.productOrder.BilledAmount).toFixed(2)
+                this.productOrder.Balance = (this.productOrder.OrderTotal - this.productOrder.BilledAmount)
                 console.log(this.productOrder.BilledAmount)
                 console.log(this.productOrder.OrderTotal)
             },

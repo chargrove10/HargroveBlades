@@ -157,19 +157,21 @@ export default {
 
             async applyFilter() {
                                
-                let number = document.getElementById('number').value;
-                let date = document.getElementById('date').value;
+                let number = document.getElementById("number").value;
+                let date = document.getElementById("date").value;
 
-                console.log(number)
-                console.log(date)
-                
+                if (number == "")
+                    number = '""'
+                if (date == "")
+                    date = '0'
 
                 if ((number =="" || number ==null) & (date =="" || date==null)) {
                     this.refreshPage();
                 }
                 
                 //this is the link to filter by the fields selected
-                let url = 'http://localhost:3000/orderList/' + "'"+number+"'" + '&' + "'" +date+"'";
+                let url = 'http://localhost:3000/orderList/' + number + '&' + date;
+                console.log(url)
                 
 
                 axios.get(url)

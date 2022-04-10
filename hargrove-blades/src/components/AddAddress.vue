@@ -125,15 +125,15 @@ import axios from 'axios'
                 
                 console.log(this.address)
 
-                //change to add an address
-                // let url = 'http://localhost:3000/addAddress';
+                
+                let url = 'http://localhost:3000/addAddress';
 
-                // axios.post(url, this.address).then((response) => {
-                //     console.log(response)
-                //     this.$router.push({name: 'EditCustomer', params: {customerID: this.address.CustomerID}})
-                // }).catch(err => {
-                //     console.log(err)
-                // })
+                axios.post(url, this.address).then((response) => {
+                    console.log(response)
+                    this.$router.push({name: 'EditCustomer', params: {customerID: this.address.CustomerID}})
+                }).catch(err => {
+                    console.log(err)
+                })
 
                 
             },

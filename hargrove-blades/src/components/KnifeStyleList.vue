@@ -32,22 +32,7 @@
                 <div style="background-color:lightgray; text-align:center"><header>Knife Information</header></div>
                 
                <div class="tab-divider"></div>
-                <div>
-                    <div class="cform1">
-                        <label>Style</label>
-                        <input type="search" placeholder="Search" class="search-field" />
-                         
-                    </div>
-                    <div class="cform2">
-                        <label>Style Description</label>
-                        <input type="search" placeholder="Search" class="search-field" />
-                        <button type="submit" style="margin-left:2%">Apply Filter</button>
-                    
-                    </div>
-
-                    <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
-                </div>
+                
 
                 <div class="tab-divider"></div>
            

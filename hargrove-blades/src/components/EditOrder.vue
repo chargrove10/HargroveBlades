@@ -18,7 +18,7 @@
         </div>
     
     <div id="main-content" class="tab-div2">
-        <div style="background-color: lightgrey; height:auto" v-for="productOrder in ProductOrder" :value="productOrder.OrderId" :key="productOrder.OrderID">
+        <div style="background-color: lightgrey; height:auto" v-for="productOrder in ProductOrder"  :key="productOrder.OrderID">
 
                 <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
@@ -50,17 +50,17 @@
                           <label> Order Notes </label><br/>
                           <textarea id="Note" v-model="productOrder.OrderNote" rows="4" cols="24"></textarea><br />
                           <label> Order Total </label><br/>
-                          <input type="text" id="total" v-model="productOrder.OrderTotal"><br/>
+                          <input type="text" id="total" :value="productOrder.OrderTotal.toFixed(2)"><br/>
                           <input type="hidden"/>
                     </form>
                 </div>
 
                 <div style="width:40%; margin-left: 60%">
                     <form>
-                        <label> Balance </label><br/>
-                        <input type="text" id="balance" v-model="productOrder.Balance"><br/>
-                        <label> Billed Amount </label><br/>
-                        <input type="text" id="billed" v-model="productOrder.BilledAmount"><br/>
+                        <label> Balance Due </label><br/>
+                        <input type="text" id="balance" :value="productOrder.Balance.toFixed(2)"><br/>
+                        <label> Total Billed Amount </label><br/>
+                        <input type="text" id="billed" @change="priceChange($event)" :value="productOrder.BilledAmount.toFixed(2)"><br/>
                         <label> Method Of Payment </label><br/>
                         <input type="text" id="method" v-model="productOrder.MethodOfPayment"><br/>
                         <label> Tracking Number </label><br/>
@@ -168,6 +168,7 @@
     <div id="editModal" class="modal" >
         <div id="edit_modal_content" class="modal_content" v-for="editItems in EditItems" :value="editItems.OrderID" :key="editItems.OrderID">
             <div style="width:50%; float:left; margin-left:10%">
+            <input id="prodID" type="hidden" v-model="editItems.ProductID" />
             <label> Order ID </label>
             <input id="oid" type="text" readonly v-model="editItems.OrderID" /><br />
             <div class="tab-divider" />
@@ -205,6 +206,7 @@
             </select><br/>
             
             </div>
+            
             <button  class="" style="transform:translate(-400%,190%)" v-on:click="saveLineItem()">Save</button>
             <button id="close" class="close" style="transform:translate(75%,-750%)" v-on:click="closeEditModal()">X</button>
 
@@ -255,10 +257,10 @@
                     BillingAddressID: '',
                     ShippingAddressID: '',
                     OrderNote: '',
-                    OrderTotal: '',
+                    OrderTotal: 0,
                     MethodOfPayment: '',
-                    BilledAmount: '',
-                    Balance: '',
+                    BilledAmount: 0,
+                    Balance: 0,
                     TrackingNumber: '',
                     CustomerPickUp: '',
                     PickUpDateTime: '',
@@ -315,7 +317,8 @@
                     Price: '',
                     OrderLineStatusID: '',
                     OrderLineStatusName: '',
-                    OrderID: ''
+                    OrderID: '',
+                    ProductID: ''
                 },
                 LineStatus: [],
                 lineStatus: {
@@ -356,9 +359,7 @@
              axios.get(url2).then((response) => {
                  const data = response.data
                  //had to loop through Customer to assign to customers{}
-                 this.ProductOrder = data
-                
-
+                 this.ProductOrder = data                
 
              }).catch(err => {
                  console.log(err)
@@ -535,6 +536,7 @@
                 this.editItems.OrderLineStatusID = document.getElementById("linestatusID").value
                 this.editItems.LineNumber = document.getElementById("lineNumber").value
                 this.editItems.OrderID = document.getElementById("oid").value
+                this.editItems.ProductID = document.getElementById("prodID").value
 
                 
 
@@ -545,6 +547,50 @@
                 }).catch(err => {
                     console.log(err)
                 })
+            },
+
+            priceChange(event){
+                let billedAmt = parseFloat(event.target.value);
+                document.getElementById("billed").value = billedAmt.toFixed(2)            
+
+                var orderTotal = parseFloat(document.getElementById("total").value)
+                var balance = parseFloat(document.getElementById("balance").value)
+                
+                 if (billedAmt > orderTotal ) {
+                     document.getElementById("billed").value = document.getElementById("total").value
+                     billedAmt = orderTotal
+                 }
+
+                 document.getElementById("balance").value = (orderTotal - billedAmt).toFixed(2)
+                 balance = document.getElementById("balance").value
+
+                 this.productOrder.BilledAmount = billedAmt
+                 this.productOrder.Balance = document.getElementById("balance").value
+                 this.productOrder.OrderTotal = orderTotal
+
+                 if (balance == 0.00) {
+                     //checks to see if balance due is 0, changes to paid
+                     console.log("Paid")
+                     this.productOrder.OrderStatusID = 5
+                     document.getElementById("statusID").value = 5
+                     //checks to see if pickup is not checked and if tracking number is in the system to set order status to shipped
+                     if (!document.getElementById("pickup").checked && document.getElementById("tracking").value !== '') {
+                     this.productOrder.OrderStatusID = 6
+                     document.getElementById("statusID").value = 6
+                    }
+
+                 }
+                 else {
+                     //changes order status to in progress once an amount is billed
+                     this.productOrder.OrderStatusID = 3
+                     document.getElementById("statusID").value = 3
+                 }
+
+
+                 console.log("Billed: " + this.productOrder.BilledAmount)
+                 console.log("Balance: " + this.productOrder.Balance)
+                 console.log("Total: " + this.productOrder.OrderTotal)
+                
             }
             
         }

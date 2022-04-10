@@ -200,7 +200,7 @@ app.get('/customerList', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("Select * From Customer C JOIN CustomerStatus CS ON C.CustomerStatusID = CS.CustomerStatusID");
+            .query("Select * From Customer C JOIN CustomerStatus CS ON C.CustomerStatusID = CS.CustomerStatusID ORDER BY C.CustomerLastName ASC");
         const customers = result.recordset;
 
         res.send(customers)
@@ -240,10 +240,11 @@ app.get('/customerList/:name&:phone', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("Select * From Customer C JOIN CustomerStatus CS ON C.CustomerStatusID = CS.CustomerStatusID" + 
-            " WHERE C.CustomerLastName = " + name + " OR CustomerPhone = " + phone);
+            .input ('name_p', name)
+            .input ('phone_p', phone)
+            .execute ('customerFilter')
         const customers = result.recordset;
-
+        console.log(customers)
         res.send(customers)
     } catch (err){
         res.status(500).json(err)
@@ -281,7 +282,7 @@ app.get('/getProduct', async (req,res) => {
             "Product.Price, Product.HandleMaterial FROM Product " +
             "JOIN KnifeStyle ON Product.StyleID = KnifeStyle.StyleID " + 
             "JOIN KnifeSteel ON Product.SteelID = KnifeSteel.SteelID " + 
-            "WHERE Product.ProductStatusID = 2")
+            "WHERE Product.ProductStatusID = 1 OR Product.ProductStatusID = 2")
             //Might change to fit a better ProductStatus
 
         const product = result.recordset
@@ -717,7 +718,7 @@ app.get('/orderList', async (req, res) => {
             //executes the stored procedure "GetOrders"
             //only shows on screen when a null value is not shown
             .query("SELECT C.CustomerID, C.CustomerFirstName, C.CustomerLastName, PO.OrderID, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance, PO.ShippingAddressID , PO.BillingAddressID" + 
-            " FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID");
+            " FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID ORDER BY PO.OrderDate DESC");
         const orders = result.recordset;
 
         res.send(orders)
@@ -738,8 +739,9 @@ app.get('/orderList/:number&:date', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT C.CustomerID, C.CustomerFirstName, C.CustomerLastName, PO.OrderID, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance, PO.BillingAddressID, PO.ShippingAddressID "+
-            "FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID WHERE OrderNumber = " + number + "OR OrderDate = " + date);
+            .input('number_p', number)
+            .input('date_p', sql.Date, date)
+            .execute('orderFilter')
         const customers = result.recordset;
 
         res.send(customers)
@@ -827,7 +829,7 @@ app.get('/editLineItems/:orderID&:lineNum', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
            
-            .query("select OLI.OrderID, OLI.LineNumber, P.SerialNo, P.BladeLength, P.HandleMaterial, P.BladeFinish, P.OverallLength ,style.StyleName, steel.SteelName, P.Price, " +
+            .query("select OLI.OrderID, OLI.LineNumber, P.ProductID, P.SerialNo, P.BladeLength, P.HandleMaterial, P.BladeFinish, P.OverallLength ,style.StyleName, steel.SteelName, P.Price, " +
             "OLS.OrderLineStatusID, OLS.OrderLineStatusName from OrderLineItem OLI "+
             "join Product P on OLI.ProductID = P.ProductID "+
             "join KnifeStyle style on P.StyleID = style.StyleID "+
@@ -870,8 +872,9 @@ app.put('/updateLineItem/', async (req,res) => {
         .input('LineNumber_p', req.body.LineNumber)
         .input('OrderLineStatusID_p', req.body.OrderLineStatusID)
         .input('OrderID_p', req.body.OrderID)
+        .input('ProductID_p', req.body.ProductID)
 
-        .execute('updateLineItem')
+        .execute('SP_OrderLine_Update')
 
         res.send(result)
     } catch (err){
