@@ -1182,7 +1182,7 @@ app.get('/orderInfo', async (req, res) => {
             //executes the stored procedure "GetOrderInfo"
             .query("SELECT SerialNo, StyleName, SteelName, overalllength, bladelength, handlematerial, embellishments, productnote, Price, ProductStatusName "+
             "FROM PRODUCT JOIN PRODUCTSTATUS ON PRODUCT.ProductStatusID = ProductStatus.productstatusID join KnifeStyle ON PRODUCT.StyleID = KnifeStyle.StyleID "+
-            "join KnifeSteel ON PRODUCT.steelID = KnifeSteel.SteelID WHERE Product.productstatusID= 1  OR Product.productstatusID= 3;");
+            "join KnifeSteel ON PRODUCT.steelID = KnifeSteel.SteelID WHERE Product.productstatusID= 6;");
         const knifeAvail = result.recordset;
 
         res.send(knifeAvail)
