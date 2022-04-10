@@ -168,9 +168,10 @@ input:not([type=submit]):not([type=file])
     padding: 10px;
     background: rgba(240,240,240,0.5);
     margin: 0,0,0,0;
-    font-size: 14px;
+    font-size: 16px;
     font-weight:bold;
-
+    font-style:oblique;
+    font-family:'Global Sans Serif';
 }
 
 table {
