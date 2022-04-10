@@ -110,9 +110,9 @@
                 </select><br />
             <label>Country</label><br />
             <input type="text" id="country" v-model="cusaddress.Country" /><br />
-            <button class="close" type="button" style="transform: translate(23%,75%)" v-on:click="closeModal()">Close</button>
+            <button class="close" type="button" style="transform: translate(-11%,-931%)" v-on:click="closeModal()">X</button>
             
-            <button class="close" type="button" style="transform: translate(138%,-80%)" v-on:click="editAddress()">Save</button>
+            <button  type="button" style="transform: translate(130%,80%)" v-on:click="editAddress()">Save</button>
         </div>
         
     </div>

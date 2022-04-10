@@ -139,9 +139,13 @@
         <div id="modal_content" class="modal_content">
             
             <form>
-                    <table style="transform:translate(-17%,0); width:96.5%">
+                    <table style="transform:translate(.1%,0); width:96.5%">
                         <tr>
                             <th>Product</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                             
                         </tr>
                         <tr id="pTable" v-for="product in Product" :value="product.ProductID" :key="product.ProductID">
@@ -156,7 +160,7 @@
                     </table>
                     </form>
                     <div class="tab-divider" />
-            <button id="close" class="close" v-on:click="closeModal()">Close Me</button>
+            <button id="close" class="close" style="transform:translate(75%,-735%)" v-on:click="closeModal()">X</button>
 
         </div>
     </div>
@@ -166,25 +170,34 @@
             <div style="width:50%; float:left; margin-left:10%">
             <label> Order ID </label>
             <input id="oid" type="text" readonly v-model="editItems.OrderID" /><br />
+            <div class="tab-divider" />
             <label> Serial Number </label>
             <input id="serialNumber" readonly type="text" v-model="editItems.SerialNo" /><br />
+            <div class="tab-divider" />
             <label> Blade Length </label>
             <input id="bladeLength" readonly type="text" v-model="editItems.BladeLength" /><br />
+            <div class="tab-divider" />
             <label> Blade Finish </label>
             <input id="bladeFinish" readonly type="text" v-model="editItems.BladeFinish" /><br />
+            <div class="tab-divider" />
             <label> Handle Material </label>
             <input id="handleMaterial" readonly type="text" v-model="editItems.HandleMaterial" /><br />
+            <div class="tab-divider" />
             <input id="lineNumber" readonly type="hidden" v-model="editItems.LineNumber" /><br />
             </div>
             <div style="margin-left:40%">
             <label> Knife Style </label>
             <input id="styleName" readonly type="text" v-model="editItems.StyleName" /><br />
+            <div class="tab-divider" />
             <label> Steel Name </label>
             <input id="steelName" readonly type="text" v-model="editItems.SteelName" /><br />
+            <div class="tab-divider" />
             <label> Overall Length </label>
             <input id="overallLength" readonly type="text" v-model="editItems.OverallLength" /><br />
+            <div class="tab-divider" />
             <label> Price </label>
             <input id="price" type="text" readonly v-model="editItems.Price" /><br />
+            <div class="tab-divider" />
             <label> Status </label>
             <select name="statusID" id="linestatusID" @change="statusChange($event)" >
                     <option hidden disabled selected v-for="editItems in EditItems" :value="editItems.OrderLineStatusID" :key="editItems.OrderLineStatusID">{{editItems.OrderLineStatusName}}</option>
@@ -192,8 +205,8 @@
             </select><br/>
             
             </div>
-            <button class="close" style="transform:translate(26%,-46%)" v-on:click="saveLineItem()">Save</button>
-            <button id="close" class="close" style="transform:translate(74%,-582%)" v-on:click="closeEditModal()">Close Me</button>
+            <button  class="" style="transform:translate(-400%,190%)" v-on:click="saveLineItem()">Save</button>
+            <button id="close" class="close" style="transform:translate(75%,-750%)" v-on:click="closeEditModal()">X</button>
 
         </div>
     </div>
