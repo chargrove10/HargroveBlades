@@ -32,6 +32,7 @@ import EditProductStatus from '../components/EditProductStatus.vue'
 import EditOrderLineStatus from '../components/EditOrderLineStatus.vue'
 import EditOrder from '../components/EditOrder.vue'
 import EditProduct from '../components/EditProduct.vue'
+import returningCustomer from '../components/ReturningCustomer.vue'
 
 const routes = [
     {
@@ -125,6 +126,11 @@ const routes = [
         path: "/priceEstimate",
         name: "PriceEstimate",
         component: PriceEstimator
+    },
+    {
+        path: "/returningCustomer",
+        name: "returningCustomer",
+        component: returningCustomer
     },
     {
         path: "/status",

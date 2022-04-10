@@ -37,45 +37,42 @@
             </div>
 
         </div>
-        
+
         <div class="tab-div2">
-            
-            <div id="knifeAvail" class="tabcontent" style="display:block">
+
+            <div id="priceEstimate" class="tabcontent" style="display:block">
                 
-                <div style="background-color:lightgray; text-align:center"><header>On Going Orders</header></div>
+                <div style="background-color:lightgray; text-align:center"><header>Number of Returning Customers</header></div>
+                
                 <div class="tab-divider"></div>
+                
+
+                <div class="tab-divider"></div>
+                
+                <div class="tab-divider"></div>
+
                 <form>
-                    <table style="width:95%">
+                    <table style="width:95%; margin-left:2.5%">
                         <tr>
-                            <th>Order Number</th>
-                            <th>Customer Name</th>
-                            <th>Customer Phone</th>
-                            <th>Customer Email</th>
-                            <th>Order Date</th>
-                            <th>Order Status Name</th>
-                            <th>Order Total</th>
-                            <th>PickUpDateTime</th>
-                            <th>OrderNote</th>
+                            <th>Customer First Name</th>
+                            <th>Customer Last Name</th>
+                            <th>Phone Number</th>
+                            <th>Number of Orders</th>
+                            <th>Last Order Date</th>
                         </tr>
-                        <tr id="mTable" v-for="order in Order" :key="order.OrderID">
-                            <td>{{order.OrderNumber}}</td>
-                            <td>{{order.CustomerFirstName.concat(' '+ order.CustomerLastName)}}</td>  
-                            <td>{{order.CustomerPhone}}</td>
-                            <td>{{order.CustomerEmail}}</td>
-                            <td>{{order.OrderDate.slice(0,10)}}</td>
-                            <td>{{order.OrderStatusName}}</td>
-                            <td>${{order.OrderTotal}}</td>
-                            <td>{{order.PickUpDateTime.slice(0,10)}}</td>
-                            <td>{{order.OrderNote}}</td>
+                        
+                        <tr id="pTable" v-for="customer in returnCustomer" :key="customer.CustomerID">
+                            <td>{{customer.CustomerFirstName}}</td>
+                            <td>{{customer.CustomerLastName}}</td>
+                            <td>{{customer.CustomerPhone}}</td>
+                            <td>{{customer.NumberOfOrders}}</td>
+                            <td>{{customer.LastOrderDate}}</td>
+
                         </tr>
                     </table>
                 </form>
                 <div class="tab-divider"></div>
-
             </div>
-
-
-
 
     </div>
 
@@ -93,9 +90,9 @@ import axios from 'axios'
 export default {
         data() {
             return {
-                Order: [],
+                returnCustomer: [],
                 isShow: false,
-                order: {}
+                prices: {}
                 //pass over to product detail to see if we are posting or editing
                 
             }
@@ -122,12 +119,16 @@ export default {
         priceEstimate() {
             this.$router.push('/priceEstimate')
         },
+/* 
+        returnCustomer() {
+            this.$router.push('/returnCustomer')
+        } */
 
         },
-        created() {
+    created() {
 
-            axios.get('http://localhost:3000/').then((res) => {
-                this.Order=res.data;
+            axios.get('http://localhost:3000/returnCustomer').then((res) => {
+                this.returnCustomer=res.data;
                 
             }).catch(err => {
                 console.log(err)
@@ -135,7 +136,7 @@ export default {
 
         },
 
-    }
+}
 </script>
 
 
