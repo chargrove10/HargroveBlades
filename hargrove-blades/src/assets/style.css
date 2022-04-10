@@ -170,8 +170,7 @@ input:not([type=submit]):not([type=file])
     margin: 0,0,0,0;
     font-size: 14px;
     font-weight:bold;
-    font-style:oblique;
-    font-family:'Global Sans Serif';
+
 }
 
 table {
@@ -265,14 +264,10 @@ header {
     top: 0;
     width: 70%; /* Full width */
     height: 50%; /* Full height */
-    
+
     background-color: rgba(248, 248, 248, 0.767); /* Black w/ opacity */
     transform:translate(14.2%,40%);
     color:rgb(0, 0, 0);
-    
-    
-    
-    
 }
 
 .modal button{
