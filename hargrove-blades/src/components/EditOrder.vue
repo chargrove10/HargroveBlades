@@ -135,10 +135,12 @@
 
     </div>
     
-    <div id="modal" class="modal">
-        <div id="modal_content" class="modal_content">
+    <div id="modal" class="modal" style ="width: 50%; height: 60%; transform:translate(40%,35%);">
+        <div id="modal_content" class="modal_content" style="overflow:auto">
             
             <form>
+                <div class="tab-divider"/>
+                <div class="tab-divider"/>
                     <table style="transform:translate(.1%,0); width:96.5%">
                         <tr>
                             <th>Product</th>
@@ -154,20 +156,21 @@
                             <td>{{product.SteelName}}</td>
                             <td>{{product.OverallLength}}</td>
                             
-                            <td><button type="button" v-on:click="addLineItem(product.ProductID, )">Add to Order</button></td>
+                            <td><button type="button" style= "padding: 5px 10px" v-on:click="addLineItem(product.ProductID, )">Add to Order</button></td>
 
                         </tr>
                     </table>
                     </form>
                     <div class="tab-divider" />
-            <button id="close" class="close" style="transform:translate(75%,-735%)" v-on:click="closeModal()">X</button>
+            <button id="close" class="close" style="transform:translate(30%, -1515%);" v-on:click="closeModal()">X</button>
 
         </div>
     </div>
 
-    <div id="editModal" class="modal" >
-        <div id="edit_modal_content" class="modal_content" v-for="editItems in EditItems" :value="editItems.OrderID" :key="editItems.OrderID">
-            <div style="width:50%; float:left; margin-left:10%">
+    <div id="editModal" class="modal" style="height: 55%">
+        <div id="edit_modal_content" class="modal_content"  style="height: 80%" v-for="editItems in EditItems" :value="editItems.OrderID" :key="editItems.OrderID">
+            <div class="tab-divider"/>
+            <div style="width:50%; float:left;">
             <input id="prodID" type="hidden" v-model="editItems.ProductID" />
             <label> Order ID </label>
             <input id="oid" type="text" readonly v-model="editItems.OrderID" /><br />
@@ -207,8 +210,8 @@
             
             </div>
             
-            <button  class="" style="transform:translate(-400%,190%)" v-on:click="saveLineItem()">Save</button>
-            <button id="close" class="close" style="transform:translate(75%,-750%)" v-on:click="closeEditModal()">X</button>
+            <button style="transform:translate(-300%,150%)" v-on:click="saveLineItem()">Save</button>
+            <button id="close" class="close" style="transform:translate(30%,-900%)" v-on:click="closeEditModal()">X</button>
 
         </div>
     </div>

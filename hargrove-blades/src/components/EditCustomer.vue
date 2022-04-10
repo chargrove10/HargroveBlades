@@ -90,7 +90,7 @@
 
     </div>
 
-    <div  id="modal" class="modal" style="width:30%; margin-left:26%">
+    <div  id="modal" class="modal" style="width:30%; margin-left:26%; transform:translate(14.2%,40%);">
         
         <div id="modal_content" class="modal_content" style="height:auto"  v-for="cusaddress in CusAddress" :value="cusaddress.AddressID" :key="cusaddress.AddressID">
             <input type="hidden" id="addID" v-model="cusaddress.AddressID"/>
@@ -110,9 +110,9 @@
                 </select><br />
             <label>Country</label><br />
             <input type="text" id="country" v-model="cusaddress.Country" /><br />
-            <button class="close" type="button" style="transform: translate(-11%,-931%)" v-on:click="closeModal()">X</button>
+            <button class="close" type="button" style="transform: translate(30%,-900%)" v-on:click="closeModal()">X</button>
             
-            <button  type="button" style="transform: translate(130%,80%)" v-on:click="editAddress()">Save</button>
+            <button  type="button" style="transform: translate(-10%, 30%)" v-on:click="editAddress()">Save</button>
         </div>
         
     </div>

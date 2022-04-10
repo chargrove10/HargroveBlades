@@ -182,8 +182,8 @@ table {
     
 }
 th{
-    background-color: rgb(49,130,189);
-    opacity: 0.7;
+    background-color: #66A0CF;
+    
     color: #ffffff;
 }
 
@@ -263,11 +263,11 @@ header {
     z-index: 1000; /* Sit on top */
     left: 10;
     top: 0;
-    width: 70%; /* Full width */
+    width: 30%; /* Full width */
     height: 50%; /* Full height */
-
-    background-color: rgba(248, 248, 248, 0.767); /* Black w/ opacity */
-    transform:translate(14.2%,40%);
+    background-color: rgb(49,130,189);
+    opacity: 0.7;
+    transform:translate(90%,40%);
     color:rgb(0, 0, 0);
 }
 
@@ -282,7 +282,7 @@ header {
 	font-family:Arial;
 	font-size:14px;
 	font-weight:bold;
-	padding:.6%;
+	padding: 10px 25px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #d4d1d1;
     transition: 0.3s;
@@ -291,12 +291,11 @@ header {
 
 
 .modal_content {
-    background-color: #fefefea1;
+    background-color: lightgrey;
     margin: 5% auto; /* 15% from the top and centered */
-    padding: 25px;
-    border: 1px solid #888;
-    width: 96%; /* Could be more or less, depending on screen size */
-    height: 70%;
+    padding: 20px;
+    width: 90%; /* Could be more or less, depending on screen size */
+    height: 80%;
     color:rgb(0, 0, 0)
 }
 
