@@ -16,11 +16,11 @@
                 </router-link>
                 <div class="tab-divider" />
                 <router-link to="/knifeAvailability" custom v-slot="{navigate, href}">
-                <a :href="href" @click="navigate">Availability</a>
+                <a :href="href" @click="navigate">Knife Availability</a>
                 </router-link>
                 <div class="tab-divider" />
                 <router-link to="/orderInfo" custom v-slot="{navigate, href}">
-                <a :href="href" @click="navigate">Order Info</a>
+                <a :href="href" @click="navigate">Knives in Progress</a>
                 </router-link>
                 <div class="tab-divider" />
                 <router-link to="/newsletter" custom v-slot="{navigate, href}">
