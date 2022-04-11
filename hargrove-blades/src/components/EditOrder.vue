@@ -162,7 +162,7 @@
                     </table>
                     </form>
                     <div class="tab-divider" />
-            <button id="close" class="close" style="transform:translate(30%, -1380%);" v-on:click="closeModal()">X</button>
+            <button id="close" class="close" style="transform:translate(30%, -1120%);" v-on:click="closeModal()">X</button>
 
         </div>
     </div>
@@ -506,8 +506,11 @@
             },
 
             openModal() {
-                document.getElementById("modal").style.display="block";
-                document.getElementById("main-content").style.display="none";
+                if(document.getElementById("statusID").value >= 1 && document.getElementById("statusID").value <= 3){
+                    document.getElementById("modal").style.display="block";
+                    document.getElementById("main-content").style.display="none";
+                }
+                else {alert("Cannot add a Product to this Order!")}
                 
                 
             },
