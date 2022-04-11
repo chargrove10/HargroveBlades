@@ -29,7 +29,7 @@
         <div class="tab-div2">
 
             <div class="tabcontent">
-                <div style="background-color:lightgray; text-align:center"><header>Steel Information</header></div>
+                <div style="text-align:center"><header>Steel Information</header></div>
                 
                 <div class="tab-divider"></div>
                 

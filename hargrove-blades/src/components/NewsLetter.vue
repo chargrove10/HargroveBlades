@@ -39,7 +39,7 @@
 
             <div class="tabcontent" style="display:block">
                 
-                <div style="background-color:lightgray; text-align:center"><header>Newsletter</header></div>
+                <div style="text-align:center"><header>Newsletter</header></div>
                 
                 <div class="tab-divider"></div>
                 
