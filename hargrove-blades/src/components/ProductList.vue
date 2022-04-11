@@ -75,6 +75,7 @@
                     <form>
                         <table style="width:95%">
                             <tr>
+                                <th style="width:1%"> </th>
                                 <th>Serial Number</th>
                                 <th>Product Status</th>
                                 <th>Knife Style</th>
@@ -87,6 +88,7 @@
 
                             </tr>
                             <tr id="pTable" v-for="products in Products" :key="products.ProductID">
+                                <td> </td>
                                 <td>{{products.SerialNo}}</td>
                                 <td>{{products.ProductStatusName}}</td>
                                 <td>{{products.StyleName}}</td>
@@ -98,7 +100,7 @@
                                 <td hidden>{{products.StyleID}}</td>
                                 <td hidden>{{products.ProductID}}</td>
                                 <td hidden>{{products.SteelID}}</td>
-                                <td><router-link :to="{ name: 'EditProduct', params: {productID: products.ProductID, productStatusId: products.ProductStatusID, styleId: products.StyleID, steelId: products.SteelID}}">Edit</router-link></td>
+                                <td><router-link :to="{ name: 'EditProduct', params: {productID: products.ProductID, productStatusId: products.ProductStatusID, styleId: products.StyleID, steelId: products.SteelID}}"><button style="width:100%">Edit</button></router-link></td>
                                 <!-- Place holder !-->
                             </tr>
                         </table>
@@ -107,7 +109,7 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'ProductDetail'}"><button>Add</button></router-link>
+                    <router-link :to="{ name: 'ProductDetail'}"><button style="position: fixed; bottom: 0.5%; left: 12.4%">Add</button></router-link>
                 </div>
             </div>
         
