@@ -48,8 +48,9 @@
                              <tr id="sTable" v-for="knife in Knives" v-bind:key="knife.StyleID">
                                 <td>{{knife.StyleName}}</td>
                                 <td>{{knife.StyleDesc}}</td>
-                                <td>{{knife.KnifeStyleActive}}</td>
-                                <td><router-link :to="{ name: 'EditKnifeStyle', params: {knifeID: knife.StyleID, flag: knife.KnifeStyleActive}}">Edit</router-link></td>
+                                <td v-if="knife.KnifeStyleActive === true">Active</td>
+                                <td v-else>Inactive</td>
+                                <td><router-link :to="{ name: 'EditKnifeStyle', params: {knifeID: knife.StyleID, flag: knife.KnifeStyleActive}}"><button style="width:110% !important">Edit</button></router-link></td>
                                 
                                 <!-- Place holder !-->
                              </tr>
@@ -59,7 +60,7 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'KnifeStyle'}"><button>Add</button></router-link>
+                    <router-link :to="{ name: 'KnifeStyle'}"><button style="transform: translate(95%, -10%)">Add</button></router-link>
                 </div>
                 
 

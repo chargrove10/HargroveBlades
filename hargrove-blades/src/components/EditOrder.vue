@@ -17,8 +17,8 @@
 
         </div>
     
-    <div id="main-content" class="tab-div2">
-        <div style="background-color: lightgrey; height:auto" v-for="productOrder in ProductOrder"  :key="productOrder.OrderID">
+    <div id="main-content" class="tab-div2" style="width:87.35% ;transform:translatex(3%)">
+        <div style="border:thin solid black; height:auto" v-for="productOrder in ProductOrder"  :key="productOrder.OrderID">
 
                 <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
@@ -97,7 +97,7 @@
         <div> 
 
                     <form>
-                    <table style="transform:translate(.9%,0); width:97%">
+                    <table style="transform:translate(-2%,0); width:99.99%">
                         <tr>
                             <th style="text-align:right">Line Number</th>
                             <th style="text-align:left">Serial Number</th>
@@ -128,8 +128,7 @@
                     </table>
                     </form>
                     <div class="tab-divider"/>
-                    <div class="tab-divider"/>
-                    <button type="button" style="transform:translate(35%,0)" v-on:click="openModal()"> Add Product To Order </button>
+                    <button type="button" style="transform:translate(25%,0)" v-on:click="openModal()"> Add Product To Order </button>
 
         </div>
 
@@ -162,7 +161,7 @@
                     </table>
                     </form>
                     <div class="tab-divider" />
-            <button id="close" class="close" style="transform:translate(30%, -1120%);" v-on:click="closeModal()">X</button>
+            <button id="close" class="close" style="transform:translate(30%, -1510%);" v-on:click="closeModal()">X</button>
 
         </div>
     </div>
@@ -171,8 +170,7 @@
         <div id="edit_modal_content" class="modal_content"  style="height: 80%" v-for="editItems in EditItems" :value="editItems.OrderID" :key="editItems.OrderID">
             <div class="tab-divider"/>
             <div class="tab-divider"/>
-            <div class="tab-divider"/>
-            <div style="width:50%; float:left; text-align:right; transform:translateX(-8.5%)">
+            <div style="width:50%; float:left; text-align:right; transform:translateX(-15%)">
                 <input id="prodID" type="hidden" v-model="editItems.ProductID" />
                 <label> Order ID </label>
                 <input id="oid" type="text" readonly v-model="editItems.OrderID" /><br />
@@ -201,6 +199,7 @@
                 <label> Overall Length </label>
                 <input id="overallLength" readonly type="text" v-model="editItems.OverallLength" /><br />
                 <div class="tab-divider" />
+                <div class="tab-divider" />
                 <label> Price </label>
                 <input id="price" type="text" readonly v-model="editItems.Price" /><br />
                 <div class="tab-divider" />
@@ -212,8 +211,8 @@
             
             </div>
             
-            <button style="transform:translate(-300%,150%)" v-on:click="saveLineItem()">Save</button>
-            <button id="close" class="close" style="transform:translate(30%,-820%)" v-on:click="closeEditModal()">X</button>
+            <button style="transform:translate(-290%, 80%)" v-on:click="saveLineItem()">Save</button>
+            <button id="close" class="close" style="transform:translate(30%,-960%)" v-on:click="closeEditModal()">X</button>
 
         </div>
     </div>

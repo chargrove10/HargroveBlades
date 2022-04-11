@@ -73,7 +73,8 @@
                             
                         </tr>
                         <tr id="oTable" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">
-                            <td>{{address.DefaultAddress}}</td>
+                            <td v-if="address.DefaultAddress === true">Default</td>
+                            <td v-else> </td>
                             <td>{{address.AddressLine1}}</td>
                             <td>{{address.AddressLine2}}</td>
                             <td>{{address.City}}</td>

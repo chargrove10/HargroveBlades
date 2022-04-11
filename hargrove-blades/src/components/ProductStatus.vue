@@ -56,8 +56,9 @@
                             <tr id = "cTable" v-for="productStatus in ProductStatus" :key="productStatus.ProductStatusID">
                                 <td>{{productStatus.ProductStatusName}}</td>
                                 <td>{{productStatus.ProductStatusDesc}}</td>
-                                <td>{{productStatus.ProductStatusActive}}</td>
-                                <td><router-link :to="{ name: 'EditProductStatus', params: {productStatID: productStatus.ProductStatusID}}">Edit</router-link></td>
+                                <td v-if="productStatus.ProductStatusActive === true">On</td>
+                                <td v-else>Off</td>
+                                <td><router-link :to="{ name: 'EditProductStatus', params: {productStatID: productStatus.ProductStatusID}}"><button style="width:60% !important">Edit</button></router-link></td>
                             </tr>
                             
                         </table>
@@ -66,7 +67,7 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'CreateProductStatus'}"><button>Create Status</button></router-link>
+                    <router-link :to="{ name: 'CreateProductStatus'}"><button style="transform: translate(15%, -10%)">Create Status</button></router-link>
                 </div>
                 
         </div>

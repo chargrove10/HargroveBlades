@@ -1,8 +1,8 @@
 <template>
 <div class="form-div">
 
-    <div style="text-align:center;margin-bottom:20px">
-        <header>Input Customer Information</header>
+    <div style="color: white; text-align:center;margin-bottom:20px">
+        <header>Add New Address</header>
     </div>
 
    <div class="tab-div1">
@@ -18,8 +18,8 @@
     </div>
       
 
-    <div class="tab-div2" style="min-height:0">
-        <div style="background-color: lightgrey">
+    <div class="tab-div2" style="min-height:0; width:87.35% ;transform:translatex(3%)">
+        <div style="border:thin solid black;">
 
                 <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>

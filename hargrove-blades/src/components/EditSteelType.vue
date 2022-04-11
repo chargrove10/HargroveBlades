@@ -1,8 +1,8 @@
 <template>
 <div class="form-div">
 
-    <div style="text-align:center;margin-bottom:20px">
-        <header>Edit New Knife Steel</header>
+    <div style="color: white; text-align:center;margin-bottom:20px">
+        <header>Edit Knife Steel</header>
     </div>
       
     <div class="tab-div1">
@@ -17,8 +17,8 @@
 
         </div>
     
-<div class="tab-div2" style="min-height:auto">
-        <div style="background-color: lightgrey" v-for="steel in Steel" :key="steel.SteelID"> 
+<div class="tab-div2" style="min-height:auto; width:87.35% ;transform:translatex(3%)">
+        <div style="border: thin solid black" v-for="steel in Steel" :key="steel.SteelID"> 
 
                 <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>

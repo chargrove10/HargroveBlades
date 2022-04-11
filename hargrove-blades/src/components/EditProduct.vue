@@ -2,7 +2,7 @@
 <div class="form-div">
 
     <div style="text-align:center;margin-bottom:20px; color:white">
-        <header>Input Product Information</header>
+        <header>Edit Product Information</header>
     </div>
 
         <div class="tab-div1">
@@ -17,9 +17,8 @@
 
         </div>
     
-    <div class="tab-div2">
-        <div style="background-color: lightgrey" v-for="product in Products" :value="product.ProductID" :key="product.ProductID">
-
+    <div class="tab-div2"  style="width:87.35% ;transform:translatex(3%); min-height:0;">
+        <div style="border: thin solid black; height:auto" v-for="product in Products" :value="product.ProductID" :key="product.ProductID">
                 <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
                         <input type="hidden" id="prodId" v-model="product.ProductID"/>

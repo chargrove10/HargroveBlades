@@ -1,7 +1,7 @@
 <template>
 <div class="form-div">
 
-    <div style="text-align:center;margin-bottom:20px">
+    <div style="color: white; text-align:center;margin-bottom:20px">
         <header>Edit Order Status</header>
     </div>
       
@@ -17,8 +17,8 @@
 
         </div>
     
-    <div class="tab-div2" style="min-height:auto">
-        <div style="background-color: lightgrey" v-for="orLStatus in OrLStatus" :key="orLStatus.OrderLineStatusID">
+    <div class="tab-div2" style="min-height:auto;width:87.35% ;transform:translatex(3%)">
+        <div style="border: thin solid black" v-for="orLStatus in OrLStatus" :key="orLStatus.OrderLineStatusID">
 
                 <div style="width:40%; float: left; transform:translate(10%,0) ">
                     <form>

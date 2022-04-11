@@ -46,8 +46,9 @@
                         <tr id="dTable" v-for="steel in Steels" :key="steel.SteelID">
                             <td>{{steel.SteelName}}</td>
                             <td>{{steel.SteelDesc}}</td>
-                            <td>{{steel.KnifeSteelActive}}</td>
-                            <td><router-link :to="{ name: 'EditSteelType', params: {steelID: steel.SteelID, flag: steel.KnifeSteelActive}}">Edit</router-link></td>
+                            <td v-if="steel.KnifeSteelActive === true">Active</td>
+                            <td v-else>Inactive</td>
+                            <td><router-link :to="{ name: 'EditSteelType', params: {steelID: steel.SteelID, flag: steel.KnifeSteelActive}}"><button style="width:50% !important">Edit</button></router-link></td>
                             
                                 <!-- Place holder !-->
                         </tr>
@@ -57,7 +58,7 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'SteelType'}"><button>Add</button></router-link>
+                    <router-link :to="{ name: 'SteelType'}"><button style="transform: translate(60%, -10%)">Add</button></router-link>
                 </div>
             </div>
 
