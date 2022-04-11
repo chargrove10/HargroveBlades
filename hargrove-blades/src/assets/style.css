@@ -8,7 +8,6 @@ body {
     height: 10%;
     background-color: #F0ECEA;
     border:thin solid black;
-    position: sticky;
     top: 0;
 }
 
@@ -183,7 +182,8 @@ table {
 }
 th{
     background-color: #66A0CF;
-    
+    top:0;
+    position:sticky;
     color: #ffffff;
 }
 

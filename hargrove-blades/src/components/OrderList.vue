@@ -83,8 +83,8 @@
                             <td>{{orders.CustomerLastName}}</td>
                             <td>{{orders.OrderNumber}}</td>
                             <td>{{orders.OrderDate.slice(0,10)}}</td>
-                            <td>{{orders.OrderTotal}}</td>
-                            <td>{{orders.Balance}}</td>
+                            <td>{{'$'+ orders.OrderTotal.toLocaleString('en-US')}}</td>
+                            <td>{{'$'+ orders.Balance.toFixed(2)}}</td>
                             <td style="display:none">{{orders.CustomerID}}</td>
                             <td ><input type="hidden" v-model="orders.ShippingAddressID"></td>
                             <td ><input type="hidden" v-model="orders.BillingAddressID"></td>
