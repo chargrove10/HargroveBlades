@@ -33,6 +33,8 @@ import EditOrderLineStatus from '../components/EditOrderLineStatus.vue'
 import EditOrder from '../components/EditOrder.vue'
 import EditProduct from '../components/EditProduct.vue'
 import returningCustomer from '../components/ReturningCustomer.vue'
+import MonthlyTotal from '../components/MonthlyTotal.vue'
+import OrderNotify from '../components/OrderNotify.vue'
 
 const routes = [
     {
@@ -96,6 +98,16 @@ const routes = [
         path: "/productList",
         name: "ProductList",
         component: ProductList
+    },
+    {
+        path: "/orderNotify",
+        name: "orderNotify",
+        component: OrderNotify
+    },
+    {
+        path: "/monthlyTotal",
+        name: "monthlyTotal",
+        component: MonthlyTotal
     },
     {
         path: "/orderList",

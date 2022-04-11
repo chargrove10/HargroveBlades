@@ -55,7 +55,7 @@
                         <input type="text" id="bladeLength" name="bladeLength" v-model="product.BladeLength"/><br/>
                         <label for="overallLength">Overall Length </label><br/>
                         <input type="text" id="overallLength" name="overallLength" v-model="product.OverallLength"/><br/>
-                        <label for="bladeFinish">Blade Finsih </label><br/>
+                        <label for="bladeFinish">Blade Finish </label><br/>
                         <input type="text" id="bladeFinish" name="bladefinish" v-model="product.BladeFinish"/><br/>
                         <label for="embellishments">Embellishments </label><br/>
                         <input type="text" id="embellishments" name="embellishments" v-model="product.Embellishments"/><br/>

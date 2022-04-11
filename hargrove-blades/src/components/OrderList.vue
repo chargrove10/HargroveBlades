@@ -100,7 +100,7 @@
                 </form>
 
                 <div class="tab-divider"></div>
-                <button v-on:click="test()">Edit</button>
+               <!--  <button v-on:click="test()">Edit</button> -->
 
             </div>
         

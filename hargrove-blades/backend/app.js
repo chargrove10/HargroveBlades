@@ -1245,7 +1245,69 @@ app.get('/returnCustomer', async (req, res) => {
         res.status(500).json(err)
     }
 });
+/* 
+app.put('/LastNotifiedStatusEdit/', async (req,res) => {
+    try {
+        let pool = await sql.connect(config)
+        let result = await pool.request()
+        .input('OrderID', sql.Int, req.body.OrderID)
+        .query('UPDATE ProductOrder SET LastOrderStatusNotified = (SELECT OrderStatusID FROM ProductOrder WHERE OrderID = ' + req.body.OrderID  +') WHERE OrderID = '+ req.body.OrderID )
 
+        res.send(result.recordset)
+        console.log(result.recordset)
+
+    }catch(err) {
+        console.log(err)
+    }
+});
+
+
+
+app.get('/monthlyTotal', async (req, res) => {  //VanPhan
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the view orderNotify
+            .query("SELECT COUNT([OrderID]) AS 'NoOfOrder' , YEAR(OrderDate) AS 'Year', MONTH(OrderDate) AS 'Month', DATENAME(Month, '2020-'+CAST(MONTH(OrderDate) AS VARCHAR(2))+'-01') + '-' + CAST(YEAR(OrderDate) AS VARCHAR(4)) AS 'MonthYear'"+
+            ",CONVERT(DECIMAL(10,2),SUM([OrderTotal]) ) AS 'MonthlyTotal' " +
+            "FROM [HargroveBlades].[dbo].[ProductOrder] " +
+          "WHERE OrderDate >= CAST(YEAR(DATEADD(month, -5, GETDATE())) AS VARCHAR(4)) + '-' + CAST(MONTH(DATEADD(month, -5, GETDATE())) AS VARCHAR(2)) + '-01' " +
+        " GROUP BY CAST(MONTH(OrderDate) AS VARCHAR(2)) + '-' + CAST(YEAR(OrderDate) AS VARCHAR(4)), YEAR(OrderDate) , MONTH(OrderDate) " +
+        "  ORDER BY 'Year', 'Month' ASC"); 
+        const monthlyTotal = result.recordset;
+
+        res.send(monthlyTotal)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
+app.get('/orderNotify', async (req, res) => {  //VanPhan
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the view orderNotify
+            .query("SELECT [OrderID],[OrderNumber],CustomerFirstName,CustomerLastName,CustomerEmail,[OrderDate],OrderStatusName, " +
+                "(SELECT OrderStatusName FROM OrderStatus WHERE OrderStatusID = [LastOrderStatusNotified]) AS 'LastStatusNotified' " +
+                ",[OrderNote],[OrderTotal],[MethodOfPayment],[BilledAmount],[Balance],[TrackingNumber]" +
+                "  FROM [HargroveBlades].[dbo].[ProductOrder] JOIN OrderStatus" +
+                "  ON ProductOrder.OrderStatusID = OrderStatus.OrderStatusID" +
+                "  JOIN Customer ON ProductOrder.CustomerID = Customer.CustomerID" +
+                "  WHERE  ProductOrder.OrderStatusID IN (2, 6, 8) -- confirmed, shipped, cancelled" +
+                        "AND (ProductOrder.OrderStatusID <> [LastOrderStatusNotified]" +
+                        "OR [LastOrderStatusNotified] IS NULL)");
+        const orderNotify = result.recordset;
+
+        res.send(orderNotify)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+ */
 //Customer Status CRUD starts here
 app.get('/status', async (req, res) => {
     try {
