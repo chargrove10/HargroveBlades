@@ -92,7 +92,7 @@
                             
                             
                             <!--IS GOING TO GO TO EDIT ORDER-->
-                            <td><router-link :to="{ name: 'EditOrder', params: {orderID: orders.OrderID, customerID: orders.CustomerID, shippingID: orders.ShippingAddressID, billingID: orders.BillingAddressID}}">Edit</router-link></td>
+                            <td><router-link :to="{ name: 'EditOrder', params: {orderID: orders.OrderID, customerID: orders.CustomerID, shippingID: orders.ShippingAddressID, billingID: orders.BillingAddressID}}"><button style="width:70%">Edit</button></router-link></td>
                             
                             <!-- Place holder !-->
                         </tr>
@@ -100,7 +100,7 @@
                 </form>
 
                 <div class="tab-divider"></div>
-                <button v-on:click="test()">Edit</button>
+                
 
             </div>
         
@@ -131,9 +131,6 @@ export default {
         },
 
         methods: {
-            test() {
-                console.log(this.orders.CustomerID)
-            },
 
             product() {
                 this.$router.push('/productList')

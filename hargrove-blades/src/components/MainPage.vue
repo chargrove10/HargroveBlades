@@ -89,7 +89,7 @@
                                 <td>{{customer.CustomerNote}}</td>
                                 
                                 
-                                <td><router-link :to="{ name: 'EditCustomer', params: {customerID: customer.CustomerID}}">Edit</router-link></td>
+                                <td><router-link :to="{ name: 'EditCustomer', params: {customerID: customer.CustomerID}}"><button style="width:160% !important">Edit</button></router-link></td>
                                 <td><router-link :to="{ name: 'CreateOrder', params: {customerID: customer.CustomerID}}"><button>Create Order</button></router-link></td>
                                 
                                 
