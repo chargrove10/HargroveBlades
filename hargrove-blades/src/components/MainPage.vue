@@ -69,6 +69,7 @@
                     <form>
                         <table>
                             <tr>
+                                <th style="width:3%"> </th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Phone Number</th>
@@ -80,6 +81,7 @@
                             </tr>
                            
                             <tr id = "cTable" v-for="customer in Customers" :key="customer.CustomerID">
+                                <td> </td>
                                 <td>{{customer.CustomerFirstName}}</td>
                                 <td>{{customer.CustomerLastName}}</td>
                                 <td>{{customer.CustomerPhone}}</td>
@@ -100,7 +102,7 @@
 
                 <div>
                        <!-- Fixes the button in a position on the screen so when you scroll you will always see it -->
-                    <router-link :to="{ name: 'CustomerDetail' }"><button style="position: fixed; bottom: 0%; left: 7.8%">Add</button></router-link>
+                    <router-link :to="{ name: 'CustomerDetail' }"><button style="position: fixed; bottom: 0%; left: 11.78%">Add</button></router-link>
                     <div class="divider"></div>
                 </div>
                 
