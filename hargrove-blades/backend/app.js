@@ -1235,9 +1235,9 @@ app.get('/returnCustomer', async (req, res) => {
         let pool = await sql.connect(config)
         //making result awaiting the request to the connection
         let result = await pool.request()
-            .query("SELECT CustomerID, CustomerFirstName, CustomerLastName, CustomerPhone, COUNT(OrderID) AS NumberOfOrders, MAX(OrderDate) AS 'LastOrderDate' " +
+            .query("SELECT Customer.CustomerID, CustomerFirstName, CustomerLastName, CustomerPhone, COUNT(OrderID) AS NumberOfOrders, MAX(OrderDate) AS 'LastOrderDate' " +
             " FROM Customer JOIN ProductOrder ON customer.customerID = Productorder.customerID " +
-            "GROUP BY CustomerFirstName, CustomerLastName, CustomerPhone HAVING COUNT(OrderID) >=2");
+            "GROUP BY Customer.CustomerID, CustomerFirstName, CustomerLastName, CustomerPhone HAVING COUNT(OrderID) >=2");
         const returnCust = result.recordset;
 
         res.send(returnCust)
@@ -1245,6 +1245,8 @@ app.get('/returnCustomer', async (req, res) => {
         res.status(500).json(err)
     }
 });
+
+
 /* 
 app.put('/LastNotifiedStatusEdit/', async (req,res) => {
     try {
