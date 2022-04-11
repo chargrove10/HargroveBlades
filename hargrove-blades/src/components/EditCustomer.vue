@@ -18,8 +18,8 @@
     </div>
       
 
-    <div id="tab-div2" class="tab-div2" style="min-height:0">
-        <div style="background-color: lightgrey" v-for="customers in Customer" :key="customers.CustomerID">
+    <div id="tab-div2" class="tab-div2" style="min-height:0;width:87.35% ;transform:translatex(3%)">
+        <div style="border:thin solid black" v-for="customers in Customer" :key="customers.CustomerID">
 
                 <div style="width:40%; float: left; transform:translate(10%,0)">
                     <form>
@@ -57,9 +57,9 @@
         </div>
     </div>
 
-    <div id="address-div" style="background-color:white;"  class="tab-div2">
+    <div id="address-div" style="background-color:white"  class="tab-div2">
         <form>
-                    <table style="transform:translate(1%,0); width:97%; font-style:oblique; font-family:'Global Sans Serif';">
+                    <table style="transform:translate(.9%,0); width:97.11%; font-style:oblique; font-family:'Global Sans Serif';">
                         
                         <tr>
                             <th>Default Address</th>
