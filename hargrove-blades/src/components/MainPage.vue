@@ -69,27 +69,29 @@
                     <form>
                         <table>
                             <tr>
-                                <th style="width:3%"> </th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Phone Number</th>
-                                <th>Email Address</th>
-                                <th>Notes</th>
+                                
+                                <th style="text-align:right">First Name</th>
+                                <th style="text-align:right">Last Name</th>
+                                <th style="text-align:right">Phone Number</th>
+                                <th style="text-align:right">Email Address</th>
+                                <th style="width:4% !important"> </th>
+                                <th style="text-align:right">Notes</th>
                                 <th></th>
                                 <th></th>
                                 
                             </tr>
                            
                             <tr id = "cTable" v-for="customer in Customers" :key="customer.CustomerID">
-                                <td> </td>
-                                <td>{{customer.CustomerFirstName}}</td>
-                                <td>{{customer.CustomerLastName}}</td>
-                                <td>{{customer.CustomerPhone}}</td>
-                                <td>{{customer.CustomerEmail}}</td>
-                                <td>{{customer.CustomerNote}}</td>
+                                
+                                <td style="text-align:right">{{customer.CustomerFirstName}}</td>
+                                <td style="text-align:right">{{customer.CustomerLastName}}</td>
+                                <td style="text-align:right">{{customer.CustomerPhone}}</td>
+                                <td style="text-align:right">{{customer.CustomerEmail}}</td>
+                                <td style="width:4% !important"> </td>
+                                <td style="text-align:right">{{customer.CustomerNote}}</td>
                                 
                                 
-                                <td><router-link :to="{ name: 'EditCustomer', params: {customerID: customer.CustomerID}}"><button style="width:160% !important">Edit</button></router-link></td>
+                                <td><router-link :to="{ name: 'EditCustomer', params: {customerID: customer.CustomerID}}"><button style="width:40% !important;transform:translatex(130%)">Edit</button></router-link></td>
                                 <td><router-link :to="{ name: 'CreateOrder', params: {customerID: customer.CustomerID}}"><button>Create Order</button></router-link></td>
                                 
                                 

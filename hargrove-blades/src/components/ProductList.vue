@@ -76,31 +76,35 @@
                         <table style="width:95%">
                             <tr>
                                 <th style="width:1%"> </th>
-                                <th>Serial Number</th>
-                                <th>Product Status</th>
-                                <th>Knife Style</th>
-                                <th>Steel Type</th>
-                                <th>Handle Material</th>
-                                <th>Blade Length</th>
-                                <th>Overall Length</th>
-                                <th>Embellishments</th>
+                                <th style="text-align:right">Serial Number</th>
+                                <th style="text-align:right">Product Status</th>
+                                <th style="width:2%"> </th>
+                                <th style="text-align:right">Knife Style</th>
+                                <th style="text-align:right">Steel Type</th>
+                                <th style="text-align:right">Handle Material</th>
+                                <th style="width:4%"> </th>
+                                <th style="text-align:left">Blade Length (in)</th>
+                                <th style="text-align:left">Overall Length (in)</th>
+                                <th style="text-align:right">Embellishments</th>
                                 <th> </th>
 
                             </tr>
                             <tr id="pTable" v-for="products in Products" :key="products.ProductID">
                                 <td> </td>
-                                <td>{{products.SerialNo}}</td>
-                                <td>{{products.ProductStatusName}}</td>
-                                <td>{{products.StyleName}}</td>
-                                <td>{{products.SteelName}}</td>
-                                <td>{{products.HandleMaterial}}</td>
-                                <td>{{products.BladeLength}}</td>
-                                <td>{{products.OverallLength}}</td>
-                                <td>{{products.Embellishments}}</td>
+                                <td style="text-align:right">{{products.SerialNo}}</td>
+                                <td style="text-align:right">{{products.ProductStatusName}}</td>
+                                <td style="width:2%"> </td>
+                                <td style="text-align:right">{{products.StyleName}}</td>
+                                <td style="text-align:right">{{products.SteelName}}</td>
+                                <td style="text-align:right">{{products.HandleMaterial}}</td>
+                                <td style="width:4%"> </td>
+                                <td style="text-align:left">{{products.BladeLength}}</td>
+                                <td style="text-align:left">{{products.OverallLength}}</td>
+                                <td style="text-align:right">{{products.Embellishments}}</td>
                                 <td hidden>{{products.StyleID}}</td>
                                 <td hidden>{{products.ProductID}}</td>
                                 <td hidden>{{products.SteelID}}</td>
-                                <td><router-link :to="{ name: 'EditProduct', params: {productID: products.ProductID, productStatusId: products.ProductStatusID, styleId: products.StyleID, steelId: products.SteelID}}"><button style="width:100%">Edit</button></router-link></td>
+                                <td><router-link :to="{ name: 'EditProduct', params: {productID: products.ProductID, productStatusId: products.ProductStatusID, styleId: products.StyleID, steelId: products.SteelID}}"><button style="width:50%">Edit</button></router-link></td>
                                 <!-- Place holder !-->
                             </tr>
                         </table>

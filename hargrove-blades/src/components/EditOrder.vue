@@ -90,7 +90,9 @@
                 <div class="tab-divider"></div>
                 <div class="tab-divider"></div>
                 <div class="tab-divider"></div>
-                <button style="transform:translate(105%,0)" v-on:click="handleSave()">Save</button>
+                <button style="transform:translate(90%,0)" v-on:click="cancel()">Cancel</button>
+                <button style="transform:translate(330%,0)" v-on:click="handleSave()">Save</button>
+                
 
         </div>
 
@@ -128,7 +130,7 @@
                     </table>
                     </form>
                     <div class="tab-divider"/>
-                    <button type="button" style="transform:translate(25%,0)" v-on:click="openModal()"> Add Product To Order </button>
+                    <button type="button" style="transform:translate(37%,0)" v-on:click="openModal()"> Add Product To Order </button>
 
         </div>
 
@@ -598,6 +600,10 @@
                  console.log("Balance: " + this.productOrder.Balance)
                  console.log("Total: " + this.productOrder.OrderTotal)
                 
+            },
+
+            cancel() {
+                this.$router.push('/orderList')
             }
             
         }

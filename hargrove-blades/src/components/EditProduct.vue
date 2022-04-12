@@ -63,7 +63,8 @@
                     </form>
                 </div>
 
-                <button style="transform:translate(90%,0)" v-on:click="editProduct()">Save</button>
+                <button style="transform:translate(90%,0)" v-on:click="cancel()">Cancel</button>
+                <button style="transform:translate(200%,0)" v-on:click="editProduct()">Save</button>
 
         </div>
     </div>
@@ -93,7 +94,8 @@ import axios from 'axios'
                     ProductNote: '',
                     StyleName: '',
                     SteelName: '',
-                    ProductStatusName: ''                 
+                    ProductStatusName: '',
+                    ProductNotes: ''                 
                 },
                 ProductDropDown: [],
                 productDropDown: {
@@ -156,6 +158,10 @@ import axios from 'axios'
         methods: {
             home() {
                 this.$router.push('/customerList')
+            },
+
+            cancel() {
+                this.$router.push('/productList')
             },
 
             editProduct(){

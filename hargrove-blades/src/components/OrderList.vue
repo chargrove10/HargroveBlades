@@ -68,23 +68,27 @@
                 <form>
                     <table style="width:95%">
                         <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Order Number</th>
-                            <th>Order Date</th>
-                            <th>Order Total</th>
-                            <th>Balance</th>
+                            <th style="text-align:right">First Name</th>
+                            <th style="text-align:right">Last Name</th>
+                            <th style="width:4% !important"> </th>
+                            <th style="text-align:left">Order Number</th>
+                            <th style="text-align:right">Order Date</th>
+                            <th style="width:4% !important"> </th>
+                            <th style="text-align:left">Order Total</th>
+                            <th style="text-align:left">Balance</th>
                             <th></th>
                             <th></th>
                             <th></th>
                         </tr>
                         <tr id="oTable" v-for="orders in Orders" :key="orders.OrderID">
-                            <td>{{orders.CustomerFirstName}}</td>
-                            <td>{{orders.CustomerLastName}}</td>
-                            <td>{{orders.OrderNumber}}</td>
-                            <td>{{orders.OrderDate.slice(0,10)}}</td>
-                            <td>{{'$'+ orders.OrderTotal.toLocaleString('en-US')}}</td>
-                            <td>{{'$'+ orders.Balance.toLocaleString('en-US')}}</td>
+                            <td style="text-align:right">{{orders.CustomerFirstName}}</td>
+                            <td style="text-align:right">{{orders.CustomerLastName}}</td>
+                            <td style="width:4% !important"> </td>
+                            <td style="text-align:left">{{orders.OrderNumber}}</td>
+                            <td style="text-align:right">{{orders.OrderDate.slice(0,10)}}</td>
+                            <td style="width:4% !important"> </td>
+                            <td style="text-align:left">{{'$'+ orders.OrderTotal.toLocaleString('en-US')}}</td>
+                            <td style="text-align:left;">{{'$'+ orders.Balance.toLocaleString('en-US')}}</td>
                             <td style="display:none">{{orders.CustomerID}}</td>
                             <td ><input type="hidden" v-model="orders.ShippingAddressID"></td>
                             <td ><input type="hidden" v-model="orders.BillingAddressID"></td>

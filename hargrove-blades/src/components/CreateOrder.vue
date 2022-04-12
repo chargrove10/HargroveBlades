@@ -54,7 +54,7 @@
                           </select><br/>
                           <label> Order Notes </label><br/>
                           <textarea id="Note" placeholder="Ntes" v-model="productOrder.OrderNote" rows="4" cols="24"></textarea><br />
-                          <label> Order Total </label><br/>
+                          <label> Order Total ($) </label><br/>
                           <div style="display:block" v-for="price in Price" :key="price.Price">
                           <input type="text" id="total" readonly :value="price.Price"><br/>
                           </div>
@@ -64,9 +64,9 @@
 
                 <div style="width:40%; margin-left: 60%">
                     <form>
-                        <label> Balance </label><br/>
+                        <label> Balance ($) </label><br/>
                         <input type="text" id="balance" :value="productOrder.Balance"><br/>
-                        <label> Deposit </label><br/>
+                        <label> Deposit ($) </label><br/>
                         <input type="text" id="billed" @change="priceChange($event)" :value="productOrder.BilledAmount"><br/>
                         <label> Method Of Payment </label><br/>
                         <!-- <input type="text" id="method" v-model="productOrder.MethodOfPayment"><br/> -->
@@ -267,30 +267,30 @@
                 this.productOrder.ProductID = document.getElementById("product").value
 
                 console.log(this.productOrder)
-                let url = 'http://localhost:3000/createOrder/';
+                // let url = 'http://localhost:3000/createOrder/';
 
-                 axios.post(url, this.productOrder).then(() => {
-                     this.$router.push('/orderList')
-                      this.productOrder = {
-                          //assigning all values as empty
-                            CustomerID: '',
-                            OrderStatusID: '',
-                            OrderDate: '',
-                            BillingAddressID: '',
-                            ShippingAddressID: '',
-                            OrderNote: '',
-                            OrderTotal: '',
-                            MethodOfPayment: '',
-                            BilledAmount: '',
-                            Balance: '',
-                            TrackingNumber: '',
-                            CustomerPickup: '',
-                            PickUpDateTime: '',
-                            ProductID: ''
-                      }
-                 }).catch(err => {
-                     console.log(err)
-                 });
+                //  axios.post(url, this.productOrder).then(() => {
+                //      this.$router.push('/orderList')
+                //       this.productOrder = {
+                //           //assigning all values as empty
+                //             CustomerID: '',
+                //             OrderStatusID: '',
+                //             OrderDate: '',
+                //             BillingAddressID: '',
+                //             ShippingAddressID: '',
+                //             OrderNote: '',
+                //             OrderTotal: '',
+                //             MethodOfPayment: '',
+                //             BilledAmount: '',
+                //             Balance: '',
+                //             TrackingNumber: '',
+                //             CustomerPickup: '',
+                //             PickUpDateTime: '',
+                //             ProductID: ''
+                //       }
+                //  }).catch(err => {
+                //      console.log(err)
+                //  });
 
                 console.log(this.productOrder)
             },

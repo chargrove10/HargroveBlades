@@ -52,7 +52,7 @@
                 </div>
 
                 <router-link :to="{ name: 'AddAddress', params: {customerID: customers.CustomerID}}"><button style="transform:translate(60%,0)">Add Address</button></router-link>
-                <button style="transform:translate(150%,0)" v-on:click="handleEdit()" >Save</button>
+                <button style="transform:translate(260%,0)" v-on:click="handleEdit()" >Save</button>
 
         </div>
     </div>
