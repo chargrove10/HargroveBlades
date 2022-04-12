@@ -100,35 +100,46 @@
 
                     <form>
                     <table style="transform:translate(-2%,0); width:99.99%">
-                        <tr>
-                            <th style="text-align:right">Line Number</th>
-                            <th style="text-align:left">Serial Number</th>
-                            <th style="text-align:right">Blade Length</th>
-                            <th style="text-align:left">Blade Finish</th>
-                            <th style="text-align:left">Handle Material</th>
-                            <th style="text-align:left">Knife Style</th>
-                            <th style="text-align:left">Type of Steel</th>
-                            <th style="text-align:right">Overall Length</th>
-                            <th style="text-align:right">Price</th>
+                        <tr style="background-color:#66A0CF">
+                            <th style="width:2%"> </th>
+                            <th style="text-align:left">Line Number</th>
+                            <th style="width:3%"></th>
+                            <th style="text-align:right">Serial Number</th>
+                            <th style="width:3%"> </th>
+                            <th style="text-align:left">Blade Length</th>
+                            
+                            <th style="text-align:right">Blade Finish</th>
+                            <th style="text-align:right">Handle Material</th>
+                            <th style="text-align:right">Knife Style</th>
+                            <th style="text-align:right">Type of Steel</th>
+                            <th style="width:3%"> </th>
+                            <th style="text-align:left">Overall Length</th>
+                            <th style="text-align:left">Price ($)</th>
                             <th></th>
                             
                         </tr>
                         <tr id="oTable" v-for="lineItem in LineItem" :key="lineItem.OrderID">
-                            <td style="text-align:right">{{lineItem.LineNumber}}</td>
-                            <td style="text-align:left">{{lineItem.SerialNo}}</td>
-                            <td style="text-align:right">{{lineItem.BladeLength}}</td>
-                            <td style="text-align:left">{{lineItem.BladeFinish}}</td>
-                            <td style="text-align:left">{{lineItem.HandleMaterial}}</td>
-                            <td style="text-align:left">{{lineItem.StyleName}}</td>
-                            <td style="text-align:left">{{lineItem.SteelName}}</td>
-                            <td style="text-align:right">{{lineItem.OverallLength}}</td>
-                            <td style="text-align:right">{{lineItem.Price}}</td>
+                            <td> </td>
+                            <td style="text-align:left">{{lineItem.LineNumber}}</td>
+                            <td></td>
+                            <td style="text-align:right">{{lineItem.SerialNo}}</td>
+                            <td> </td>
+                            <td style="text-align:left">{{lineItem.BladeLength}}</td>
+                            
+                            <td style="text-align:right">{{lineItem.BladeFinish}}</td>
+                            <td style="text-align:right">{{lineItem.HandleMaterial}}</td>
+                            <td style="text-align:right">{{lineItem.StyleName}}</td>
+                            <td style="text-align:right">{{lineItem.SteelName}}</td>
+                            <td> </td>
+                            <td style="text-align:left">{{lineItem.OverallLength}}</td>
+                            <td style="text-align:left">{{lineItem.Price}}</td>
                             
                             <td><button type="button" v-on:click="editLineItem(lineItem.OrderID, lineItem.LineNumber)">Edit</button></td>
 
                         </tr>
                     </table>
                     </form>
+                    <div class="tab-divider"/>
                     <div class="tab-divider"/>
                     <button type="button" style="transform:translate(37%,0)" v-on:click="openModal()"> Add Product To Order </button>
 
