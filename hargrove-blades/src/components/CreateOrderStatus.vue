@@ -38,7 +38,8 @@
 
             <div>
                 <div class="tab-divider"/>
-                <button style="transform:translate(90%,0)" v-on:click="addOrderStatus()">Save</button>  
+                <button style="transform:translate(100%,0)" v-on:click="cancel()">Cancel</button>
+                <button style="transform:translate(330%,0)" v-on:click="addOrderStatus()">Save</button>  
             </div> 
 
         </div>
@@ -85,6 +86,9 @@ import axios from 'axios'
                     console.log(err)
                 });
 
+            },
+            cancel() {
+                this.$router.push('/orderStatus')
             }
         },
 

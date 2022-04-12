@@ -70,14 +70,14 @@
                         <tr>
                             <th style="text-align:right">First Name</th>
                             <th style="text-align:right">Last Name</th>
-                            <th style="width:4% !important"> </th>
+                            <th style="width:6% !important"> </th>
                             <th style="text-align:left">Order Number</th>
                             <th style="text-align:right">Order Date</th>
                             <th style="width:4% !important"> </th>
                             <th style="text-align:left">Order Total</th>
                             <th style="text-align:left">Balance</th>
-                            <th></th>
-                            <th></th>
+                            <th style="width:.1% !important"></th>
+                            <th style="width:.1% !important"></th>
                             <th></th>
                         </tr>
                         <tr id="oTable" v-for="orders in Orders" :key="orders.OrderID">
@@ -90,7 +90,7 @@
                             <td style="text-align:left">{{'$'+ orders.OrderTotal.toLocaleString('en-US')}}</td>
                             <td style="text-align:left;">{{'$'+ orders.Balance.toLocaleString('en-US')}}</td>
                             <td style="display:none">{{orders.CustomerID}}</td>
-                            <td ><input type="hidden" v-model="orders.ShippingAddressID"></td>
+                            <td style="width:.01% !important"><input type="hidden" v-model="orders.ShippingAddressID"></td>
                             <td ><input type="hidden" v-model="orders.BillingAddressID"></td>
                             
                             

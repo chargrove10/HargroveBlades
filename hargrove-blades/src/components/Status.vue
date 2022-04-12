@@ -46,18 +46,18 @@
                     <form>
                         <table>
                             <tr>
-                                <th>Customer Status Name</th>
-                                <th>Description</th>
-                                <th>Active</th>
+                                <th style="text-align:right; width:15%">Customer Status Name</th>
+                                <th style="text-align:right; width:35%">Description</th>
+                                <th style="text-align:right; width:15%">Active</th>
                                 <th></th>
                             </tr>
                            
                             <tr id = "cTable" v-for="customerStatus in CustomerStatus" :key="customerStatus.CustomerStatusID">
-                                <td>{{customerStatus.CustomerStatusName}}</td>
-                                <td>{{customerStatus.CustomerStatusDesc}}</td>
-                                <td v-if="customerStatus.CustomerStatusActive === true">On</td>
-                                <td v-else>Off</td>
-                                <td><router-link :to="{ name: 'EditCustomerStatus', params: {customerStatID: customerStatus.CustomerStatusID}}"><button style="width:50% !important">Edit</button></router-link></td>
+                                <td style="text-align:right; width:15%">{{customerStatus.CustomerStatusName}}</td>
+                                <td style="text-align:right; width:35%">{{customerStatus.CustomerStatusDesc}}</td>
+                                <td style="text-align:right; width:15%" v-if="customerStatus.CustomerStatusActive === true">On</td>
+                                <td style="text-align:right; width:15%" v-else>Off</td>
+                                <td><router-link :to="{ name: 'EditCustomerStatus', params: {customerStatID: customerStatus.CustomerStatusID}}"><button style="width:15% !important">Edit</button></router-link></td>
                             </tr>
                             
                         </table>

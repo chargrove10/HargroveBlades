@@ -46,19 +46,19 @@
                     <form>
                         <table>
                             <tr>
-                                <th>Order Status Name</th>
-                                <th>Description</th>
-                                <th>Active</th>
+                                <th style="text-align:right; width:15%">Order Status Name</th>
+                                <th style="text-align:right; width:35%"> Description</th>
+                                <th  style="text-align:right; width:15%">Active</th>
                                 <th></th>
                                 
                             </tr>
                            
                             <tr id = "cTable" v-for="orderStatus in OrderStatus" :key="orderStatus.OrderStatusID">
-                                <td>{{orderStatus.OrderStatusName}}</td>
-                                <td>{{orderStatus.OrderStatusDesc}}</td>
-                                <td v-if="orderStatus.OrderStatusActive === true">On</td>
-                                <td v-else>Off</td>
-                                <td><router-link :to="{ name: 'EditOrderStatus', params: {orderStatID: orderStatus.OrderStatusID}}"><button style="width:65% !important">Edit</button></router-link></td>
+                                <td style="text-align:right; width:15%">{{orderStatus.OrderStatusName}}</td>
+                                <td style="text-align:right; width:35%">{{orderStatus.OrderStatusDesc}}</td>
+                                <td style="text-align:right; width:15%" v-if="orderStatus.OrderStatusActive === true">On</td>
+                                <td style="text-align:right; width:15%" v-else>Off</td>
+                                <td ><router-link :to="{ name: 'EditOrderStatus', params: {orderStatID: orderStatus.OrderStatusID}}"><button style="width:15% !important">Edit</button></router-link></td>
                             </tr>
                             
                         </table>

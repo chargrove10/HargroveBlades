@@ -61,7 +61,7 @@
                             <td>{{order.CustomerEmail}}</td>
                             <td>{{order.OrderDate.slice(0,10)}}</td>
                             <td>{{order.OrderStatusName}}</td>
-                            <td>${{order.OrderTotal}}</td>
+                            <td>${{order.OrderTotal.toLocaleString('en-US')}}</td>
                             <td>{{order.PickUpDateTime.slice(0,10)}}</td>
                             <td>{{order.OrderNote}}</td>
                         </tr>

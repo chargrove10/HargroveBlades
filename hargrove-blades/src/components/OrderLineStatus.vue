@@ -46,19 +46,19 @@
                     <form>
                         <table>
                             <tr>
-                                <th>Order Line Status Name</th>
-                                <th>Description</th>
-                                <th>Active</th>
+                                <th style="text-align:right; width:15%">Order Line Status Name</th>
+                                <th style="text-align:right; width:35%">Description</th>
+                                <th style="text-align:right; width:15%">Active</th>
                                 <th></th>
                                 
                             </tr>
                            
                             <tr id = "cTable" v-for="orderLineStatus in OrderLineStatus" :key="orderLineStatus.OrderLineStatusID">
-                                <td>{{orderLineStatus.OrderLineStatusName}}</td>
-                                <td>{{orderLineStatus.OrderLineStatusDesc}}</td>
-                                <td v-if="orderLineStatus.OrderLineStatusActive === true">On</td>
-                                <td v-else>Off</td>
-                                <td><router-link :to="{ name: 'EditOrderLineStatus', params: {orderLineStatID: orderLineStatus.OrderLineStatusID}}"><button style="width:50% !important">Edit</button></router-link></td>
+                                <td style="text-align:right; width:15%">{{orderLineStatus.OrderLineStatusName}}</td>
+                                <td style="text-align:right; width:35%">{{orderLineStatus.OrderLineStatusDesc}}</td>
+                                <td style="text-align:right; width:15%" v-if="orderLineStatus.OrderLineStatusActive === true">On</td>
+                                <td style="text-align:right; width:15%" v-else>Off</td>
+                                <td><router-link :to="{ name: 'EditOrderLineStatus', params: {orderLineStatID: orderLineStatus.OrderLineStatusID}}"><button style="width:15% !important">Edit</button></router-link></td>
                                 
                             </tr>
                             
