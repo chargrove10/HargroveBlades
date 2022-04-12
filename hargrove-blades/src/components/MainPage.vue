@@ -46,9 +46,12 @@
             <div id="Customer" class="tabcontent" style="display:block">
                 <div style="text-align:center"><header>Customer Information</header></div>
                 
-                <div class="tab-divider"></div>
+                <div class="tab-divider">
+                
+
+                </div>
                 <div>
-                    <div class="cform1">
+                    <div class="cform1" style="margin-left: 30px">
                         <label>Customer Last Name</label>
                         <input type="search" id="nameValue" v-model="nameValue" placeholder="Name" class="search-field" />
                     </div>
@@ -56,9 +59,14 @@
                         <label>Phone Number</label>
                         <input type="search" id="phoneValue" v-model="phoneValue" placeholder="Phone Number" class="search-field" />
                         <button v-on:click="applyFilter()" type="submit" style="margin-left:2%">Apply Filter</button>
-                    
                     </div>
         
+                    <div class="tab-divider">
+
+                    </div>
+                    <div class="tab-divider">
+                         <router-link :to="{ name: 'CustomerDetail' }"><button style="margin-left: 30px">Add Customer</button></router-link>
+                    </div>
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
@@ -74,7 +82,7 @@
                                 <th style="text-align:left">First Name</th>
                                 <th style="text-align:left">Last Name</th>
                                 <th style="text-align:left">Phone Number</th>
-                                <th style="text-align:left">Email Address</th>
+                                <th style="text-align:left;  width: auto !important" >Email Address       </th>
                                 <th style="width:4% !important"> </th>
                                 <th style="text-align:left">Notes</th>
                                 <th></th>
@@ -91,8 +99,7 @@
                                 <td style="text-align:left">{{customer.CustomerEmail}}</td>
                                 <td style="width:4% !important"> </td>
                                 <td style="text-align:left">{{customer.CustomerNote}}</td>
-                                
-                                <td><router-link :to="{ name: 'CustomerHist', params: {customerID: customer.CustomerID}}"><button style="transform:translatex(200%)">View History</button></router-link></td>
+                                <td><router-link :to="{ name: 'CustomerHist', params: {customerID: customer.CustomerID}}"><button style="transform:translatex(260%)">View History</button></router-link></td>
                                 <td><router-link :to="{ name: 'EditCustomer', params: {customerID: customer.CustomerID}}"><button style="width:40% !important;transform:translatex(130%)">Edit</button></router-link></td>
                                 <td><router-link :to="{ name: 'CreateOrder', params: {customerID: customer.CustomerID}}"><button>Create Order</button></router-link></td>
                                 
@@ -102,12 +109,15 @@
                         </table>
                     </form>
                 </div>
-                <div class="tab-divider"></div>
+                <div class="tab-divider">
+
+                </div>
 
                 <div>
                        <!-- Fixes the button in a position on the screen so when you scroll you will always see it -->
-                    <router-link :to="{ name: 'CustomerDetail' }"><button style="position: fixed; bottom: 0%; left: 11.78%">Add</button></router-link>
-                    <div class="divider"></div>
+                    <!-- <router-link :to="{ name: 'CustomerDetail' }"><button style="position: fixed; bottom: 0%; left: 11.78%">Add</button></router-link> -->
+                    <div class="divider">
+                    </div>
                 </div>
                 
 
