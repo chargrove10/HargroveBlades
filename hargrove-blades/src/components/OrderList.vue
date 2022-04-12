@@ -33,6 +33,7 @@
                 <router-link to="/" custom v-slot="{navigate, href}">
                 <a :href="href" @click="navigate">Reports</a>
                 </router-link>
+                <div class="tab-divider" />
                 <router-link to="/status" custom v-slot="{navigate, href}">
                 <a :href="href" @click="navigate">Status</a>
                 </router-link>
