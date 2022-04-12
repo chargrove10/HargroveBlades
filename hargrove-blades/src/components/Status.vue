@@ -46,17 +46,19 @@
                     <form>
                         <table>
                             <tr>
-                                <th style="text-align:right; width:15%">Customer Status Name</th>
-                                <th style="text-align:right; width:35%">Description</th>
-                                <th style="text-align:right; width:15%">Active</th>
+                                <th style="width:3%"></th>
+                                <th style="text-align:left; width:15%">Customer Status Name</th>
+                                <th style="text-align:left; width:35%">Description</th>
+                                <th style="text-align:left; width:15%">Active</th>
                                 <th></th>
                             </tr>
                            
                             <tr id = "cTable" v-for="customerStatus in CustomerStatus" :key="customerStatus.CustomerStatusID">
-                                <td style="text-align:right; width:15%">{{customerStatus.CustomerStatusName}}</td>
-                                <td style="text-align:right; width:35%">{{customerStatus.CustomerStatusDesc}}</td>
-                                <td style="text-align:right; width:15%" v-if="customerStatus.CustomerStatusActive === true">On</td>
-                                <td style="text-align:right; width:15%" v-else>Off</td>
+                                <td></td>
+                                <td style="text-align:left; width:15%">{{customerStatus.CustomerStatusName}}</td>
+                                <td style="text-align:left; width:35%">{{customerStatus.CustomerStatusDesc}}</td>
+                                <td style="text-align:left; width:15%" v-if="customerStatus.CustomerStatusActive === true">On</td>
+                                <td style="text-align:left; width:15%" v-else>Off</td>
                                 <td><router-link :to="{ name: 'EditCustomerStatus', params: {customerStatID: customerStatus.CustomerStatusID}}"><button style="width:15% !important">Edit</button></router-link></td>
                             </tr>
                             

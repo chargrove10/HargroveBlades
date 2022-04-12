@@ -77,31 +77,33 @@
                         <table style="width:95%">
                             <tr>
                                 <th style="width:1%"> </th>
-                                <th style="text-align:right">Serial Number</th>
-                                <th style="text-align:right">Product Status</th>
+                                <th style="text-align:left">Serial Number</th>
+                                <th style="text-align:left">Product Status</th>
                                 <th style="width:2%"> </th>
-                                <th style="text-align:right">Knife Style</th>
-                                <th style="text-align:right">Steel Type</th>
-                                <th style="text-align:right">Handle Material</th>
+                                <th style="text-align:left">Knife Style</th>
+                                <th style="text-align:left">Steel Type</th>
+                                <th style="text-align:left">Handle Material</th>
                                 <th style="width:4%"> </th>
-                                <th style="text-align:left">Blade Length (in)</th>
-                                <th style="text-align:left">Overall Length (in)</th>
-                                <th style="text-align:right">Embellishments</th>
-                                <th> </th>
+                                <th style="text-align:right">Blade Length (in)</th>
+                                <th style="text-align:right">Overall Length (in)</th>
+                                <th style="width:4%"></th>
+                                <th style="text-align:left">Embellishments</th>
+                                <th></th>
 
                             </tr>
                             <tr id="pTable" v-for="products in Products" :key="products.ProductID">
                                 <td> </td>
-                                <td style="text-align:right">{{products.SerialNo}}</td>
-                                <td style="text-align:right">{{products.ProductStatusName}}</td>
+                                <td style="text-align:left">{{products.SerialNo}}</td>
+                                <td style="text-align:left">{{products.ProductStatusName}}</td>
                                 <td style="width:2%"> </td>
-                                <td style="text-align:right">{{products.StyleName}}</td>
-                                <td style="text-align:right">{{products.SteelName}}</td>
-                                <td style="text-align:right">{{products.HandleMaterial}}</td>
+                                <td style="text-align:left">{{products.StyleName}}</td>
+                                <td style="text-align:left">{{products.SteelName}}</td>
+                                <td style="text-align:left">{{products.HandleMaterial}}</td>
                                 <td style="width:4%"> </td>
-                                <td style="text-align:left">{{products.BladeLength}}</td>
-                                <td style="text-align:left">{{products.OverallLength}}</td>
-                                <td style="text-align:right">{{products.Embellishments}}</td>
+                                <td style="text-align:right">{{products.BladeLength.toFixed(2)}}</td>
+                                <td style="text-align:right">{{products.OverallLength.toFixed(2)}}</td>
+                                <td></td>
+                                <td style="text-align:left">{{products.Embellishments}}</td>
                                 <td hidden>{{products.StyleID}}</td>
                                 <td hidden>{{products.ProductID}}</td>
                                 <td hidden>{{products.SteelID}}</td>

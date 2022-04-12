@@ -51,36 +51,40 @@
                 <form>
                     <table style="width:95%; margin-left:3%">
                         <tr>
-                            <th style="text-align:right">Knife Style</th>
-                            <th style="text-align:right">Blade Finish</th>
-                            <th style="text-align:right">Handle Material</th>
                             <th style="width:3%"> </th>
-                            <th style="text-align:left">Overall Length</th>
-                            <th style="text-align:left">Blade Length</th>
-                            <th style="text-align:right">Embellishments</th>
+                            <th style="text-align:left">Knife Style</th>
+                            <th style="text-align:left">Blade Finish</th>
+                            <th style="text-align:left">Handle Material</th>
+                            <th style="width:3%"> </th>
+                            <th style="text-align:right">Overall Length</th>
+                            <th style="text-align:right">Blade Length</th>
+                            <th style="width:3%"> </th>
+                            <th style="text-align:left">Embellishments</th>
                             <th style="width:1%"> </th>
-                            <th style="text-align:right">Customer FirstName</th>
+                            <th style="text-align:left">Customer FirstName</th>
                             <th style="width:1%"> </th>
-                            <th style="text-align:right">Customer Last Name</th>
+                            <th style="text-align:left">Customer Last Name</th>
                             <th style="width:1%"> </th>
-                            <th style="text-align:right">Customer Email</th>
+                            <th style="text-align:left">Customer Email</th>
                             <th>Customer Status Name</th>
                         </tr>
                         
                         <tr id="pTable" v-for="news in News" :key="news.ProductID">
-                            <td style="text-align:right">{{news.StyleName}}</td>
-                            <td style="text-align:right">{{news.BladeFinish}}</td>
-                            <td style="text-align:right">{{news.HandleMaterial}}</td>
+                            <td></td>
+                            <td style="text-align:left">{{news.StyleName}}</td>
+                            <td style="text-align:left">{{news.BladeFinish}}</td>
+                            <td style="text-align:left">{{news.HandleMaterial}}</td>
                             <td style="width:3%"> </td>
-                            <td style="text-align:left">{{news.OverallLength}}</td>
-                            <td style="text-align:left">{{news.BladeLength}}</td>
-                            <td style="text-align:right">{{news.Embellishments}}</td>
+                            <td style="text-align:right">{{news.OverallLength.toFixed(2)}}</td>
+                            <td style="text-align:right">{{news.BladeLength.toFixed(2)}}</td>
+                            <td></td>
+                            <td style="text-align:left">{{news.Embellishments}}</td>
                             <td style="width:1%"> </td>
-                            <td style="text-align:right">{{news.CustomerFirstName}}</td>
+                            <td style="text-align:left">{{news.CustomerFirstName}}</td>
                             <td style="width:1%"> </td>
-                            <td style="text-align:right">{{news.CustomerLastName}}</td>
+                            <td style="text-align:left">{{news.CustomerLastName}}</td>
                             <td style="width:1%"> </td>
-                            <td style="text-align:right">{{news.CustomerEmail}}</td>
+                            <td style="text-align:left">{{news.CustomerEmail}}</td>
                             <td>{{news.CustomerStatusName}}</td>
 
                         </tr>
