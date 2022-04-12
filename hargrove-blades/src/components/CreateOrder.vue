@@ -250,6 +250,8 @@
             },
 
             CreateOrder() {
+
+                
                 
                 this.productOrder.CustomerID = document.getElementById("cusID").value
                 this.productOrder.OrderNote = document.getElementById("Note").value

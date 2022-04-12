@@ -180,6 +180,7 @@ app.put('/editAddress/', async (req,res) => {
             .input('StateID_p', sql.Int, req.body.StateID)
             .input('Country_p', sql.VarChar, req.body.Country)
             .input('CustomerID_p', sql.Int, req.body.CustomerID)
+            .input('AddressActive_p', sql.Bit, req.body.AddressActive)
             //execute stored procedure updateAddress
             .execute('updateAddress')
         
@@ -336,7 +337,7 @@ app.get('/getAddress/:id', async (req,res) => {
 
             //might need to make it so customerstatus is active here or on the main screen
             .query("Select ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
-            " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.CustomerID = " +id)
+            " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.CustomerID = " +id + " AND Address.AddressActive = 'true'")
 
         const address = result.recordset
         res.send(address)
@@ -373,7 +374,7 @@ app.get('/Address/:id', async (req,res) => {
         let result = await pool.request()
 
             //might need to make it so customerstatus is active here or on the main screen
-            .query("Select ADDRESS.CustomerID, ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
+            .query("Select ADDRESS.CustomerID, ADDRESS.AddressID, ADDRESS.AddressActive, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
             " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.AddressID = " +id)
 
         const address = result.recordset
