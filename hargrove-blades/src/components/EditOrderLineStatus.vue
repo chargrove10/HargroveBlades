@@ -2,7 +2,7 @@
 <div class="form-div">
 
     <div style="color: white; text-align:center;margin-bottom:20px">
-        <header>Edit Order Status</header>
+        <header>Edit Order Line Status</header>
     </div>
       
     <div class="tab-div1">

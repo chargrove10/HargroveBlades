@@ -53,7 +53,7 @@
                             <option  v-for="address in Address" :value="address.AddressID" :key="address.AddressID">{{address.AddressLine1.concat(', '+ address.City + ', ' + address.StateInitials + ', ' + address.ZipCode)}}</option>
                           </select><br/>
                           <label> Order Notes </label><br/>
-                          <textarea id="Note" placeholder="Ntes" v-model="productOrder.OrderNote" rows="4" cols="24"></textarea><br />
+                          <textarea id="Note" placeholder="Notes" v-model="productOrder.OrderNote" rows="4" cols="24"></textarea><br />
                           <label> Order Total ($) </label><br/>
                           <div style="display:block" v-for="price in Price" :key="price.Price">
                           <input type="text" id="total" readonly :value="price.Price"><br/>

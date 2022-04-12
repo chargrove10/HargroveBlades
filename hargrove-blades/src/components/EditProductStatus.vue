@@ -2,7 +2,7 @@
 <div class="form-div">
 
     <div style="color: white; text-align:center;margin-bottom:20px">
-        <header>Edit Customer Status</header>
+        <header>Edit Product Status</header>
     </div>
       
     <div class="tab-div1">
