@@ -267,30 +267,30 @@
                 this.productOrder.ProductID = document.getElementById("product").value
 
                 console.log(this.productOrder)
-                // let url = 'http://localhost:3000/createOrder/';
+                let url = 'http://localhost:3000/createOrder/';
 
-                //  axios.post(url, this.productOrder).then(() => {
-                //      this.$router.push('/orderList')
-                //       this.productOrder = {
-                //           //assigning all values as empty
-                //             CustomerID: '',
-                //             OrderStatusID: '',
-                //             OrderDate: '',
-                //             BillingAddressID: '',
-                //             ShippingAddressID: '',
-                //             OrderNote: '',
-                //             OrderTotal: '',
-                //             MethodOfPayment: '',
-                //             BilledAmount: '',
-                //             Balance: '',
-                //             TrackingNumber: '',
-                //             CustomerPickup: '',
-                //             PickUpDateTime: '',
-                //             ProductID: ''
-                //       }
-                //  }).catch(err => {
-                //      console.log(err)
-                //  });
+                 axios.post(url, this.productOrder).then(() => {
+                     this.$router.push('/orderList')
+                      this.productOrder = {
+                          //assigning all values as empty
+                            CustomerID: '',
+                            OrderStatusID: '',
+                            OrderDate: '',
+                            BillingAddressID: '',
+                            ShippingAddressID: '',
+                            OrderNote: '',
+                            OrderTotal: '',
+                            MethodOfPayment: '',
+                            BilledAmount: '',
+                            Balance: '',
+                            TrackingNumber: '',
+                            CustomerPickup: '',
+                            PickUpDateTime: '',
+                            ProductID: ''
+                      }
+                 }).catch(err => {
+                     console.log(err)
+                 });
 
                 console.log(this.productOrder)
             },
