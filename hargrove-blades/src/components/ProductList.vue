@@ -110,7 +110,7 @@
                                 <td hidden>{{products.StyleID}}</td>
                                 <td hidden>{{products.ProductID}}</td>
                                 <td hidden>{{products.SteelID}}</td>
-                                <td><router-link :to="{ name: 'EditProduct', params: {productID: products.ProductID, productStatusId: products.ProductStatusID, styleId: products.StyleID, steelId: products.SteelID}}"><button style="width:50%">Edit</button></router-link></td>
+                                <td><router-link :to="{ name: 'EditProduct', params: {productID: products.ProductID, productStatusId: products.ProductStatusID, styleId: products.StyleID, steelId: products.SteelID}}"><button style= "height: 30px; width: 100px; max-width: 120px">Edit Product</button></router-link></td>
                                 <!-- Place holder !-->
                             </tr>
                         </table>

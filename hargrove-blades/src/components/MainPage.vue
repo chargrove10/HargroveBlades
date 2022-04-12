@@ -5,7 +5,7 @@
         <img src='../assets/sponsor.jpg' height='100' width='100' align="left">
         
     
-        <h1 class="title">Hargrove Blades</h1>
+        <h1 class="title" >Hargrove Blades</h1>
     </div>
 
     <div class="main-content">
@@ -77,33 +77,32 @@
            
                 <div class="table-div">
                     <form>
-                        <table>
+                        <table style= "margin-left:30px">
                             <tr>
-                                <th style="width: 3%"></th>
-                                <th style="text-align:left">First Name</th>
+                                <!-- <th style="width: 3%"></th> -->
+                                <th style="text-align:left; padding-left:30px ">First Name</th>
                                 <th style="text-align:left">Last Name</th>
-                                <th style="text-align:left">Phone Number</th>
-                                <th style="text-align:left;  width: auto !important" >Email Address       </th>
-                                <th style="width:4% !important"> </th>
-                                <th style="text-align:left">Notes</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                <th style="text-align:left; width: 200px">Phone Number</th>
+                                <th style="text-align:left;  width: auto !important; ; min-width: 300px" >Email Address       </th>
+                                <!-- <th style="width:4% !important"> </th> -->
+                                <th style="text-align:left ; min-width: 500px" >Notes</th>
+                                <th style= "height: 30px; width: 100px; max-width: 150px; padding-right: 20px"></th>
+                                <th style= "height: 30px; width: 100px; max-width: 150px; padding-right: 20px"></th>
+                                <th style= "height: 30px; width: 100px; max-width: 150px; padding-right: 20px"></th>
                                 
                             </tr>
                            
                             <tr id = "cTable" v-for="customer in Customers" :key="customer.CustomerID">
-                                <td></td>
-                                <td style="text-align:left">{{customer.CustomerFirstName}}</td>
+                                <!-- <td></td> -->
+                                <td style="text-align:left; padding-left:30px">{{customer.CustomerFirstName}}</td>
                                 <td style="text-align:left">{{customer.CustomerLastName}}</td>
-                                <td style="text-align:left">{{customer.CustomerPhone}}</td>
-                                <td style="text-align:left">{{customer.CustomerEmail}}</td>
-                                <td style="width:4% !important"> </td>
-                                <td style="text-align:left">{{customer.CustomerNote}}</td>
-                                <td><router-link :to="{ name: 'CustomerHist', params: {customerID: customer.CustomerID}}"><button style="transform:translatex(260%)">View History</button></router-link></td>
-                                <td><router-link :to="{ name: 'EditCustomer', params: {customerID: customer.CustomerID}}"><button style="width:40% !important;transform:translatex(130%)">Edit</button></router-link></td>
-                                <td><router-link :to="{ name: 'CreateOrder', params: {customerID: customer.CustomerID}}"><button>Create Order</button></router-link></td>
-                                
+                                <td style="text-align:left; width: 200px">{{customer.CustomerPhone}}</td>
+                                <td style="text-align:left; min-width: 300px">{{customer.CustomerEmail}}</td>
+                                <!-- <td style="width:4% !important"> </td> -->
+                                <td style="text-align:left ; min-width: 500px">{{customer.CustomerNote}}</td>
+                                <td><router-link :to="{ name: 'CustomerHist', params: {customerID: customer.CustomerID}}"><button style= "height: 30px; width: 100px; max-width: 120px">View History</button></router-link></td>
+                                <td><router-link :to="{ name: 'EditCustomer', params: {customerID: customer.CustomerID}}"><button style= "height: 30px; width: 100px;  max-width: 120px">Edit</button></router-link></td>
+                                <td><router-link :to="{ name: 'CreateOrder', params: {customerID: customer.CustomerID}}"><button style= "height: 30px; width: 100px;  max-width: 120px">Create Order</button></router-link></td>
                                 
                             </tr>
                             

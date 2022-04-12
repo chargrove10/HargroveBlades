@@ -99,7 +99,7 @@
                             
                             
                             <!--IS GOING TO GO TO EDIT ORDER-->
-                            <td><router-link :to="{ name: 'EditOrder', params: {orderID: orders.OrderID, customerID: orders.CustomerID, shippingID: orders.ShippingAddressID, billingID: orders.BillingAddressID}}"><button style="width:30%">Edit</button></router-link></td>
+                            <td><router-link :to="{ name: 'EditOrder', params: {orderID: orders.OrderID, customerID: orders.CustomerID, shippingID: orders.ShippingAddressID, billingID: orders.BillingAddressID}}"><button style= "height: 30px; width: 100px; max-width: 120px">Edit Order</button></router-link></td>
                             
                             <!-- Place holder !-->
                         </tr>
