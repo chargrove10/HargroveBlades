@@ -67,6 +67,7 @@
                             <th style="text-align:left">Order Date</th>
                             <th style="text-align:right">Order Total</th>
                             <th style="text-align:right">Balance</th>
+                            <th style="width:3%"></th>
                             <th style="text-align:left">Order Status</th>
                             <th style="text-align:left">Last Status Notified</th>
                             <th style="text-align:left">Order Note</th>
@@ -83,6 +84,7 @@
                             <td style="text-align:left">{{orders.OrderDate.slice(0,10)}}</td>
                             <td style="text-align:right">{{orders.OrderTotal.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>
                             <td style="text-align:right">{{orders.Balance.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>   
+                            <td></td>
                             <td style="text-align:left">{{orders.OrderStatusName}}</td>     
                             <td style="text-align:left">{{orders.LastStatusNotified}}</td>     
                             <td style="text-align:left">{{orders.OrderNote}}</td>     
