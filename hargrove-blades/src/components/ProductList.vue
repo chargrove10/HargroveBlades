@@ -66,8 +66,12 @@
                     </div>
                     <div class="tab-divider"></div>
                     <div class="tab-divider">
+                        <div class="tab-divider"></div>
+                        <div class="tab-divider"></div>
                         <router-link :to="{ name: 'ProductDetail'}"><button style="margin-left: 50px">Add Product</button></router-link>
+                        
                     </div>
+                    <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
