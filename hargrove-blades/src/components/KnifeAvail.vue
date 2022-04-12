@@ -30,6 +30,7 @@
                 <router-link to="/priceEstimate" custom v-slot="{navigate, href}">
                 <a :href="href" @click="navigate">Price Estimate</a>
                 </router-link>
+                <div class="tab-divider" />
                 <router-link to="/orderNotification" custom v-slot="{navigate, href}">
                 <a :href="href" @click="navigate">Order Notify</a>
                 </router-link>
@@ -74,7 +75,7 @@
                             <td style="text-align:left">{{knifeAvailable.handlematerial}}</td>
                             <td style="text-align:left">{{knifeAvailable.embellishments}}</td>                        
                             <td style="width:3%"> </td>
-                            <td style="text-align:right">{{knifeAvailable.Price}}</td>
+                            <td style="text-align:right">{{knifeAvailable.Price.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>
                             <td></td>
                             
                         </tr>

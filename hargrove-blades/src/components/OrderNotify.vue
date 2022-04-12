@@ -59,33 +59,33 @@
                 <!-- <div class="tab-divider"></div> -->
                     <table style="width:99.9%; margin-left:.05%">
                         <tr>
-
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Order Number</th>
-                            <th>Order Date</th>
-                            <th>Order Total</th>
-                            <th>Balance</th>
-                            <th>Order Status</th>
-                            <th>Last Status Notified</th>
-                            <th>Order Note</th>
-                            <th>Update Notification Status</th>
-                            <th>Send Order Notification</th>
+                            <th style="width:3%"></th>
+                            <th style="text-align:left">First Name</th>
+                            <th style="text-align:left">Last Name</th>
+                            <th style="text-align:left">Email</th>
+                            <th style="text-align:right">Order Number</th>
+                            <th style="text-align:left">Order Date</th>
+                            <th style="text-align:right">Order Total</th>
+                            <th style="text-align:right">Balance</th>
+                            <th style="text-align:left">Order Status</th>
+                            <th style="text-align:left">Last Status Notified</th>
+                            <th style="text-align:left">Order Note</th>
+                            <th style="text-align:left">Update Notification Status</th>
+                            <th style="text-align:left">Send Order Notification</th>
                         </tr>
                         <tr id="oTable" v-for="orders in OrderNotify" :key="orders.OrderID">
                             <!--IS GOING TO GO SEND EMAIL NOTIFICATION-->
-
-                            <td>{{orders.CustomerFirstName}}</td>
-                            <td>{{orders.CustomerLastName}}</td>
-                            <td>{{orders.CustomerEmail}}</td>
-                            <td>{{orders.OrderNumber}}</td>
-                            <td>{{orders.OrderDate.slice(0,10)}}</td>
-                            <td>{{orders.OrderTotal}}</td>
-                            <td>{{orders.Balance}}</td>   
-                            <td>{{orders.OrderStatusName}}</td>     
-                            <td>{{orders.LastStatusNotified}}</td>     
-                            <td>{{orders.OrderNote}}</td>     
+                            <td></td>
+                            <td style="text-align:left">{{orders.CustomerFirstName}}</td>
+                            <td style="text-align:left">{{orders.CustomerLastName}}</td>
+                            <td style="text-align:left">{{orders.CustomerEmail}}</td>
+                            <td style="text-align:right">{{orders.OrderNumber}}</td>
+                            <td style="text-align:left">{{orders.OrderDate.slice(0,10)}}</td>
+                            <td style="text-align:right">{{orders.OrderTotal.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>
+                            <td style="text-align:right">{{orders.Balance.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>   
+                            <td style="text-align:left">{{orders.OrderStatusName}}</td>     
+                            <td style="text-align:left">{{orders.LastStatusNotified}}</td>     
+                            <td style="text-align:left">{{orders.OrderNote}}</td>     
                             <td hidden>{{orders.TrackingNumber}}</td>  
                             <td><button  v-on:click=updateLastNotifiedStatus(orders)>Update Notification Status</button></td>
                             <td><button  v-on:click=sendEmail(orders)>Send Order Notification</button></td>
