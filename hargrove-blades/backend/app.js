@@ -20,16 +20,16 @@ app.listen(PORT, () => {
     console.log("Connection achieved on : ", PORT)
 })
 
-// var config1 = {
-//     server: 'COT-CIS4375-01',
-//     database: 'HargroveBlades',
-//     user: 'ISSD',
-//     password: 'HargroveBlades@!',
-//     port: 1433,
-//     options: {
-//         trustServerCertificate: true // change to true for local dev / self-signed certs
-//       }
-// };
+var config = {
+    server: 'COT-CIS4375-01',
+    database: 'HargroveBlades',
+    user: 'ISSD',
+    password: 'HargroveBlades@!',
+    port: 1433,
+    options: {
+        trustServerCertificate: true // change to true for local dev / self-signed certs
+      }
+};
 
 //Chris Computer
 // var config = {
@@ -43,17 +43,17 @@ app.listen(PORT, () => {
 //     }
 // }
 
-//Bryan Comnputer
-var config = {
-    user: 'BG2',
-    password: 'BG2',
-    server: 'DESKTOP-94E3EIO',
-    database: 'HargroveBlades',
-    port: 1433,
-    options: {
-        trustServerCertificate: true
-    }
-}
+// //Bryan Comnputer
+// var config = {
+//     user: 'BG2',
+//     password: 'BG2',
+//     server: 'DESKTOP-94E3EIO',
+//     database: 'HargroveBlades',
+//     port: 1433,
+//     options: {
+//         trustServerCertificate: true
+//     }
+// }
 
 //customer List Page
 
@@ -629,11 +629,12 @@ app.get('/productList/:serial&:knife&:steel', async (req, res) => {
 //product inserting
 app.post('/productAdd/', async (req,res) => {
     try {
+        console.log('in Product app.js')
+        console.log('styleId:' + req.body.StyleID)
         //making 'pool' awaiting the connection
         let pool = await sql.connect(config)
         //making result awaiting the request to the connection
         let result = await pool.request()
-
             .input('StyleID_p', sql.Int,  req.body.StyleID)
             .input('SteelID_p', sql.Int,  req.body.SteelID)
             .input('ProductStatusID_p', sql.Int, req.body.ProductStatusID)
@@ -647,14 +648,20 @@ app.post('/productAdd/', async (req,res) => {
             .input('HandleMaterial_p', req.body.HandleMaterial)
             .input('ProductNotes_p', req.body.ProductNotes)
             //sample script will be changed later
-            .execute('dbo.InsertProduct')
-
+            .execute('dbo.SP_Product_Create')
+            // .query("INSERT INTO [dbo].[Product] ([StyleID],[SteelID],[ProductStatusID],[CompleteDate],[Price],[SerialNo], " +
+            // "[OverallLength],[BladeFinish],[BladeLength],[Embellishments],[HandleMaterial],[ProductNote])     VALUES " +
+            //         "(@StyleID_p,@SteelID_p,@ProductStatusID_p,@CompleteDate_p,@Price_p,@SerialNo_p,@OverallLength_p,@BladeFinish_p, "+
+            //         "@BladeLength_p,@Embellishments_p,@HandleMaterial_p,@ProductNotes_p)")
         const product = result.recordset
+        console.log('after add product')
         res.send(product)
     } catch (err) {
         res.send(err)
     }
 });
+
+
 
 //product Productstatus drop down
 app.get('/productDropDown', async (req, res) => {

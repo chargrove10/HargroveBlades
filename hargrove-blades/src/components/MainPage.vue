@@ -92,7 +92,7 @@
                                 <td style="width:4% !important"> </td>
                                 <td style="text-align:left">{{customer.CustomerNote}}</td>
                                 
-                                <td><router-link :to="{ name: 'CustomerHist', params: {customerID: customer.CustomerID}}"><button style="transform:translatex(220%)">View History</button></router-link></td>
+                                <td><router-link :to="{ name: 'CustomerHist', params: {customerID: customer.CustomerID}}"><button style="transform:translatex(200%)">View History</button></router-link></td>
                                 <td><router-link :to="{ name: 'EditCustomer', params: {customerID: customer.CustomerID}}"><button style="width:40% !important;transform:translatex(130%)">Edit</button></router-link></td>
                                 <td><router-link :to="{ name: 'CreateOrder', params: {customerID: customer.CustomerID}}"><button>Create Order</button></router-link></td>
                                 
