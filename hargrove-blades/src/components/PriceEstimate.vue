@@ -30,6 +30,9 @@
                 <router-link to="/priceEstimate" custom v-slot="{navigate, href}">
                 <a :href="href" @click="navigate">Price Estimate</a>
                 </router-link>
+                <router-link to="/orderNotification" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Order Notify</a>
+                </router-link>
                 
             </div>
 

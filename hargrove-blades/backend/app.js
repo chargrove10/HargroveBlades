@@ -32,28 +32,28 @@ app.listen(PORT, () => {
 // };
 
 //Chris Computer
-var config = {
-    user: 'CZ',
-    password: 'CZ1',
-    server: 'DESKTOP-O78Q1FG',
-    database: 'HargroveBlades',
-    port: 1433,
-    options: {
-        trustServerCertificate: true
-    }
-}
-
-//Bryan Comnputer
 // var config = {
-//     user: 'BG2',
-//     password: 'BG2',
-//     server: 'DESKTOP-94E3EIO',
+//     user: 'CZ',
+//     password: 'CZ1',
+//     server: 'DESKTOP-O78Q1FG',
 //     database: 'HargroveBlades',
 //     port: 1433,
 //     options: {
 //         trustServerCertificate: true
 //     }
 // }
+
+//Bryan Comnputer
+var config = {
+    user: 'BG2',
+    password: 'BG2',
+    server: 'DESKTOP-94E3EIO',
+    database: 'HargroveBlades',
+    port: 1433,
+    options: {
+        trustServerCertificate: true
+    }
+}
 
 //customer List Page
 
@@ -1563,4 +1563,74 @@ app.put('/OrderLineStatusEdit/', async (req,res) => {
     }catch(err) {
         console.log(err)
     }
-})
+});
+
+// Customer Purchase History
+app.get('/customerHist/:customerID', async (req,res) => {
+    let id = req.params.customerID;
+    try {
+        let pool = await sql.connect(config)
+
+        let result = await pool.request()
+            .query("SELECT CustomerFirstName, CustomerLastName, Customer.CustomerID, OrderID,OrderNumber,OrderDate, OrderStatus.OrderStatusName  "+
+            ",ISNULL((SELECT OrderStatusName FROM OrderStatus WHERE OrderStatusID = LastOrderStatusNotified), '-') "+
+            " AS LastOrderStatusNotified , OrderNote, OrderTotal, Balance "+
+          " FROM HargroveBlades.dbo.ProductOrder JOIN OrderStatus  ON ProductOrder.OrderStatusID = OrderStatus.OrderStatusID "+
+          "JOIN Customer  ON Customer.CustomerID = ProductOrder.CustomerID WHERE Customer.CustomerID =  " + id)
+
+        const customerHist = result.recordset
+        res.send(customerHist)
+    } catch(err){
+        console.log(err)
+    }
+});
+
+// update Last Notified Status //VanPhan
+app.put('/LastNotifiedStatusEdit/', async (req,res) => {
+    try {
+        let pool = await sql.connect(config)
+        let result = await pool.request()
+        .input('OrderID', sql.Int, req.body.OrderID)
+        .query('UPDATE ProductOrder SET LastOrderStatusNotified = (SELECT OrderStatusID FROM ProductOrder WHERE OrderID = ' + req.body.OrderID  +') WHERE OrderID = '+ req.body.OrderID )
+
+        res.send(result.recordset)
+        console.log(result.recordset)
+
+    }catch(err) {
+        console.log(err)
+    }
+});
+
+
+
+app.get('/monthlyTotal', async (req, res) => {  //VanPhan
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the view orderNotify
+            .query("SELECT NoOfOrder, Year, Month, MonthYear,  MonthlyTotal FROM MonthlyTotal ORDER BY  'Year', 'Month' ASC");
+        const monthlyTotal = result.recordset;
+
+        res.send(monthlyTotal)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
+app.get('/orderNotify', async (req, res) => {  //VanPhan
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            //executes the view orderNotify
+            .query("SELECT * FROM OrderNotify");
+        const orderNotify = result.recordset;
+
+        res.send(orderNotify)
+    } catch (err){
+        res.status(500).json(err)
+    }
+}); 

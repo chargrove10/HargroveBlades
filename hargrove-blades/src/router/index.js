@@ -32,6 +32,8 @@ import EditProductStatus from '../components/EditProductStatus.vue'
 import EditOrderLineStatus from '../components/EditOrderLineStatus.vue'
 import EditOrder from '../components/EditOrder.vue'
 import EditProduct from '../components/EditProduct.vue'
+import CustomerHist from '../components/CustomerHist.vue'
+import OrderNotify from '../components/OrderNotify.vue'
 
 const routes = [
     {
@@ -201,6 +203,17 @@ const routes = [
         name: "EditProduct",
         component: EditProduct
     },
+    {
+        path:"/customerHist/:customerID",
+        name: "CustomerHist",
+        component: CustomerHist
+    },
+    {
+        path: "/orderNotification",
+        name: "OrderNotify",
+        component: OrderNotify
+    }
+
 
 ]
 
