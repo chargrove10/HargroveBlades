@@ -44,28 +44,30 @@
                 <form>
                     <table style="width:95%; margin-left:2.5%">
                         <tr>
-                            <th>SerialNo</th>
-                            <th>Style Name</th>
-                            <th>Steel Name</th>
-                            <th>Overall Length</th>
-                            <th>Blade Length</th>
-                            <th>Handle Material</th>
-                            <th>Embellishments</th>
-                            <th>Product Note</th>
-                            <th>Price</th>
-                            <th>Product Status Name</th>
+                            <th style="text-align:right">SerialNo</th>
+                            <th style="text-align:right">Style Name</th>
+                            <th style="text-align:right">Steel Name</th>
+                            <th style="width:4%"> </th>                            
+                            <th style="text-align:left; width:10%">Overall Length (in)</th>
+                            <th style="text-align:left">Blade Length (in)</th>
+                            <th style="text-align:right">Handle Material</th>
+                            <th style="text-align:right">Embellishments</th>                            
+                            <th style="width:3%"> </th>
+                            <th style="text-align:left">Price ($)</th>
+                            
                         </tr>
                         <tr id = "aTable" v-for="knifeAvailable in KnifeAvail" :key="knifeAvailable.ProductID">
-                            <td>{{knifeAvailable.SerialNo}}</td>
-                            <td>{{knifeAvailable.StyleName}}</td>
-                            <td>{{knifeAvailable.SteelName}}</td>
-                            <td>{{knifeAvailable.overalllength}}</td>
-                            <td>{{knifeAvailable.bladelength}}</td>
-                            <td>{{knifeAvailable.handlematerial}}</td>
-                            <td>{{knifeAvailable.embellishments}}</td>
-                            <td>{{knifeAvailable.productnote}}</td>
-                            <td>{{knifeAvailable.Price}}</td>
-                            <td>{{knifeAvailable.ProductStatusName}}</td>
+                            <td style="text-align:right">{{knifeAvailable.SerialNo}}</td>
+                            <td style="text-align:right">{{knifeAvailable.StyleName}}</td>
+                            <td style="text-align:right">{{knifeAvailable.SteelName}}</td>  
+                            <td style="width:4%"> </td>                         
+                            <td style="text-align:left; width:10%">{{knifeAvailable.overalllength}}</td>        
+                            <td style="text-align:left">{{knifeAvailable.bladelength}}</td>
+                            <td style="text-align:right">{{knifeAvailable.handlematerial}}</td>
+                            <td style="text-align:right">{{knifeAvailable.embellishments}}</td>                        
+                            <td style="width:3%"> </td>
+                            <td style="text-align:left">{{knifeAvailable.Price}}</td>
+                            
                         </tr>
                     </table>
                 </form>

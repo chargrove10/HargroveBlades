@@ -51,15 +51,17 @@
                 <form>
                     <table style="width:95%; margin-left:2.5%">
                         <tr>
-                            <th>Knife Style</th>
-                            <th>Steel Name</th>
-                            <th>Average price for specs</th>
+                            <th style="text-align:right">Knife Style</th>
+                            <th style="text-align:right">Steel Name</th>
+                            <th> </th>
+                            <th style="text-align:left">Average price for specs</th>
                         </tr>
                         
                         <tr id="pTable" v-for="prices in Price" :key="prices.ProductID">
-                            <td>{{prices.StyleName}}</td>
-                            <td>{{prices.steelname}}</td>
-                            <td>$ {{prices.Average.toFixed(2)}}</td>
+                            <td style="text-align:right">{{prices.StyleName}}</td>
+                            <td style="text-align:right">{{prices.steelname}}</td>
+                            <td> </td>
+                            <td style="text-align:left">$ {{prices.Average.toFixed(2)}}</td>
 
                         </tr>
                     </table>

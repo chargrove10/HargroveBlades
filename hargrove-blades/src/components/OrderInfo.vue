@@ -44,28 +44,33 @@
                 <form>
                     <table style="width:95%; margin-left:2.5%">
                         <tr>
-                            <th>SerialNo</th>
-                            <th>Style Name</th>
-                            <th>Steel Name</th>
-                            <th>Overall Length</th>
-                            <th>Blade Length</th>
-                            <th>Handle Material</th>
-                            <th>Embellishments</th>
-                            <th>Product Note</th>
-                            <th>Price</th>
-                            <th>Product Status Name</th>
+                            <th style="text-align:right">SerialNo</th>
+                            <th style="text-align:right">Style Name</th>
+                            <th style="text-align:right">Steel Name</th>
+                            <th style="width:3%"> </th>
+                            <th style="text-align:left">Overall Length</th>
+                            
+                            <th style="text-align:left">Blade Length (in)</th>
+                            <th style="text-align:right">Handle Material</th>
+                            <th style="text-align:right">Embellishments</th>
+                            <th style="text-align:right">Product Note</th>
+                            <th style="width:3%"> </th>
+                            <th style="text-align:left">Price ($)</th>
+                            
                         </tr>
                         <tr id = "orTable" v-for="orderInfos in OrderInfo" :key="orderInfos.ProductID">
-                            <td>{{orderInfos.SerialNo}}</td>
-                            <td>{{orderInfos.StyleName}}</td>
-                            <td>{{orderInfos.SteelName}}</td>
-                            <td>{{orderInfos.overalllength}}</td>
-                            <td>{{orderInfos.bladelength}}</td>
-                            <td>{{orderInfos.handlematerial}}</td>
-                            <td>{{orderInfos.embellishments}}</td>
-                            <td>{{orderInfos.productnote}}</td>
-                            <td>{{orderInfos.Price}}</td>
-                            <td>{{orderInfos.ProductStatusName}}</td>
+                            <td style="text-align:right">{{orderInfos.SerialNo}}</td>
+                            <td style="text-align:right">{{orderInfos.StyleName}}</td>
+                            <td style="text-align:right">{{orderInfos.SteelName}}</td>
+                            <td> </td>
+                            <td style="text-align:left">{{orderInfos.overalllength}}</td>
+                            <td style="text-align:left">{{orderInfos.bladelength}}</td>
+                            <td style="text-align:right">{{orderInfos.handlematerial}}</td>
+                            <td style="text-align:right">{{orderInfos.embellishments}}</td>
+                            <td style="text-align:right">{{orderInfos.productnote}}</td>
+                            <td > </td>
+                            <td style="text-align:left">{{orderInfos.Price}}</td>
+                            
                         </tr>
                     </table>
                 </form>

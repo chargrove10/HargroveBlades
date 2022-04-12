@@ -51,28 +51,36 @@
                 <form>
                     <table style="width:95%; margin-left:3%">
                         <tr>
-                            <th>Knife Style</th>
-                            <th>Blade Finish</th>
-                            <th>Handle Material</th>
-                            <th>Overall Length</th>
-                            <th>Blade Length</th>
-                            <th>Embellishments</th>
-                            <th>Customer FirstName</th>
-                            <th>Customer Last Name</th>
-                            <th>Customer Email</th>
+                            <th style="text-align:right">Knife Style</th>
+                            <th style="text-align:right">Blade Finish</th>
+                            <th style="text-align:right">Handle Material</th>
+                            <th style="width:3%"> </th>
+                            <th style="text-align:left">Overall Length</th>
+                            <th style="text-align:left">Blade Length</th>
+                            <th style="text-align:right">Embellishments</th>
+                            <th style="width:1%"> </th>
+                            <th style="text-align:right">Customer FirstName</th>
+                            <th style="width:1%"> </th>
+                            <th style="text-align:right">Customer Last Name</th>
+                            <th style="width:1%"> </th>
+                            <th style="text-align:right">Customer Email</th>
                             <th>Customer Status Name</th>
                         </tr>
                         
                         <tr id="pTable" v-for="news in News" :key="news.ProductID">
-                            <td>{{news.StyleName}}</td>
-                            <td>{{news.BladeFinish}}</td>
-                            <td>{{news.HandleMaterial}}</td>
-                            <td>{{news.OverallLength}}</td>
-                            <td>{{news.BladeLength}}</td>
-                            <td>{{news.Embellishments}}</td>
-                            <td>{{news.CustomerFirstName}}</td>
-                            <td>{{news.CustomerLastName}}</td>
-                            <td>{{news.CustomerEmail}}</td>
+                            <td style="text-align:right">{{news.StyleName}}</td>
+                            <td style="text-align:right">{{news.BladeFinish}}</td>
+                            <td style="text-align:right">{{news.HandleMaterial}}</td>
+                            <td style="width:3%"> </td>
+                            <td style="text-align:left">{{news.OverallLength}}</td>
+                            <td style="text-align:left">{{news.BladeLength}}</td>
+                            <td style="text-align:right">{{news.Embellishments}}</td>
+                            <td style="width:1%"> </td>
+                            <td style="text-align:right">{{news.CustomerFirstName}}</td>
+                            <td style="width:1%"> </td>
+                            <td style="text-align:right">{{news.CustomerLastName}}</td>
+                            <td style="width:1%"> </td>
+                            <td style="text-align:right">{{news.CustomerEmail}}</td>
                             <td>{{news.CustomerStatusName}}</td>
 
                         </tr>
