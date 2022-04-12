@@ -38,7 +38,7 @@
                         </select><br/> 
                         <label for="price">Price</label><br/>
                         <input type="text" id="price" name="price" v-model="product.Price"/><br/> 
-                        <label for="completeDate">Complete Date</label><br/>
+                        <label for="completeDate">Estimated Complete Date</label><br/>
                         <input @change="dateGet($event)" type="date" id="completeDate" name="completeDate" v-model="product.CompleteDate" /><br/>    
                     </form>
                 </div>
