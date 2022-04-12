@@ -1608,6 +1608,22 @@ app.put('/LastNotifiedStatusEdit/', async (req,res) => {
     }
 });
 
+app.get('/returnCustomer', async (req, res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+            .query("SELECT Customer.CustomerID, CustomerFirstName, CustomerLastName, CustomerPhone, COUNT(OrderID) AS NumberOfOrders, MAX(OrderDate) AS 'LastOrderDate'  " +
+            " FROM Customer JOIN ProductOrder ON customer.customerID = Productorder.customerID " +
+            "GROUP BY Customer.CustomerID, CustomerFirstName, CustomerLastName, CustomerPhone HAVING COUNT(OrderID) >=2");
+        const returnCust = result.recordset;
+
+        res.send(returnCust)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
 
 
 app.get('/monthlyTotal', async (req, res) => {  //VanPhan

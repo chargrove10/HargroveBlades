@@ -34,7 +34,7 @@ import EditOrder from '../components/EditOrder.vue'
 import EditProduct from '../components/EditProduct.vue'
 import CustomerHist from '../components/CustomerHist.vue'
 import OrderNotify from '../components/OrderNotify.vue'
-
+import returningCustomer from '../components/ReturningCustomer.vue'
 const routes = [
     {
         path:"/customerList",
@@ -128,6 +128,12 @@ const routes = [
         name: "PriceEstimate",
         component: PriceEstimator
     },
+    {
+        path: "/returningCustomer",
+        name: "returningCustomer",
+        component: returningCustomer
+    },
+
     {
         path: "/status",
         name: "Status",

@@ -47,48 +47,38 @@
 
         <div class="tab-div2">
 
-            <div class="tabcontent" style="display:block">
+            <div id="priceEstimate" class="tabcontent" style="display:block">
                 
-                <div style="text-align:center"><header>Available Knives</header></div>
+                <div style="background-color:lightgray; text-align:center"><header>Number of Returning Customers</header></div>
+                
                 <div class="tab-divider"></div>
+                
+
+                <div class="tab-divider"></div>
+                
+                <div class="tab-divider"></div>
+
                 <form>
                     <table style="width:95%; margin-left:2.5%">
                         <tr>
-                            <th style="width:3%"> </th>
-                            <th style="text-align:left">SerialNo</th>
-                            <th style="text-align:left">Style Name</th>
-                            <th style="text-align:left">Steel Name</th>
-                            <th style="width:4%"> </th>                            
-                            <th style="text-align:right; width:10%">Overall Length (in)</th>
-                            <th style="text-align:right">Blade Length (in)</th>
-                            <th style="width:3%"> </th>
-                            <th style="text-align:left">Handle Material</th>
-                            <th style="text-align:left">Embellishments</th>                            
-                            <th style="width:3%"> </th>
-                            <th style="text-align:right">Price ($)</th>
-                            <th style="width:3%"> </th>
-                            
+                            <th>Customer First Name</th>
+                            <th>Customer Last Name</th>
+                            <th>Phone Number</th>
+                            <th>Number of Orders</th>
+                            <th>Last Order Date</th>
                         </tr>
-                        <tr id = "aTable" v-for="knifeAvailable in KnifeAvail" :key="knifeAvailable.ProductID">
-                            <td></td>
-                            <td style="text-align:left">{{knifeAvailable.SerialNo}}</td>
-                            <td style="text-align:left">{{knifeAvailable.StyleName}}</td>
-                            <td style="text-align:left">{{knifeAvailable.SteelName}}</td>  
-                            <td style="width:4%"> </td>                         
-                            <td style="text-align:right; width:10%">{{knifeAvailable.overalllength}}</td>        
-                            <td style="text-align:right">{{knifeAvailable.bladelength}}</td>
-                            <td></td>
-                            <td style="text-align:left">{{knifeAvailable.handlematerial}}</td>
-                            <td style="text-align:left">{{knifeAvailable.embellishments}}</td>                        
-                            <td style="width:3%"> </td>
-                            <td style="text-align:right">{{knifeAvailable.Price.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>
-                            <td></td>
-                            
+                        
+                        <tr id="pTable" v-for="customer in returnCustomer" :key="customer.CustomerID">
+                            <td>{{customer.CustomerFirstName}}</td>
+                            <td>{{customer.CustomerLastName}}</td>
+                            <td>{{customer.CustomerPhone}}</td>
+                            <td>{{customer.NumberOfOrders}}</td>
+                            <td>{{customer.LastOrderDate.slice(0,10)}}</td>
+
                         </tr>
                     </table>
                 </form>
                 <div class="tab-divider"></div>
-
             </div>
 
     </div>
@@ -107,9 +97,9 @@ import axios from 'axios'
 export default {
         data() {
             return {
-                KnifeAvail: [],
+                returnCustomer: [],
                 isShow: false,
-                knifeAvailable: {}
+                prices: {}
                 //pass over to product detail to see if we are posting or editing
                 
             }
@@ -135,13 +125,17 @@ export default {
 
         priceEstimate() {
             this.$router.push('/priceEstimate')
-        }
+        },
+/* 
+        returnCustomer() {
+            this.$router.push('/returnCustomer')
+        } */
 
         },
-        created() {
+    created() {
 
-            axios.get('http://localhost:3000/knifeAvailability').then((res) => {
-                this.KnifeAvail=res.data;
+            axios.get('http://localhost:3000/returnCustomer').then((res) => {
+                this.returnCustomer=res.data;
                 
             }).catch(err => {
                 console.log(err)
@@ -149,7 +143,5 @@ export default {
 
         },
 
-    }
+}
 </script>
-
-

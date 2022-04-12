@@ -15,6 +15,10 @@
                 <a :href="href" @click="navigate">Home</a>
                 </router-link>
                 <div class="tab-divider" />
+                <router-link to="/" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">On-Going Orders</a>
+                </router-link>
+                <div class="tab-divider" />
                 <router-link to="/knifeAvailability" custom v-slot="{navigate, href}">
                 <a :href="href" @click="navigate">Knife Availability</a>
                 </router-link>
@@ -34,7 +38,10 @@
                 <router-link to="/orderNotification" custom v-slot="{navigate, href}">
                 <a :href="href" @click="navigate">Order Notify</a>
                 </router-link>
-                
+                <div class="tab-divider" />
+                <router-link to="/returningCustomer" custom v-slot="{navigate, href}">
+                <a :href="href" @click="navigate">Returning Customers</a>
+                </router-link>
             </div>
 
         </div>
