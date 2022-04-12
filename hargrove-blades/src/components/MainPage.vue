@@ -60,6 +60,7 @@
                         <input type="search" id="phoneValue" v-model="phoneValue" placeholder="Phone Number" class="search-field" />
                         <button v-on:click="applyFilter()" type="submit" style="margin-left:2%">Apply Filter</button>
                     </div>
+  
         
                     <div class="tab-divider">
 
