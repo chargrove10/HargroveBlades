@@ -40,17 +40,17 @@
                     <form>
                         <table style="width:94%; margin-left:3%;">
                             <tr>
-                                <th>Style Name</th>
-                                <th>Description</th>
-                                <th>Active</th>
+                                <th style="text-align:right; width:15%">Style Name</th>
+                                <th style="text-align:right; width:35%">Description</th>
+                                <th style="text-align:right">Active</th>
                                 <th></th>
                             </tr>
                              <tr id="sTable" v-for="knife in Knives" v-bind:key="knife.StyleID">
-                                <td>{{knife.StyleName}}</td>
-                                <td>{{knife.StyleDesc}}</td>
-                                <td v-if="knife.KnifeStyleActive === true">Active</td>
-                                <td v-else>Inactive</td>
-                                <td><router-link :to="{ name: 'EditKnifeStyle', params: {knifeID: knife.StyleID, flag: knife.KnifeStyleActive}}"><button style="width:110% !important">Edit</button></router-link></td>
+                                <td style="text-align:right; width:15%">{{knife.StyleName}}</td>
+                                <td style="text-align:right; width:35%">{{knife.StyleDesc}}</td>
+                                <td style="text-align:right" v-if="knife.KnifeStyleActive === true">Active</td>
+                                <td style="text-align:right" v-else>Inactive</td>
+                                <td><router-link :to="{ name: 'EditKnifeStyle', params: {knifeID: knife.StyleID, flag: knife.KnifeStyleActive}}"><button style="width:30% !important">Edit</button></router-link></td>
                                 
                                 <!-- Place holder !-->
                              </tr>

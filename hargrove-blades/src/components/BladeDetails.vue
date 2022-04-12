@@ -38,17 +38,17 @@
                 <form>
                     <table style="width:95%">
                         <tr>
-                            <th>Steel Name</th>
-                            <th>Description</th>
-                            <th>Active</th>
+                            <th style="text-align:right; width:10%">Steel Name</th>
+                            <th style="text-align:right">Description</th>
+                            <th style="text-align:right">Active</th>
                             <th></th>
                         </tr>
                         <tr id="dTable" v-for="steel in Steels" :key="steel.SteelID">
-                            <td>{{steel.SteelName}}</td>
-                            <td>{{steel.SteelDesc}}</td>
-                            <td v-if="steel.KnifeSteelActive === true">Active</td>
-                            <td v-else>Inactive</td>
-                            <td><router-link :to="{ name: 'EditSteelType', params: {steelID: steel.SteelID, flag: steel.KnifeSteelActive}}"><button style="width:50% !important">Edit</button></router-link></td>
+                            <td style="text-align:right; width:10%">{{steel.SteelName}}</td>
+                            <td style="text-align:right">{{steel.SteelDesc}}</td>
+                            <td style="text-align:right" v-if="steel.KnifeSteelActive === true">Active</td>
+                            <td style="text-align:right" v-else>Inactive</td>
+                            <td><router-link :to="{ name: 'EditSteelType', params: {steelID: steel.SteelID, flag: steel.KnifeSteelActive}}"><button style="width:25% !important">Edit</button></router-link></td>
                             
                                 <!-- Place holder !-->
                         </tr>
