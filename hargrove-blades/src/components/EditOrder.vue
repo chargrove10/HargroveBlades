@@ -99,7 +99,7 @@
         <div> 
 
                     <form>
-                    <table style="transform:translate(-2%,0); width:99.99%; font-style:oblique; font-family:'Global Sans Serif';">
+                    <table style="transform:translate(-2%,0); width:99.99%">
                         <tr style="background-color:#66A0CF">
                             <th style="width:1%"> </th>
                             <th style="text-align:right">Line Number</th>
