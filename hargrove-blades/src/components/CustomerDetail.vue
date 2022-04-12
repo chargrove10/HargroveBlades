@@ -171,7 +171,8 @@ import axios from 'axios'
 
             phonecheck(event) {
                 let phone = event.target.value
-                if (!/^\(?\d{3}\)?[- ]?(\d{3})[- ]?(\d{4})$/.test(phone)) {document.getElementById("phone").value = ''} 
+                if (phone.length == 10) {document.getElementById("phone").value = ''}
+                if (!/^(?\d{3})?[- ]?(\d{3})[- ]?(\d{4})$/.test(phone)) {document.getElementById("phone").value = ''} 
             },
 
             emailcheck(event) {

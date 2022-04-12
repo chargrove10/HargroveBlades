@@ -102,8 +102,8 @@
         <div id="modal_content" class="modal_content" style="height:auto"  v-for="cusaddress in CusAddress" :value="cusaddress.AddressID" :key="cusaddress.AddressID">
             <input type="hidden" id="addID" v-model="cusaddress.AddressID"/>
             <input type="hidden" id="cusID" v-model="cusaddress.CustomerID"/>
-            <label>Default Address</label><br />
-            <input type="checkbox" id="defaultAdd" v-model="cusaddress.DefaultAddress"/><br />
+            <label>Default Address</label><label>Active Address</label><br />
+            <input type="checkbox" id="defaultAdd" v-model="cusaddress.DefaultAddress"/><input style="transform:translatex(1300%)" type="checkbox" id="activeAdd" v-model="cusaddress.AddressActive"/><br />
             <label>Address Line 1</label><br />
             <input type="text" id = "A1" v-model="cusaddress.AddressLine1"/><br />
             <label>Address Line 2</label><br />
@@ -163,7 +163,8 @@ import axios from 'axios'
                     City: '',
                     StateID: '',
                     Country: '',
-                    CustomerID: ''
+                    CustomerID: '',
+                    AddressActive: true
                 }
             
             }
@@ -293,15 +294,16 @@ import axios from 'axios'
                 this.cusaddress.StateID = document.getElementById("st").value
                 this.cusaddress.Country = document.getElementById("country").value
                 this.cusaddress.CustomerID = document.getElementById("cusID").value
+                this.cusaddress.AddressActive = document.getElementById("activeAdd").checked
 
                 console.log(this.cusaddress)
                 let url = 'http://localhost:3000/editAddress/'
                 axios.put(url, this.cusaddress).then((res) => {
                     console.log(res)
-    
+
                 }).catch(err => {
                     console.log(err)
-                
+
                 })
 
                 document.getElementById("modal").style.display="none";
@@ -325,7 +327,8 @@ import axios from 'axios'
 
             phonecheck(event) {
                 let phone = event.target.value
-                if (!/^\(?\d{3}\)?[- ]?(\d{3})[- ]?(\d{4})$/.test(phone)) {document.getElementById("phone").value = ''} 
+                if (phone.length == 10) {document.getElementById("phone").value = ''}
+                if (!/^(?\d{3})?[- ]?(\d{3})[- ]?(\d{4})$/.test(phone)) {document.getElementById("phone").value = ''} 
             },
 
             emailcheck(event) {

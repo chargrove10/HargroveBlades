@@ -65,7 +65,7 @@ app.get('/cStatus', async (req,res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT CustomerStatusID, CustomerStatusName, CustomerStatusDesc FROM CustomerStatus");
+            .query("SELECT CustomerStatusID, CustomerStatusName, CustomerStatusDesc FROM CustomerStatus WHERE CustomerStatusActive = 1");
         
         const status = result.recordset
 
@@ -170,7 +170,7 @@ app.put('/editAddress/', async (req,res) => {
         let pool = await sql.connect(config)
         //making result awaiting the request to the connection
         let result = await pool.request()
-           
+
             //gather inputs
             .input('AddressID_p', sql.Int, req.body.AddressID)
             .input('DefaultAddress_p', sql.Bit, req.body.DefaultAddress)
@@ -180,9 +180,10 @@ app.put('/editAddress/', async (req,res) => {
             .input('StateID_p', sql.Int, req.body.StateID)
             .input('Country_p', sql.VarChar, req.body.Country)
             .input('CustomerID_p', sql.Int, req.body.CustomerID)
+            .input('AddressActive_p', sql.Bit, req.body.AddressActive)
             //execute stored procedure updateAddress
             .execute('updateAddress')
-        
+
         console.log(result.recordset)
     } catch (err){
         res.send(err)
@@ -190,7 +191,6 @@ app.put('/editAddress/', async (req,res) => {
     }
 
 });
-
 
 //this should run a stored procedure using async functions
 app.get('/customerList', async (req, res) => {
@@ -336,7 +336,7 @@ app.get('/getAddress/:id', async (req,res) => {
 
             //might need to make it so customerstatus is active here or on the main screen
             .query("Select ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
-            " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.CustomerID = " +id)
+            " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.CustomerID = " +id + " AND Address.AddressActive = 1")
 
         const address = result.recordset
         res.send(address)
@@ -373,7 +373,7 @@ app.get('/Address/:id', async (req,res) => {
         let result = await pool.request()
 
             //might need to make it so customerstatus is active here or on the main screen
-            .query("Select ADDRESS.CustomerID, ADDRESS.AddressID, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
+            .query("Select ADDRESS.CustomerID, ADDRESS.AddressID, ADDRESS.AddressActive, ADDRESS.AddressLine1, ADDRESS.AddressLine2, ADDRESS.City, STATE.StateInitials, ADDRESS.ZipCode, ADDRESS.Country, ADDRESS.DefaultAddress" +
             " FROM Address JOIN State ON ADDRESS.StateID = STATE.StateID WHERE ADDRESS.AddressID = " +id)
 
         const address = result.recordset
@@ -649,10 +649,6 @@ app.post('/productAdd/', async (req,res) => {
             .input('ProductNotes_p', req.body.ProductNotes)
             //sample script will be changed later
             .execute('dbo.SP_Product_Create')
-            // .query("INSERT INTO [dbo].[Product] ([StyleID],[SteelID],[ProductStatusID],[CompleteDate],[Price],[SerialNo], " +
-            // "[OverallLength],[BladeFinish],[BladeLength],[Embellishments],[HandleMaterial],[ProductNote])     VALUES " +
-            //         "(@StyleID_p,@SteelID_p,@ProductStatusID_p,@CompleteDate_p,@Price_p,@SerialNo_p,@OverallLength_p,@BladeFinish_p, "+
-            //         "@BladeLength_p,@Embellishments_p,@HandleMaterial_p,@ProductNotes_p)")
         const product = result.recordset
         console.log('after add product')
         res.send(product)

@@ -67,7 +67,7 @@
                         <input type="text" id="tracking" v-model="productOrder.TrackingNumber"><br/>
                         <label> Pickup </label><br/>
                         <input type="checkbox" id="pickup" v-model="productOrder.CustomerPickUp"><br/>
-                        <label> Pickup Date and Time </label><br/>
+                        <label> Shipping/Pickup Date and Time </label><br/>
                         <input type="datetime-local" id="time1" v-if="productOrder.PickUpDateTime!==null" :value="productOrder.PickUpDateTime.slice(0,16)" ><br/>
                         <input type="datetime-local" id="time2" v-if="productOrder.PickUpDateTime===null" v-model="productOrder.PickUpDateTime" ><br/>
                         

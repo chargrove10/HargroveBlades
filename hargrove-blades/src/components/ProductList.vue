@@ -92,7 +92,7 @@
                                 <th style="text-align:left">Handle Material</th>
                                 <th style="width:4%"> </th>
                                 <th style="text-align:right">Blade Length (in)</th>
-                                <th style="text-align:right">Overall Length (in)</th>
+                                <th style="text-align:right; width:12%">Overall Length (in)</th>
                                 <th style="width:4%"></th>
                                 <th style="text-align:left">Embellishments</th>
                                 <th></th>

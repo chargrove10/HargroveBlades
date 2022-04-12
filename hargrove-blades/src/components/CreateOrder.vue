@@ -80,7 +80,7 @@
                         <input type="text" id="tracking" v-model="productOrder.TrackingNumber"><br/>
                         <label> Pickup </label><br/>
                         <input type="checkbox" id="pickup" v-model="productOrder.CustomerPickup"><br/>
-                        <label> Pickup Date and Time </label><br/>
+                        <label> Shipping/Pickup Date and Time </label><br/>
                         <input type="datetime-local" id="time" v-model="productOrder.PickUpDateTime"><br/>
                         
                         
