@@ -41,7 +41,8 @@
                 <div style="text-align:center"><header>Product Status Information</header></div>
                 
                 <div class="tab-divider"></div>
-           
+                               <router-link :to="{ name: 'CreateProductStatus'}"><button style="transform: translate(15%, -10%)">Add Product Status</button></router-link>
+
                 <div class="table-div">
                     <form>
                         <table>
@@ -69,7 +70,6 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'CreateProductStatus'}"><button style="transform: translate(15%, -10%)">Create Status</button></router-link>
                 </div>
                 
         </div>

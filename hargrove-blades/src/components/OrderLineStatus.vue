@@ -41,7 +41,8 @@
                 <div style="text-align:center"><header>Order Line Status Information</header></div>
                 
                 <div class="tab-divider"></div>
-           
+                               <router-link :to="{ name: 'CreateOrderLineStatus'}"><button style="transform: translate(15%, -10%)">Add Order Line Status</button></router-link>
+
                 <div class="table-div">
                     <form>
                         <table>
@@ -70,7 +71,6 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'CreateOrderLineStatus'}"><button style="transform: translate(15%, -10%)">Create Status</button></router-link>
                 </div>
                 
         </div>

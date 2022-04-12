@@ -41,8 +41,10 @@
                 <div style="text-align:center"><header>Customer Status Information</header></div>
                 
                 <div class="tab-divider"></div>
-           
+                               <router-link :to="{ name: 'CreateCustomerStatus'}"><button style="transform: translate(15%, -10%)">Add Customer Status</button></router-link>
+
                 <div class="table-div">
+
                     <form>
                         <table>
                             <tr>
@@ -68,7 +70,6 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'CreateCustomerStatus'}"><button style="transform: translate(15%, -10%)">Create Status</button></router-link>
                 </div>
                 
         </div>

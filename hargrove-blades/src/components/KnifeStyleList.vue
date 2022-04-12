@@ -30,13 +30,14 @@
 
             <div id="KnifeStyle" class="tabcontent" style="display:block">
                 <div style="text-align:center"><header>Knife Information</header></div>
-                
-               <div class="tab-divider"></div>
-                
+
+               <div class="tab-divider"> </div>
 
                 <div class="tab-divider"></div>
            
                 <div>
+                                <router-link :to="{ name: 'KnifeStyle'}"><button style="transform: translate(95%, -10%)">Add Style</button></router-link>
+
                     <form>
                         <table style="width:94%; margin-left:3%;">
                             <tr>
@@ -62,7 +63,6 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'KnifeStyle'}"><button style="transform: translate(95%, -10%)">Add</button></router-link>
                 </div>
                 
 

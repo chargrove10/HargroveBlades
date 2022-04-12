@@ -47,7 +47,7 @@
                 <div style="text-align:center"><header>Order Information</header></div>
                 
                 <div class="tab-divider"></div>
-                <div>
+                <div style="margin-left: 50px">
                     <div class="cform1">
                         <label>Order Number</label>
                         <input type="search" id="number" placeholder="Search" class="search-field" />

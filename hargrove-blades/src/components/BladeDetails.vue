@@ -34,7 +34,8 @@
                 <div class="tab-divider"></div>
                 
                 <div class="tab-divider"></div>
-                
+                                    <router-link :to="{ name: 'SteelType'}"><button style="transform: translate(60%, -10%); ">Add Steel</button></router-link>
+
                 <form>
                     <table style="width:95%">
                         <tr>
@@ -50,7 +51,7 @@
                             <td style="text-align:left">{{steel.SteelDesc}}</td>
                             <td style="text-align:left" v-if="steel.KnifeSteelActive === true">Active</td>
                             <td style="text-align:left" v-else>Inactive</td>
-                            <td><router-link :to="{ name: 'EditSteelType', params: {steelID: steel.SteelID, flag: steel.KnifeSteelActive}}"><button style="width:25% !important">Edit</button></router-link></td>
+                            <td><router-link :to="{ name: 'EditSteelType', params: {steelID: steel.SteelID, flag: steel.KnifeSteelActive}}"><button style="width:25% !important">Edit Blade</button></router-link></td>
                             
                                 <!-- Place holder !-->
                         </tr>
@@ -60,7 +61,6 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'SteelType'}"><button style="transform: translate(60%, -10%)">Add</button></router-link>
                 </div>
             </div>
 

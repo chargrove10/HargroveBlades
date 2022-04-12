@@ -41,13 +41,13 @@
 
         </div>
 
-        <div class="tab-div2" style="min-height:auto">
+        <div class="tab-div2" style="min-height:aut">
 
             <div class="tabcontent" style="display:block">
                 <div style="text-align:center"><header>Product Information</header></div>
-                <div class="tab-divider"></div>
-                <div>
-                    <div class="pform1">
+                <div class="tab-divider" ></div>
+                <div  class="tab-divider" style="margin-left: 50px">
+                    <div class="pform1" >
                         <label>Serial Number</label>
                         <input type="search" id="serial" placeholder="Search" class="search-field" style="width:40%" />
 
@@ -63,12 +63,15 @@
                         <button type="submit" style="margin-left:2%" v-on:click="applyFilter()">Apply Filter</button>
                     </div>
                     
+                    </div>
+                    <div class="tab-divider"></div>
+                    <div class="tab-divider">
+                        <router-link :to="{ name: 'ProductDetail'}"><button style="margin-left: 50px">Add Product</button></router-link>
+                    </div>
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
                     <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
-                    <div class="tab-divider"></div>
-                </div>
+                
                 
                 <div class="tab-divider"></div>
            
@@ -116,7 +119,6 @@
                 <div class="tab-divider"></div>
 
                 <div>
-                    <router-link :to="{ name: 'ProductDetail'}"><button style="position: fixed; bottom: 0.5%; left: 12.4%">Add</button></router-link>
                 </div>
             </div>
         
