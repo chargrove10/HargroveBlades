@@ -44,26 +44,30 @@
                 <form>
                     <table style="width:95%">
                         <tr>
-                            <th>Order Number</th>
-                            <th>Customer Name</th>
-                            <th>Customer Phone</th>
-                            <th>Customer Email</th>
-                            <th>Order Date</th>
-                            <th>Order Status Name</th>
-                            <th>Order Total</th>
-                            <th>PickUpDateTime</th>
-                            <th>OrderNote</th>
+                            <th style="text-align:right">Order Number</th>
+                            <th style="width:3%"></th>
+                            <th style="text-align:left">Customer Name</th>
+                            <th style="text-align:left">Customer Phone</th>
+                            <th style="text-align:left">Customer Email</th>
+                            <th style="text-align:left">Order Date</th>
+                            <th style="text-align:left">Order Status Name</th>
+                            <th style="text-align:right">Order Total</th>
+                            <th style="width:3%"></th>
+                            <th style="text-align:left">PickUpDateTime</th>
+                            <th style="text-align:left">OrderNote</th>
                         </tr>
                         <tr id="mTable" v-for="order in Order" :key="order.OrderID">
-                            <td>{{order.OrderNumber}}</td>
-                            <td>{{order.CustomerFirstName.concat(' '+ order.CustomerLastName)}}</td>  
-                            <td>{{order.CustomerPhone}}</td>
-                            <td>{{order.CustomerEmail}}</td>
-                            <td>{{order.OrderDate.slice(0,10)}}</td>
-                            <td>{{order.OrderStatusName}}</td>
-                            <td>${{order.OrderTotal.toLocaleString('en-US')}}</td>
-                            <td>{{order.PickUpDateTime.slice(0,10)}}</td>
-                            <td>{{order.OrderNote}}</td>
+                            <td style="text-align:right">{{order.OrderNumber}}</td>
+                            <td></td>
+                            <td style="text-align:left">{{order.CustomerFirstName.concat(' '+ order.CustomerLastName)}}</td>  
+                            <td style="text-align:left">{{order.CustomerPhone}}</td>
+                            <td style="text-align:left">{{order.CustomerEmail}}</td>
+                            <td style="text-align:left">{{order.OrderDate.slice(0,10)}}</td>
+                            <td style="text-align:left">{{order.OrderStatusName}}</td>
+                            <td style="text-align:right">{{order.OrderTotal.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>
+                            <td></td>
+                            <td style="text-align:left">{{order.PickUpDateTime.slice(0,10)}}</td>
+                            <td style="text-align:left">{{order.OrderNote}}</td>
                         </tr>
                     </table>
                 </form>

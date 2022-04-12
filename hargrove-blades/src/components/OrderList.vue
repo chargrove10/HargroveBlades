@@ -69,27 +69,29 @@
                 <form>
                     <table style="width:95%">
                         <tr>
-                            <th style="text-align:right">First Name</th>
-                            <th style="text-align:right">Last Name</th>
-                            <th style="width:6% !important"> </th>
-                            <th style="text-align:left">Order Number</th>
+                            <th style="width:3%"></th>
+                            <th style="text-align:left">First Name</th>
+                            <th style="text-align:left">Last Name</th>
+                            <th style="width:2% !important"> </th>
+                            <th style="text-align:right">Order Number</th>
                             <th style="text-align:right">Order Date</th>
                             <th style="width:4% !important"> </th>
-                            <th style="text-align:left">Order Total</th>
-                            <th style="text-align:left">Balance</th>
+                            <th style="text-align:right">Order Total</th>
+                            <th style="text-align:right">Balance</th>
                             <th style="width:.1% !important"></th>
-                            <th style="width:.1% !important"></th>
+                            <th style="width:1% !important"></th>
                             <th></th>
                         </tr>
                         <tr id="oTable" v-for="orders in Orders" :key="orders.OrderID">
-                            <td style="text-align:right">{{orders.CustomerFirstName}}</td>
-                            <td style="text-align:right">{{orders.CustomerLastName}}</td>
+                            <td></td>
+                            <td style="text-align:left">{{orders.CustomerFirstName}}</td>
+                            <td style="text-align:left">{{orders.CustomerLastName}}</td>
                             <td style="width:4% !important"> </td>
-                            <td style="text-align:left">{{orders.OrderNumber}}</td>
+                            <td style="text-align:right">{{orders.OrderNumber}}</td>
                             <td style="text-align:right">{{orders.OrderDate.slice(0,10)}}</td>
                             <td style="width:4% !important"> </td>
-                            <td style="text-align:left">{{'$'+ orders.OrderTotal.toLocaleString('en-US')}}</td>
-                            <td style="text-align:left;">{{'$'+ orders.Balance.toLocaleString('en-US')}}</td>
+                            <td style="text-align:right">{{orders.OrderTotal.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>
+                            <td style="text-align:right;">{{orders.Balance.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>
                             <td style="display:none">{{orders.CustomerID}}</td>
                             <td style="width:.01% !important"><input type="hidden" v-model="orders.ShippingAddressID"></td>
                             <td ><input type="hidden" v-model="orders.BillingAddressID"></td>
@@ -97,7 +99,7 @@
                             
                             
                             <!--IS GOING TO GO TO EDIT ORDER-->
-                            <td><router-link :to="{ name: 'EditOrder', params: {orderID: orders.OrderID, customerID: orders.CustomerID, shippingID: orders.ShippingAddressID, billingID: orders.BillingAddressID}}"><button style="width:70%">Edit</button></router-link></td>
+                            <td><router-link :to="{ name: 'EditOrder', params: {orderID: orders.OrderID, customerID: orders.CustomerID, shippingID: orders.ShippingAddressID, billingID: orders.BillingAddressID}}"><button style="width:30%">Edit</button></router-link></td>
                             
                             <!-- Place holder !-->
                         </tr>

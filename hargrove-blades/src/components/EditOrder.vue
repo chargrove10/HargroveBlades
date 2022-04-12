@@ -99,40 +99,41 @@
         <div> 
 
                     <form>
-                    <table style="transform:translate(-2%,0); width:99.99%">
+                    <table style="transform:translate(-2%,0); width:99.99%; font-style:oblique; font-family:'Global Sans Serif';">
                         <tr style="background-color:#66A0CF">
+                            <th style="width:1%"> </th>
+                            <th style="text-align:right">Line Number</th>
+                            <th style="width:2%"></th>
+                            <th style="text-align:left">Serial Number</th>
                             <th style="width:2%"> </th>
-                            <th style="text-align:left">Line Number</th>
-                            <th style="width:3%"></th>
-                            <th style="text-align:right">Serial Number</th>
-                            <th style="width:3%"> </th>
-                            <th style="text-align:left">Blade Length</th>
-                            
+                            <th style="text-align:right">Blade Length</th>
                             <th style="text-align:right">Blade Finish</th>
-                            <th style="text-align:right">Handle Material</th>
-                            <th style="text-align:right">Knife Style</th>
-                            <th style="text-align:right">Type of Steel</th>
                             <th style="width:3%"> </th>
-                            <th style="text-align:left">Overall Length</th>
-                            <th style="text-align:left">Price ($)</th>
+                            <th style="text-align:left">Handle Material</th>
+                            <th style="text-align:left">Knife Style</th>
+                            <th style="text-align:left">Type of Steel</th>
+                            <th style="width:3%"> </th>
+                            <th style="text-align:right">Overall Length</th>
+                            <th style="text-align:right">Price ($)</th>
                             <th></th>
                             
                         </tr>
                         <tr id="oTable" v-for="lineItem in LineItem" :key="lineItem.OrderID">
                             <td> </td>
-                            <td style="text-align:left">{{lineItem.LineNumber}}</td>
+                            <td style="text-align:right">{{lineItem.LineNumber}}</td>
                             <td></td>
-                            <td style="text-align:right">{{lineItem.SerialNo}}</td>
-                            <td> </td>
-                            <td style="text-align:left">{{lineItem.BladeLength}}</td>
+                            <td style="text-align:left">{{lineItem.SerialNo}}</td>
+                            <td></td>
+                            <td style="text-align:right">{{lineItem.BladeLength}}</td>
                             
-                            <td style="text-align:right">{{lineItem.BladeFinish}}</td>
-                            <td style="text-align:right">{{lineItem.HandleMaterial}}</td>
-                            <td style="text-align:right">{{lineItem.StyleName}}</td>
-                            <td style="text-align:right">{{lineItem.SteelName}}</td>
+                            <td style="text-align:left">{{lineItem.BladeFinish}}</td>
+                            <td></td>
+                            <td style="text-align:left">{{lineItem.HandleMaterial}}</td>
+                            <td style="text-align:left">{{lineItem.StyleName}}</td>
+                            <td style="text-align:left">{{lineItem.SteelName}}</td>
                             <td> </td>
-                            <td style="text-align:left">{{lineItem.OverallLength}}</td>
-                            <td style="text-align:left">{{lineItem.Price}}</td>
+                            <td style="text-align:right">{{lineItem.OverallLength.toFixed(2)}}</td>
+                            <td style="text-align:right">{{lineItem.Price.toLocaleString('en-US', {style:"currency", currency:"USD"})}}</td>
                             
                             <td><button type="button" v-on:click="editLineItem(lineItem.OrderID, lineItem.LineNumber)">Edit</button></td>
 
@@ -153,7 +154,7 @@
             <form>
                 <div class="tab-divider"/>
                 <div class="tab-divider"/>
-                    <table style="transform:translate(.1%,0); width:96.5%">
+                    <table style="transform:translate(.1%,0); width:96.5%; font-style:oblique; font-family:'Global Sans Serif';">
                         <tr>
                             <th>Product</th>
                             <th></th>
@@ -174,7 +175,7 @@
                     </table>
                     </form>
                     <div class="tab-divider" />
-            <button id="close" class="close" style="transform:translate(30%, -1510%);" v-on:click="closeModal()">X</button>
+            <button id="close" class="close" style="transform:translate(30%, -1590%);" v-on:click="closeModal()">X</button>
 
         </div>
     </div>

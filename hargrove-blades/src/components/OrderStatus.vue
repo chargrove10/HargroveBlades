@@ -46,18 +46,20 @@
                     <form>
                         <table>
                             <tr>
-                                <th style="text-align:right; width:15%">Order Status Name</th>
-                                <th style="text-align:right; width:35%"> Description</th>
-                                <th  style="text-align:right; width:15%">Active</th>
+                                <th style="width:3%"></th>
+                                <th style="text-align:left; width:15%">Order Status Name</th>
+                                <th style="text-align:left; width:35%"> Description</th>
+                                <th  style="text-align:left; width:15%">Active</th>
                                 <th></th>
                                 
                             </tr>
                            
                             <tr id = "cTable" v-for="orderStatus in OrderStatus" :key="orderStatus.OrderStatusID">
-                                <td style="text-align:right; width:15%">{{orderStatus.OrderStatusName}}</td>
-                                <td style="text-align:right; width:35%">{{orderStatus.OrderStatusDesc}}</td>
-                                <td style="text-align:right; width:15%" v-if="orderStatus.OrderStatusActive === true">On</td>
-                                <td style="text-align:right; width:15%" v-else>Off</td>
+                                <td></td>
+                                <td style="text-align:left; width:15%">{{orderStatus.OrderStatusName}}</td>
+                                <td style="text-align:left; width:35%">{{orderStatus.OrderStatusDesc}}</td>
+                                <td style="text-align:left; width:15%" v-if="orderStatus.OrderStatusActive === true">On</td>
+                                <td style="text-align:left; width:15%" v-else>Off</td>
                                 <td ><router-link :to="{ name: 'EditOrderStatus', params: {orderStatID: orderStatus.OrderStatusID}}"><button style="width:15% !important">Edit</button></router-link></td>
                             </tr>
                             
