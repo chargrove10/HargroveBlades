@@ -50,9 +50,9 @@
                     <form>
                         <label for="handleMaterial">Handle Material </label><br/>
                         <input type="text" id="handleMaterial" name="handleMaterial" v-model="product.HandleMaterial"/><br/> 
-                        <label for="bladeLength">Blade Length </label><br/>
+                        <label for="bladeLength">Blade Length (in)</label><br/>
                         <input type="text" id="bladeLength" name="bladeLength" v-model="product.BladeLength"/><br/>
-                        <label for="overallLength">Overall Length </label><br/>
+                        <label for="overallLength">Overall Length (in)</label><br/>
                         <input type="text" id="overallLength" name="overallLength" v-model="product.OverallLength"/><br/>
                         <label for="bladeFinish">Blade Finsih </label><br/>
                         <input type="text" id="bladeFinish" name="bladefinish" v-model="product.BladeFinish"/><br/>
