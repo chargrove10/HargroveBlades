@@ -80,7 +80,7 @@
 
                     <div v-for="customer in returnCustomer" :key="customer.CustomerID">
                     <label>Returning Customers</label>
-                    <input readonly> {{returnCustomer.length}}
+                    <label readonly> {{returnCustomer.length}} </label>
                     </div>
                 </form>
                 <div class="tab-divider"></div>
