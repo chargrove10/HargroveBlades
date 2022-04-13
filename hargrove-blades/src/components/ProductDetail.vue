@@ -134,7 +134,7 @@ import axios from 'axios'
 
         methods: {
             home() {
-                this.$router.push('/customerList')
+                this.$router.push('/productList')
             },
 
             addProduct(){

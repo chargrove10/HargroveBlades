@@ -186,8 +186,7 @@
             <div class="tab-divider"/>
             <div style="width:50%; float:left; text-align:right; transform:translateX(-15%)">
                 <input id="prodID" type="hidden" v-model="editItems.ProductID" />
-                <label> Order ID </label>
-                <input id="oid" type="text" readonly v-model="editItems.OrderID" /><br />
+                <input id="oid" type="hidden" v-model="editItems.OrderID" /><br />
                 <div class="tab-divider" />
                 <label> Serial Number </label>
                 <input id="serialNumber" readonly type="text" v-model="editItems.SerialNo" /><br />
@@ -519,9 +518,12 @@
             },
 
             openModal() {
+                // this.handleSave();
                 if(document.getElementById("statusID").value >= 1 && document.getElementById("statusID").value <= 3){
+                    
                     document.getElementById("modal").style.display="block";
                     document.getElementById("main-content").style.display="none";
+                    
                 }
                 else {alert("Cannot add a Product to this Order!")}
                 

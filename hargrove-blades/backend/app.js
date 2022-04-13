@@ -20,7 +20,7 @@ app.listen(PORT, () => {
     console.log("Connection achieved on : ", PORT)
 })
 
-var config = {
+ var config = {
     server: 'COT-CIS4375-01',
     database: 'HargroveBlades',
     user: 'ISSD',
@@ -391,7 +391,7 @@ app.get('/getOrderStatus', async (req,res) => {
         let result = await pool.request()
 
             //might need to make it so customerstatus is active here or on the main screen
-            .query("SELECT * FROM OrderStatus")
+            .query("SELECT * FROM OrderStatus WHERE OrderStatusActive = 1")
 
         const status = result.recordset
         res.send(status)
@@ -408,7 +408,7 @@ app.get('/getProductStatus', async (req,res) => {
         let result = await pool.request()
 
             //might need to make it so customerstatus is active here or on the main screen
-            .query("SELECT * FROM ProductStatus")
+            .query("SELECT * FROM ProductStatus WHERE ProductStatusActive = 1")
 
         const status = result.recordset
         res.send(status)
@@ -855,7 +855,7 @@ app.get('/orderLineStatus', async (req,res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
            
-            .query("Select OrderLineStatusID, OrderLineStatusName, OrderLineStatusDesc, OrderLineStatusActive FROM OrderLineStatus")
+            .query("Select OrderLineStatusID, OrderLineStatusName, OrderLineStatusDesc, OrderLineStatusActive FROM OrderLineStatus WHERE OrderLineStatusActive = 1")
         const lineStatus = result.recordset;
 
         res.send(lineStatus)
@@ -1610,7 +1610,7 @@ app.get('/returnCustomer', async (req, res) => {
         let pool = await sql.connect(config)
         //making result awaiting the request to the connection
         let result = await pool.request()
-            .query("SELECT Customer.CustomerID, CustomerFirstName, CustomerLastName, CustomerPhone, COUNT(OrderID) AS NumberOfOrders, MAX(OrderDate) AS 'LastOrderDate'  " +
+            .query("SELECT Customer.CustomerID, Customer.CustomerFirstName, Customer.CustomerLastName, Customer.CustomerPhone, COUNT(OrderID) AS NumberOfOrders, MAX(OrderDate) AS 'LastOrderDate'  " +
             " FROM Customer JOIN ProductOrder ON customer.customerID = Productorder.customerID " +
             "GROUP BY Customer.CustomerID, CustomerFirstName, CustomerLastName, CustomerPhone HAVING COUNT(OrderID) >=2");
         const returnCust = result.recordset;

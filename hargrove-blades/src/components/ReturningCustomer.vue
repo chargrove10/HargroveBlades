@@ -68,7 +68,7 @@
                             <th>Last Order Date</th>
                         </tr>
                         
-                        <tr id="pTable" v-for="customer in returnCustomer" :key="customer.CustomerID">
+                        <tr id="pTable" v-for="customer in Customer" :key="customer.CustomerID">
                             <td>{{customer.CustomerFirstName}}</td>
                             <td>{{customer.CustomerLastName}}</td>
                             <td>{{customer.CustomerPhone}}</td>
@@ -97,9 +97,9 @@ import axios from 'axios'
 export default {
         data() {
             return {
-                returnCustomer: [],
+                Customer: [],
                 isShow: false,
-                prices: {}
+                customer: {}
                 //pass over to product detail to see if we are posting or editing
                 
             }
@@ -135,7 +135,7 @@ export default {
     created() {
 
             axios.get('http://localhost:3000/returnCustomer').then((res) => {
-                this.returnCustomer=res.data;
+                this.Customer=res.data;
                 
             }).catch(err => {
                 console.log(err)
