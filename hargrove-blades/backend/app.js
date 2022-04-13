@@ -720,8 +720,8 @@ app.get('/orderList', async (req, res) => {
         let result = await pool.request()
             //executes the stored procedure "GetOrders"
             //only shows on screen when a null value is not shown
-            .query("SELECT C.CustomerID, C.CustomerFirstName, C.CustomerLastName, PO.OrderID, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance, PO.ShippingAddressID , PO.BillingAddressID" + 
-            " FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID ORDER BY PO.OrderDate DESC");
+            .query("SELECT C.CustomerID, C.CustomerFirstName, C.CustomerLastName, OS.OrderStatusName, PO.OrderID, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance, PO.ShippingAddressID , PO.BillingAddressID" + 
+            " FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID JOIN ORDERSTATUS OS ON PO.OrderStatusID = OS.OrderStatusID  ORDER BY PO.OrderDate DESC");
         const orders = result.recordset;
 
         res.send(orders)

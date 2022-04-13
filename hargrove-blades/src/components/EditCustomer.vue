@@ -64,33 +64,33 @@
                         <tr style="background-color:#66A0CF">
                             <th style="width: 3%"></th>
                             <th style="text-align:left">Default Address</th>
-                            <th style="text-align:left">Address Line 1</th>
+                            <th style="text-align:left ; width: 300px;">Address Line 1</th>
                             <th style="text-align:left">Address Line 2</th>
-                            <th style="text-align:left">City</th>
-                            <th style="width:4%"> </th>
-                            <th style="text-align:right">Zipcode</th>
+                            <th style="text-align:left ; width: 100px;">City</th>
+                            <!-- <th style="width:4%"> </th> -->
+                            <th style="text-align:right; width: 100px;">Zipcode</th>
                             <th style="width: 3%"></th>
-                            <th style="text-align:left">State Initials</th>
-                            <th style="text-align:left">Country</th>
-                            <th style="width: 3%"></th>
-                            
+                            <th style="text-align:left; width: 150px;">State Initials</th>
+                            <th style="text-align:left; width:150px;">Country</th>
+                            <th style="width: 120px; margin-right: 20px"></th>
+                             <th style="width:2%"> </th>
                         </tr>
                         <tr id="oTable" v-for="address in Address" :value="address.AddressID" :key="address.AddressID">
                             <td></td>
                             <td style="text-align:left" v-if="address.DefaultAddress === true">Default</td>
                             <td style="text-align:left" v-else> </td>
-                            <td style="text-align:left">{{address.AddressLine1}}</td>
+                            <td style="text-align:left ; width: 300px;">{{address.AddressLine1}}</td>
                             <td style="text-align:left">{{address.AddressLine2}}</td>
-                            <td style="text-align:left">{{address.City}}</td>
+                            <td style="text-align:left; width: 100px;">{{address.City}}</td>
+                            <!-- <td></td> -->
+                            <td style="text-align:right; width: 100px;">{{address.ZipCode}}</td>
                             <td></td>
-                            <td style="text-align:right">{{address.ZipCode}}</td>
-                            <td></td>
-                            <td style="text-align:left">{{address.StateInitials}}</td>
-                            <td style="text-align:left">{{address.Country}}</td>
+                            <td style="text-align:left; width: 150px;">{{address.StateInitials}}</td>
+                            <td style="text-align:left; width:150px;">{{address.Country}}</td>
                             
                             
-                            <td><button type="button" v-on:click="showModal(address.AddressID)">Edit</button></td>
-
+                            <td><button type="button" style= "height: 30px; width: 120px; margin-right: 20px" v-on:click="showModal(address.AddressID)">Edit Address</button></td>
+                            <td></td>
                         </tr>
                     </table>
         </form>
