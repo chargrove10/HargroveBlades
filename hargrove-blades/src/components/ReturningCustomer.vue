@@ -78,10 +78,13 @@
                         </tr>
                     </table>
 
-                    <div v-for="customer in returnCustomer" :key="customer.CustomerID">
+                    <div class="tab-divider" />
+                    <div class="tab-divider" />
+                    <div style="transform:translatex(2.2%)">
                     <label>Returning Customers</label>
                     <label readonly> {{returnCustomer.length}} </label>
                     </div>
+                    <div class="tab-divider" />
                 </form>
                 <div class="tab-divider"></div>
             </div>
