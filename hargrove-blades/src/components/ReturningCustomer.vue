@@ -99,7 +99,7 @@ import axios from 'axios'
 export default {
         data() {
             return {
-                Customer: [],
+                returnCustomer: [],
                 isShow: false,
                 customer: {},
                 //pass over to product detail to see if we are posting or editing
@@ -136,7 +136,7 @@ export default {
         },
     created() {
             axios.get('http://localhost:3000/returnCustomer').then((res) => {
-                this.Customer=res.data;
+                this.returnCustomer=res.data;
                 
             }).catch(err => {
                 console.log(err)
