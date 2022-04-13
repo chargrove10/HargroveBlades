@@ -864,6 +864,23 @@ app.get('/orderLineStatus', async (req,res) => {
     }
 });
 
+//get OrderLineStatus information
+app.get('/oLineStatus', async (req,res) => {
+    try {
+        //making 'pool' awaiting the connection
+        let pool = await sql.connect(config)
+        //making result awaiting the request to the connection
+        let result = await pool.request()
+           
+            .query("Select OrderLineStatusID, OrderLineStatusName, OrderLineStatusDesc, OrderLineStatusActive FROM OrderLineStatus")
+        const lineStatus = result.recordset;
+
+        res.send(lineStatus)
+    } catch (err){
+        res.status(500).json(err)
+    }
+});
+
 //update OrderLineItem with Status
 app.put('/updateLineItem/', async (req,res) => {
     try {
