@@ -667,7 +667,7 @@ app.get('/productDropDown', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT ProductStatusID, ProductStatusName FROM ProductStatus");
+            .query("SELECT ProductStatusID, ProductStatusName FROM ProductStatus WHERE ProductStatusActive = 1");
         const productStatus = result.recordset;
 
         res.send(productStatus)
@@ -684,7 +684,7 @@ app.get('/knifeDropDown', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT StyleID, StyleName FROM KnifeStyle ORDER BY StyleID");
+            .query("SELECT StyleID, StyleName FROM KnifeStyle WHERE KnifeStyleActive = 1 ORDER BY StyleID ");
         const knifeStatus = result.recordset;
 
         res.send(knifeStatus)
@@ -701,7 +701,7 @@ app.get('/steelDropDown', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT SteelID, SteelName FROM KnifeSteel ORDER BY SteelID");
+            .query("SELECT SteelID, SteelName FROM KnifeSteel  WHERE KnifeSteelActive = 1 ORDER BY SteelID");
         const steelStatus = result.recordset;
 
         res.send(steelStatus)
@@ -720,8 +720,8 @@ app.get('/orderList', async (req, res) => {
         let result = await pool.request()
             //executes the stored procedure "GetOrders"
             //only shows on screen when a null value is not shown
-            .query("SELECT C.CustomerID, C.CustomerFirstName, C.CustomerLastName, PO.OrderID, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance, PO.ShippingAddressID , PO.BillingAddressID" + 
-            " FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID ORDER BY PO.OrderDate DESC");
+            .query("SELECT C.CustomerID, C.CustomerFirstName, C.CustomerLastName, OS.OrderStatusName, PO.OrderID, PO.OrderNumber, PO.OrderDate, PO.OrderTotal, PO.Balance, PO.ShippingAddressID , PO.BillingAddressID" + 
+            " FROM PRODUCTORDER PO JOIN CUSTOMER C ON C.CustomerID = PO.CustomerID JOIN ORDERSTATUS OS ON PO.OrderStatusID = OS.OrderStatusID  ORDER BY PO.OrderDate DESC");
         const orders = result.recordset;
 
         res.send(orders)
@@ -1611,13 +1611,13 @@ app.get('/returnCustomer', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             .query("SELECT Customer.CustomerID, Customer.CustomerFirstName, Customer.CustomerLastName, Customer.CustomerPhone, COUNT(OrderID) AS NumberOfOrders, MAX(OrderDate) AS 'LastOrderDate'  " +
-            " FROM Customer JOIN ProductOrder ON customer.customerID = Productorder.customerID " +
-            "GROUP BY Customer.CustomerID, CustomerFirstName, CustomerLastName, CustomerPhone HAVING COUNT(OrderID) >=2");
+            " FROM Customer JOIN ProductOrder ON Customer.CustomerID = Productorder.CustomerID WHERE ProductOrder.OrderStatusID NOT IN (8,9) " +
+            "GROUP BY Customer.CustomerID, Customer.CustomerFirstName, Customer.CustomerLastName, Customer.CustomerPhone HAVING COUNT(OrderID) >=2");
         const returnCust = result.recordset;
 
         res.send(returnCust)
     } catch (err){
-        res.status(500).json(err)
+        console.log(err)
     }
 });
 
