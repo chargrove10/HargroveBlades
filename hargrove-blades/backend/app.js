@@ -408,7 +408,7 @@ app.get('/getProductStatus', async (req,res) => {
         let result = await pool.request()
 
             //might need to make it so customerstatus is active here or on the main screen
-            .query("SELECT * FROM ProductStatus")
+            .query("SELECT * FROM ProductStatus WHERE ProductStatusActive = 1")
 
         const status = result.recordset
         res.send(status)
@@ -667,7 +667,7 @@ app.get('/productDropDown', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT ProductStatusID, ProductStatusName FROM ProductStatus");
+            .query("SELECT ProductStatusID, ProductStatusName FROM ProductStatus WHERE ProductStatusActive = 1");
         const productStatus = result.recordset;
 
         res.send(productStatus)
@@ -684,7 +684,7 @@ app.get('/knifeDropDown', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT StyleID, StyleName FROM KnifeStyle ORDER BY StyleID");
+            .query("SELECT StyleID, StyleName FROM KnifeStyle WHERE KnifeStyleActive = 1 ORDER BY StyleID ");
         const knifeStatus = result.recordset;
 
         res.send(knifeStatus)
@@ -701,7 +701,7 @@ app.get('/steelDropDown', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             //executes the stored procedure "GetCustomers"
-            .query("SELECT SteelID, SteelName FROM KnifeSteel ORDER BY SteelID");
+            .query("SELECT SteelID, SteelName FROM KnifeSteel  WHERE KnifeSteelActive = 1 ORDER BY SteelID");
         const steelStatus = result.recordset;
 
         res.send(steelStatus)
