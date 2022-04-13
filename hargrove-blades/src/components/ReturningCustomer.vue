@@ -99,7 +99,7 @@ export default {
             return {
                 returnCustomer: [],
                 isShow: false,
-                prices: {}
+                customer: {}
                 //pass over to product detail to see if we are posting or editing
                 
             }
