@@ -49,7 +49,7 @@
 
             <div id="priceEstimate" class="tabcontent" style="display:block">
                 
-                <div style="background-color:lightgray; text-align:center"><header>Number of Returning Customers</header></div>
+                <div style="text-align:center"><header>Number of Returning Customers</header></div>
                 
                 <div class="tab-divider"></div>
                 
@@ -61,7 +61,6 @@
                 <form>
                     <table style="width:95%; margin-left:2.5%">
                         <tr>
-                            <th>Customer Count</th>
                             <th>Customer First Name</th>
                             <th>Customer Last Name</th>
                             <th>Phone Number</th>
@@ -70,7 +69,6 @@
                         </tr>
                         
                         <tr id="pTable" v-for="customer in returnCustomer" :key="customer.CustomerID">
-                            <td>{{returnCustomer.length}}</td>
                             <td>{{customer.CustomerFirstName}}</td>
                             <td>{{customer.CustomerLastName}}</td>
                             <td>{{customer.CustomerPhone}}</td>
