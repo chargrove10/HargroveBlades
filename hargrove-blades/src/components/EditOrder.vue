@@ -471,8 +471,41 @@
                 console.log(this.editItems.OrderLineStatusID)
             },
 
-            test() {
-                
+            saveOrderForOpen() {
+                var time,
+                data = document.getElementById("time1");
+                if (data != null){
+                    time = data.value
+                    this.productOrder.PickUpDateTime = time
+                }
+                else{
+                    this.productOrder.PickUpDateTime = null
+                }
+
+                this.productOrder.OrderStatusID = document.getElementById("statusID").value 
+                this.productOrder.BillingAddressID = document.getElementById("billingID").value
+                this.productOrder.ShippingAddressID = document.getElementById("shippingID").value
+                this.productOrder.OrderDate = document.getElementById("orderDate").value
+                this.productOrder.CustomerID = document.getElementById("cusID").value
+                this.productOrder.OrderNote = document.getElementById("Note").value
+                this.productOrder.OrderTotal = document.getElementById("total").value
+                this.productOrder.MethodOfPayment = document.getElementById("method").value
+                this.productOrder.BilledAmount = document.getElementById("billed").value
+                this.productOrder.Balance = document.getElementById("balance").value
+                this.productOrder.TrackingNumber = document.getElementById("tracking").value
+                this.productOrder.CustomerPickUp = document.getElementById("pickup").checked
+                this.productOrder.OrderID = document.getElementById("orderID").value                           
+    
+                console.log(this.productOrder)
+
+                 let url = 'http://localhost:3000/updateProductOrder/';
+
+                  axios.put(url, this.productOrder).then((response) => {
+                      console.log(response)
+                      
+                  }).catch(err => {
+                      console.log(err)
+                  })
             },
 
             handleSave() {
@@ -528,7 +561,7 @@
             },
 
             openModal() {
-                // this.handleSave();
+                this.saveOrderForOpen();
                 if(document.getElementById("statusID").value >= 1 && document.getElementById("statusID").value <= 3){
                     
                     document.getElementById("modal").style.display="block";
