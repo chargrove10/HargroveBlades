@@ -64,7 +64,7 @@
                         <label> Method Of Payment </label><br/>
                         <input type="text" id="method" v-model="productOrder.MethodOfPayment"><br/>
                         <label> Tracking Number </label><br/>
-                        <input type="text" id="tracking" v-model="productOrder.TrackingNumber"><br/>
+                        <input type="text" id="tracking" @change="trackingChange($event)" v-model="productOrder.TrackingNumber"><br/>
                         <label> Pickup </label><br/>
                         <input type="checkbox" id="pickup" v-model="productOrder.CustomerPickUp"><br/>
                         <label> Shipping/Pickup Date and Time </label><br/>
@@ -629,7 +629,7 @@
 
                  document.getElementById("balance").value = (orderTotal - billedAmt).toFixed(2)
                  balance = document.getElementById("balance").value
-
+                 
                  this.productOrder.BilledAmount = billedAmt
                  this.productOrder.Balance = document.getElementById("balance").value
                  this.productOrder.OrderTotal = orderTotal
@@ -651,12 +651,19 @@
                      this.productOrder.OrderStatusID = 3
                      document.getElementById("statusID").value = 3
                  }
+                 
 
 
                  console.log("Billed: " + this.productOrder.BilledAmount)
                  console.log("Balance: " + this.productOrder.Balance)
                  console.log("Total: " + this.productOrder.OrderTotal)
                 
+            },
+
+            trackingChange(event) {
+                let tracking = event.target.value
+                if (tracking.length >=1 && document.getElementById("pickup").checked == false) {document.getElementById("statusID").value = 6}
+                else if (tracking.length == 0 && document.getElementById("pickup").checked == true) {document.getElementById("statusID").value = 7}
             },
 
             cancel() {
