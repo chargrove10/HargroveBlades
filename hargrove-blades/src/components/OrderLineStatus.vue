@@ -132,7 +132,7 @@ export default {
         },
         created() {
 
-            axios.get('http://localhost:3000/oLinestatus').then((res) => {
+            axios.get('http://localhost:3000/oLineStatus').then((res) => {
                 this.OrderLineStatus=res.data;
                 console.log(this.OrderLineStatus)
             }).catch(err => {
