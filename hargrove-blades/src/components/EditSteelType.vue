@@ -42,7 +42,7 @@
             <div>
                 <div class="tab-divider"/>
                 <button style="transform:translate(100%,0)" v-on:click="cancel()">Cancel</button>
-                <button style="transform:translate(330%,0)" v-on:click="addKnifeSteel()">Save</button>  
+                <button style="transform:translate(330%,0)" v-on:click="editKnifeSteel()">Save</button>  
             </div>
     
 
