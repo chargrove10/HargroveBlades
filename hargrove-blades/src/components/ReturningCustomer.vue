@@ -61,6 +61,7 @@
                 <form>
                     <table style="width:95%; margin-left:2.5%">
                         <tr>
+                            <th>Customer Count</th>
                             <th>Customer First Name</th>
                             <th>Customer Last Name</th>
                             <th>Phone Number</th>
@@ -69,6 +70,7 @@
                         </tr>
                         
                         <tr id="pTable" v-for="customer in returnCustomer" :key="customer.CustomerID">
+                            <td>{{returnCustomer.length}}</td>
                             <td>{{customer.CustomerFirstName}}</td>
                             <td>{{customer.CustomerLastName}}</td>
                             <td>{{customer.CustomerPhone}}</td>
@@ -99,7 +101,7 @@ export default {
             return {
                 returnCustomer: [],
                 isShow: false,
-                customer: {}
+                customer: {},
                 //pass over to product detail to see if we are posting or editing
                 
             }
@@ -133,7 +135,6 @@ export default {
 
         },
     created() {
-
             axios.get('http://localhost:3000/returnCustomer').then((res) => {
                 this.returnCustomer=res.data;
                 

@@ -53,7 +53,7 @@
                                 <td style="text-align:left; width:35%">{{knife.StyleDesc}}</td>
                                 <td style="text-align:left" v-if="knife.KnifeStyleActive === true">Active</td>
                                 <td style="text-align:left" v-else>Inactive</td>
-                                <td><router-link :to="{ name: 'EditKnifeStyle', params: {knifeID: knife.StyleID, flag: knife.KnifeStyleActive}}"><button style="width:30% !important">Edit</button></router-link></td>
+                                <td><router-link :to="{ name: 'EditKnifeStyle', params: {knifeID: knife.StyleID, flag: knife.KnifeStyleActive}}"><button style="width:30% !important">Edit Knife Style</button></router-link></td>
                                 
                                 <!-- Place holder !-->
                              </tr>

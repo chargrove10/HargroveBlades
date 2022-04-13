@@ -1611,7 +1611,7 @@ app.get('/returnCustomer', async (req, res) => {
         //making result awaiting the request to the connection
         let result = await pool.request()
             .query("SELECT Customer.CustomerID, Customer.CustomerFirstName, Customer.CustomerLastName, Customer.CustomerPhone, COUNT(OrderID) AS NumberOfOrders, MAX(OrderDate) AS 'LastOrderDate'  " +
-            " FROM Customer JOIN ProductOrder ON Customer.CustomerID = Productorder.CustomerID " +
+            " FROM Customer JOIN ProductOrder ON Customer.CustomerID = Productorder.CustomerID WHERE ProductOrder.OrderStatusID NOT IN (8,9) " +
             "GROUP BY Customer.CustomerID, Customer.CustomerFirstName, Customer.CustomerLastName, Customer.CustomerPhone HAVING COUNT(OrderID) >=2");
         const returnCust = result.recordset;
 
